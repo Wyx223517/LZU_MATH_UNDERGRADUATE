@@ -1,0 +1,35 @@
+\beamer@slide {Fig:Example of Tensors}{9}
+\beamer@slide {Equation:Tucker}{10}
+\beamer@slide {Equation:pseudo-likelihood}{24}
+\beamer@slide {PG}{28}
+\beamer@slide {Equation:PARAFAC}{35}
+\beamer@slide {Equation:prior}{37}
+\beamer@slide {Al:Gibbs}{41}
+\beamer@slide {Equations:bayes-model}{43}
+\beamer@slide {fig:scene1}{51}
+\beamer@slide {fig:scene2}{51}
+\beamer@slide {fig:scene3}{51}
+\beamer@slide {fig:scene4}{51}
+\beamer@slide {fig:scenario1_SVM}{58}
+\beamer@slide {fig:scenario2_SVM}{58}
+\beamer@slide {fig:scenario3_SVM}{58}
+\beamer@slide {fig:scenario4_SVM}{58}
+\beamer@slide {fig:scenario1_LR}{58}
+\beamer@slide {fig:scenario2_LR}{58}
+\beamer@slide {fig:scenario3_LR}{58}
+\beamer@slide {fig:scenario4_LR}{58}
+\beamer@slide {fig:all_scenarios}{58}
+\beamer@slide {fig:residual_scenario1_SVM}{59}
+\beamer@slide {fig:residual_scenario2_SVM}{59}
+\beamer@slide {fig:residual_scenario3_SVM}{59}
+\beamer@slide {fig:residual_scenario4_SVM}{59}
+\beamer@slide {fig:residual_scenario1_LR}{59}
+\beamer@slide {fig:residual_scenario2_LR}{59}
+\beamer@slide {fig:residual_scenario3_LR}{59}
+\beamer@slide {fig:residual_scenario4_LR}{59}
+\beamer@slide {fig:residual_maps_all}{59}
+\beamer@slide {tab:performance_threeline SVM part1}{62}
+\beamer@slide {tab:performance_threeline SVM part2}{63}
+\beamer@slide {tab:performance_threeline Lasso part1}{64}
+\beamer@slide {tab:performance_threeline Lasso part2}{65}
+\beamer@slide {tab:performance_threeline MRI}{67}

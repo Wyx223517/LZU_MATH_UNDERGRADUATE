@@ -1,0 +1,12 @@
+\beamer@sectionintoc {1}{引言}{3}{0}{1}
+\beamer@sectionintoc {2}{建模方法}{7}{0}{2}
+\beamer@subsectionintoc {2}{1}{张量及其分解}{8}{0}{2}
+\beamer@subsectionintoc {2}{2}{基于不同损失函数的分类模型}{19}{0}{2}
+\beamer@subsectionintoc {2}{3}{先验估计}{34}{0}{2}
+\beamer@subsectionintoc {2}{4}{后验推断}{38}{0}{2}
+\beamer@subsectionintoc {2}{5}{贝叶斯张量模型}{42}{0}{2}
+\beamer@sectionintoc {3}{模拟研究}{44}{0}{3}
+\beamer@subsectionintoc {3}{1}{模拟数据生成}{45}{0}{3}
+\beamer@subsectionintoc {3}{2}{模型评估}{52}{0}{3}
+\beamer@subsectionintoc {3}{3}{MRI脑肿瘤分类}{66}{0}{3}
+\beamer@sectionintoc {4}{参考文献}{68}{0}{4}
