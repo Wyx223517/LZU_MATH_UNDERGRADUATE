@@ -1,0 +1,279 @@
+\chapter{假设检验}\label{chap:假设检验}
+参数估计和假设检验是统计推断的两个主要形式。这里主要讨论参数型假设检验问题：
+\begin{definition}[参数型假设检验]\label{def:parametric_hypothesis_testing}
+总体的分布形式已知 (如正态、指数、二项分布等)，总
+体分布依赖于未知参数 (或参数向量) $\theta$，要检验的是有关未知参数的假设。例如，总
+体 $X \sim N(a, \sigma^2)$, $a$ 未知，检验
+$$H_0: a = a_0 \leftrightarrow H_1: a \ne a_0 \quad \text{或} \quad H_0: a \le a_0 \leftrightarrow H_1: a > a_0.$$
+\end{definition}
+
+\section{若干基本概念}\label{sec:若干基本概念}
+\begin{definition}[检验函数]\label{def:test_function}
+检验函数 $\varphi(\mathbf{x})$ 是定义在样本空间 $\mathcal{X}$ 上，取
+值于 $[0,1]$ 上的函数，它是拒绝域的示性函数，表示当有了样本 $\mathbf{X}$ 后，否定 $H_0$ 的概率。
+\end{definition}
+
+\begin{definition}[两类错误]\label{def:两类错误}
+    \begin{enumerate}
+    \item 零假设 $H_0$ 本来是对的，由于样本的随机性，观察值落入否定域 $D$，错误地
+    将 $H_0$ 否定了，称为弃真。这时犯的错误称为\textbf{第一类错误} (type I error)。
+    \item 零假设 $H_0$ 本来不对，由于样本的随机性，观察值落入接受域 $\bar{D}$，错误地将
+    $H_0$ 接受了，称为取伪。这时犯的错误称为\textbf{第二类错误} (type II error)。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[功效函数]\label{def:power_function}
+设 $\varphi(\mathbf{x})$ 是 $H_0: \theta \in \Theta_0 \leftrightarrow H_1: \theta \in \Theta_1$ 的一个检验函数，则
+$$\beta_\varphi(\theta) = P_\theta\{\text{用检验 } \varphi \text{ 否定了 } H_0\} = \E_\theta[\varphi(\mathbf{X})], \quad \theta \in \Theta$$
+称为 $\varphi$ 的\textbf{功效函数} (power function)，也称为效函数或势函数。
+\end{definition}
+\begin{remark}
+    知道了检验 $\varphi(\mathbf{x})$ 的功效函数后，就可以计算犯两类错误的概率。若以 $\alpha_\varphi^*(\theta)$
+和 $\beta_\varphi^*(\theta)$ 分别记犯第一、二类错误的概率，则犯第一类错误的概率可表示为
+$$\alpha_\varphi^*(\theta) = \begin{cases}
+\beta_\varphi(\theta), & \theta \in \Theta_0, \\
+0, & \theta \in \Theta_1,
+\end{cases}$$
+犯第二类错误的概率可表示为
+$$\beta_\varphi^*(\theta) = \begin{cases}
+0, & \theta \in \Theta_0, \\
+1-\beta_\varphi(\theta), & \theta \in \Theta_1.
+\end{cases}$$
+\end{remark}
+
+\begin{remark}
+    我们希望一个检验犯两类错误的概率都很小，但一般在固定样本大小时，对任何检验都办不到。因此，\textbf{Neyman-Pearson 提出了一条原则}，就是限制犯第一类错误概率的原则，即在保证犯第一类错误的概率不超过指定数值 $\alpha$ ($0 < \alpha < 1$, 通常取较小的数) 的检验中，寻找犯第二类错误概率尽可能小的检验。
+
+    根据 Neyman-Pearson 原则，在原假设 $H_0$ 为真时，作出错误决定 (即否定 $H_0$)的概率受到了控制。这表明，原假设 $H_0$ 受到保护，不至于轻易被否定。所以在具体问题中，往往将\textbf{有把握、不能轻易否定的命题作为原假设} $H_0$，而\textbf{没有把握的、不能轻易肯定的命题作为对立假设}。因此原假设 $H_0$ 和对立假设 $H_1$ 的地位是不平等的，不能相互调换。
+\end{remark}
+
+\begin{definition}[检验的水平与真实水平]\label{def:test_level_and_size}
+设 $\varphi$ 是一个检验，而 $0 \le \alpha \le 1$。如果 $\varphi$ 犯第一类错
+误的概率总不超过 $\alpha$ (或等价地说，$\varphi$ 满足 $\beta_\varphi(\theta) \le \alpha$, 一切 $\theta \in \Theta_0$)，则称 $\alpha$ 是检验
+$\varphi$ 的一个水平，而 $\varphi$ 称为\textbf{显著性水平为 $\alpha$ 的检验}，简称\textbf{水平为 $\alpha$ 的检验}。
+
+\begin{equation}
+    \text{检验 }\varphi\text{ 的真实水平} = \sup_{\theta \in \Theta_0} \{\beta_\varphi(\theta)\}. \label{eq:true_level}
+\end{equation}
+
+\end{definition}
+\begin{proposition}[假设检验的通用步骤]\label{prop:假设检验的通用步骤}
+\begin{enumerate}
+    \item 根据问题的要求，提出零假设 ($H_0$) 并阐明备择假设 ($H_1$)。
+    \item 导出否定域的形式，并确定检验统计量 $T(\mathbf{X})$，其中临界值 $A$ 待定。
+    \item 选取适当的显著性水平，利用检验统计量的分布求出临界值 $A$。
+    \item 由样本 $\mathbf{X}$ 算出检验统计量 $T(\mathbf{X})$ 的具体值，代入到否定域中，与临界值进行比较，最终作出接受或拒绝原假设 $H_0$ 的结论。
+\end{enumerate}
+\end{proposition}
+
+
+\section{正态总体参数的假设检验}\label{sec:正态总体参数的假设检验}
+\subsection{单个正态总体}\label{subsec:单个正态总体}
+这里的方法和区间估计几乎一致。设 $\mathbf{X} = (X_1, \dots, X_n)$ 为从正态总体 $N(\mu, \sigma^2)$ 中抽取的简单随机样本。
+\begin{proposition}[单个正态总体均值的假设检验]\label{prop:single_normal_mean_hypothesis_test}
+    \begin{enumerate}
+        \item 总体方差 $\sigma^2$ 已知时，取检验统计量为 $U = \sqrt{n}(\bar{X}-\mu_0)/\sigma$，在原假设下其服从标准正态分布 $N(0,1)$。此时的否定域分别为：
+        \begin{itemize}
+            \item 对于 $H_0: \mu = \mu_0 \leftrightarrow H_1: \mu \ne \mu_0$，否定域为 $|U| > u_{\alpha/2}$。
+            \item 对于 $H_0: \mu \le \mu_0 \leftrightarrow H_1: \mu > \mu_0$，否定域为 $U > u_\alpha$。
+            \item 对于 $H_0: \mu \ge \mu_0 \leftrightarrow H_1: \mu < \mu_0$，否定域为 $U < -u_\alpha$。
+        \end{itemize}
+        \item 总体方差 $\sigma^2$ 未知时，取检验统计量为 $T = \sqrt{n}(\bar{X}-\mu_0)/S$，在原假设下其服从自由度为 $n-1$ 的 $t$ 分布 $t_{n-1}$。此时的否定域分别为：
+        \begin{itemize}
+            \item 对于 $H_0: \mu = \mu_0 \leftrightarrow H_1: \mu \ne \mu_0$，否定域为 $|T| > t_{n-1}(\alpha/2)$。
+            \item 对于 $H_0: \mu \le \mu_0 \leftrightarrow H_1: \mu > \mu_0$，否定域为 $T > t_{n-1}(\alpha)$。
+            \item 对于 $H_0: \mu \ge \mu_0 \leftrightarrow H_1: \mu < \mu_0$，否定域为 $T < -t_{n-1}(\alpha)$。
+        \end{itemize}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[单个正态总体方差的假设检验]\label{prop:single_normal_variance_hypothesis_test}
+    \begin{enumerate}
+        \item 总体均值 $\mu$ 已知时，取检验统计量为 $\chi^2 = nS_\mu^2/\sigma_0^2$，在原假设 $\sigma^2=\sigma_0^2$ 下其服从自由度为 $n$ 的卡方分布 $\chi_n^2$。此时的否定域分别为：
+        \begin{itemize}
+            \item 对于 $H_0: \sigma^2 = \sigma_0^2 \leftrightarrow H_1: \sigma^2 \ne \sigma_0^2$，否定域为 $\chi^2 < \chi_n^2(1-\alpha/2)$ 或 $\chi^2 > \chi_n^2(\alpha/2)$。
+            \item 对于 $H_0: \sigma^2 \le \sigma_0^2 \leftrightarrow H_1: \sigma^2 > \sigma_0^2$，否定域为 $\chi^2 > \chi_n^2(\alpha)$。
+            \item 对于 $H_0: \sigma^2 \ge \sigma_0^2 \leftrightarrow H_1: \sigma^2 < \sigma_0^2$，否定域为 $\chi^2 < \chi_n^2(1-\alpha)$。
+        \end{itemize}
+        \item 总体均值 $\mu$ 未知时，取检验统计量为 $\chi^2 = (n-1)S^2/\sigma_0^2$，在原假设 $\sigma^2=\sigma_0^2$ 下其服从自由度为 $n-1$ 的卡方分布 $\chi_{n-1}^2$。此时的否定域分别为：
+        \begin{itemize}
+            \item 对于 $H_0: \sigma^2 = \sigma_0^2 \leftrightarrow H_1: \sigma^2 \ne \sigma_0^2$，否定域为 $\chi^2 < \chi_{n-1}^2(1-\alpha/2)$ 或 $\chi^2 > \chi_{n-1}^2(\alpha/2)$。
+            \item 对于 $H_0: \sigma^2 \le \sigma_0^2 \leftrightarrow H_1: \sigma^2 > \sigma_0^2$，否定域为 $\chi^2 > \chi_{n-1}^2(\alpha)$。
+            \item 对于 $H_0: \sigma^2 \ge \sigma_0^2 \leftrightarrow H_1: \sigma^2 < \sigma_0^2$，否定域为 $\chi^2 < \chi_{n-1}^2(1-\alpha)$。
+        \end{itemize}
+    \end{enumerate}
+\end{proposition}
+
+\subsection{两个正态总体}\label{subsec:两个正态总体}
+\begin{proposition}[两个正态总体均值差的假设检验]\label{prop:two_normal_mean_difference_hypothesis_test}
+    \begin{enumerate}
+        \item 总体方差 $\sigma_1^2, \sigma_2^2$ 已知时，取检验统计量为 $U = \frac{\bar{Y} - \bar{X} - \mu_0}{\sqrt{\sigma_1^2/m + \sigma_2^2/n}}$，在原假设 $\mu_2 - \mu_1 = \mu_0$ 下其服从标准正态分布 $N(0,1)$。此时的否定域分别为：
+        \begin{itemize}
+            \item 对于 $H_0: \mu_2 - \mu_1 = \mu_0 \leftrightarrow H_1: \mu_2 - \mu_1 \ne \mu_0$，否定域为 $|U| > u_{\alpha/2}$。
+            \item 对于 $H_0: \mu_2 - \mu_1 \le \mu_0 \leftrightarrow H_1: \mu_2 - \mu_1 > \mu_0$，否定域为 $U > u_\alpha$。
+            \item 对于 $H_0: \mu_2 - \mu_1 \ge \mu_0 \leftrightarrow H_1: \mu_2 - \mu_1 < \mu_0$，否定域为 $U < -u_\alpha$。
+        \end{itemize}
+        \item 总体方差 $\sigma_1^2, \sigma_2^2$ 未知（但假定相等），取检验统计量为 $T_w = \frac{\bar{Y} - \bar{X} - \mu_0}{S_w} \sqrt{\frac{mn}{m+n}}$，其中 $S_w^2 = \frac{(m-1)S_1^2 + (n-1)S_2^2}{n+m-2}$。在原假设 $\mu_2 - \mu_1 = \mu_0$ 下其服从自由度为 $n+m-2$ 的 $t$ 分布 $t_{n+m-2}$。此时的否定域分别为：
+        \begin{itemize}
+            \item 对于 $H_0: \mu_2 - \mu_1 = \mu_0 \leftrightarrow H_1: \mu_2 - \mu_1 \ne \mu_0$，否定域为 $|T_w| > t_{n+m-2}(\alpha/2)$。
+            \item 对于 $H_0: \mu_2 - \mu_1 \le \mu_0 \leftrightarrow H_1: \mu_2 - \mu_1 > \mu_0$，否定域为 $T_w > t_{n+m-2}(\alpha)$。
+            \item 对于 $H_0: \mu_2 - \mu_1 \ge \mu_0 \leftrightarrow H_1: \mu_2 - \mu_1 < \mu_0$，否定域为 $T_w < -t_{n+m-2}(\alpha)$。
+        \end{itemize}
+    \end{enumerate}
+\end{proposition}
+
+\begin{remark}
+    除此之外，还有样本容量$m=n$时的均值差检验问题，称为\textbf{成对比较问题}。此时枢轴变量的构造和命题 \ref{prop:均值差$b-a$的置信区间} 是一致的。
+\end{remark}
+
+\begin{proposition}[两个正态总体方差比的假设检验]\label{prop:two_normal_variance_ratio_hypothesis_test}
+    \begin{enumerate}
+        \item 总体均值 $\mu_1, \mu_2$ 已知时：
+        取检验统计量为 $F_* = S_{2*}^2/S_{1*}^2$，其中 $S_{1*}^2 = \frac{1}{m}\sum_{i=1}^m (X_i - \mu_1)^2$, $S_{2*}^2 = \frac{1}{n}\sum_{j=1}^n (Y_j - \mu_2)^2$。在原假设 $\sigma_2^2=\sigma_1^2$ 下其服从自由度为 $(n,m)$ 的 $F$ 分布 $F_{n,m}$。此时的否定域分别为：
+        \begin{itemize}
+            \item 对于 $H_0: \sigma_2^2 = \sigma_1^2 \leftrightarrow H_1: \sigma_2^2 \ne \sigma_1^2$，否定域为 $F_* < F_{n,m}(1-\alpha/2)$ 或 $F_* > F_{n,m}(\alpha/2)$。
+            \item 对于 $H_0: \sigma_2^2 \le \sigma_1^2 \leftrightarrow H_1: \sigma_2^2 > \sigma_1^2$，否定域为 $F_* > F_{n,m}(\alpha)$。
+            \item 对于 $H_0: \sigma_2^2 \ge \sigma_1^2 \leftrightarrow H_1: \sigma_2^2 < \sigma_1^2$，否定域为 $F_* < F_{n,m}(1-\alpha)$。
+        \end{itemize}
+        \item 总体均值 $\mu_1, \mu_2$ 未知时：
+        取检验统计量为 $F = S_2^2/S_1^2$，其中 $S_1^2 = \frac{1}{m-1}\sum_{i=1}^m (X_i - \bar{X})^2$, $S_2^2 = \frac{1}{n-1}\sum_{j=1}^n (Y_j - \bar{Y})^2$。在原假设 $\sigma_2^2=\sigma_1^2$ 下其服从自由度为 $(n-1,m-1)$ 的 $F$ 分布 $F_{n-1,m-1}$。此时的否定域分别为：
+        \begin{itemize}
+            \item 对于 $H_0: \sigma_2^2 = \sigma_1^2 \leftrightarrow H_1: \sigma_2^2 \ne \sigma_1^2$，否定域为 $F < F_{n-1,m-1}(1-\alpha/2)$ 或 $F > F_{n-1,m-1}(\alpha/2)$。
+            \item 对于 $H_0: \sigma_2^2 \le \sigma_1^2 \leftrightarrow H_1: \sigma_2^2 > \sigma_1^2$，否定域为 $F > F_{n-1,m-1}(\alpha)$。
+            \item 对于 $H_0: \sigma_2^2 \ge \sigma_1^2 \leftrightarrow H_1: \sigma_2^2 < \sigma_1^2$，否定域为 $F < F_{n-1,m-1}(1-\alpha)$。
+        \end{itemize}
+    \end{enumerate}
+\end{proposition}
+
+\subsection{大样本方法}\label{subsec:大样本方法}
+同命题 \ref{prop:二项分布总体参数的置信区间} 和命题 \ref{prop:Poisson 分布参数的置信区间} 的构造方法，实在不想写了。
+
+\section{似然比检验}\label{sec:似然比检验}
+\begin{definition}[似然比检验]\label{def:likelihood_ratio_test}
+设样本 $\mathbf{X}$ 有概率函数 $f(\mathbf{x}, \theta), \theta \in \Theta$，而 $\Theta_0$ 为参数空间 $\Theta$ 的
+真子集，则统计量
+\begin{equation}
+\lambda(\mathbf{x}) = \frac{\sup_{\theta \in \Theta} f(\mathbf{x}, \theta)}{\sup_{\theta \in \Theta_0} f(\mathbf{x}, \theta)}. \label{eq:likelihood_ratio_lambda}
+\end{equation}
+称为关于该检验问题的\textbf{似然比}。而由下述定义的检验函数
+\begin{equation}
+\varphi(\mathbf{x}) = \begin{cases}
+1, & \lambda(\mathbf{x}) > c, \\
+r, & \lambda(\mathbf{x}) = c, \\
+0, & \lambda(\mathbf{x}) < c,
+\end{cases} \label{eq:LRT_phi}
+\end{equation}
+其中 $c, r$ ($0 \le r \le 1$) 为待定常数，称为检验问题 的一个\textbf{似然比检验} (likelihood ratio test)。
+
+若样本分布为连续分布时，在式 (\ref{eq:LRT_phi}) 中令 $r=0$，即
+$$\varphi(\mathbf{x}) = \begin{cases}
+1, & \lambda(\mathbf{x}) > c, \\
+0, & \lambda(\mathbf{x}) \le c.
+\end{cases}$$
+\end{definition}
+\begin{remark}
+    找似然比检验有以下步骤：
+\begin{enumerate}
+    \item 求似然函数 $f(\mathbf{x}, \theta)$，并明确参数空间 $\Theta$ 和 $\Theta_0$ 是什么。
+    \item 算出 $L_{\Theta_0}(\mathbf{x}) = \sup_{\theta \in \Theta_0} f(\mathbf{x}, \theta)$ 和 $L_{\Theta}(\mathbf{x}) = \sup_{\theta \in \Theta} f(\mathbf{x}, \theta)$。
+    \item 求出 $\lambda(\mathbf{x})$ 或与其等价的统计量的分布。
+    \item 确定 $c$ 和 $r$ 使式 (\ref{eq:LRT_phi}) 具有给定的检验水平 $\alpha$。
+\end{enumerate}
+主要是第三步比较难。一般可以找$\lambda(x)$和已知统计量$T(x)$的关系，若有单增单减关系就比较方便了。
+\end{remark}
+\begin{remark}
+    若该比值较大，则倾向于拒绝零假设；否则倾向于接受零假设。
+\end{remark}
+
+\section{一致最优检验}\label{sec:一致最优检验}
+设 有分布族 $\{f(\mathbf{x}, \theta), \theta \in \Theta\}$, 其中 $\Theta$ 为参数空间。样本 $\mathbf{X}=(X_1, \dots, X_n)$ 为
+从上述分布族抽取的简单样本，如 5.1 节所述，参数 $\theta$ 的假设检验问题可以表示成
+如下的一般形式：
+\begin{equation}
+H_0: \theta \in \Theta_0 \leftrightarrow H_1: \theta \in \Theta_1, \label{eq:general_hypothesis_problem}
+\end{equation}
+其中 $\Theta_0$ 为参数空间 $\Theta$ 的非空真子集，$\Theta_1 = \Theta - \Theta_0$。
+
+对检验问题 (\ref{eq:general_hypothesis_problem}) 可用几种不同方法去检验。这就产生不同检验的比较问题，
+以及在一定准则下寻求 “最优” 检验的问题。
+
+\begin{definition}[一致最优检验 (UMPT)]\label{def:UMPT}
+设检验问题 (\ref{eq:general_hypothesis_problem})，令 $0 < \alpha < 1$, 记 $\Phi_\alpha$ 为式 (\ref{eq:general_hypothesis_problem}) 的一切
+水平为 $\alpha$ 的检验的集合。若 $\varphi \in \Phi_\alpha$，且对任何检验 $\varphi_1 \in \Phi_\alpha$，有
+\begin{equation}
+\beta_\varphi(\theta) \ge \beta_{\varphi_1}(\theta), \quad \theta \in \Theta_1, \label{eq:UMPT_condition}
+\end{equation}
+则称 $\varphi$ 为式 (\ref{eq:general_hypothesis_problem}) 的一个水平为 $\alpha$ 的\textbf{一致最优检验} (uniformly most powerful
+test, UMPT)。当 $\varphi$ 为水平 $\alpha$ 的 UMPT 时，它在限制第一类错误概率不超过 $\alpha$ 的
+条件下，总使犯第二类错误概率达到最小 (即使不犯第二类错误概率最大)。
+\end{definition}
+
+
+\begin{lemma}[Neyman-Pearson引理]\label{lem:NP}
+    设样本 $\mathbf{X}$ 的分布有概率函数 $f(\mathbf{x}, \theta)$，参数 $\theta$ 只
+有两个可能的值 $\theta_0$ 和 $\theta_1$，考虑下列检验问题：
+\begin{equation}
+H_0: \theta = \theta_0 \leftrightarrow H_1: \theta = \theta_1\label{eq:simple_hypothesis}
+\end{equation}
+则对给定的 $0 < \alpha < 1$ 有
+\begin{enumerate}
+    \item 存在性。对检验问题 (\ref{eq:simple_hypothesis}) 必存在一个检验函数 $\varphi(\mathbf{x})$ 及非负常数 $c$ 和
+    $0 \le r \le 1$, 满足条件
+    \begin{enumerate}
+        \item[(i)]
+        \begin{equation}
+        \varphi(\mathbf{x}) = \begin{cases}
+        1, & f(\mathbf{x}, \theta_1)/f(\mathbf{x}, \theta_0) > c, \\
+        r, & f(\mathbf{x}, \theta_1)/f(\mathbf{x}, \theta_0) = c, \\
+        0, & f(\mathbf{x}, \theta_1)/f(\mathbf{x}, \theta_0) < c.
+        \end{cases} \label{eq:NP_phi}
+        \end{equation}
+        \item[(ii)]
+        \begin{equation}
+        E_{\theta_0}[\varphi(\mathbf{X})] = \alpha. \label{eq:NP_alpha}
+        \end{equation}
+    \end{enumerate}
+    \item 一致最优性。任何满足式 (\ref{eq:NP_phi}) 和式 (\ref{eq:NP_alpha}) 的检验 $\varphi(\mathbf{x})$ 是检验问题
+    (\ref{eq:simple_hypothesis}) 的 UMPT.
+\end{enumerate}
+\end{lemma}
+\begin{remark}
+    \begin{enumerate}
+        \item 在引理 \ref{lem:NP} 中，当样本分布为连续分布时，式 (\ref{eq:NP_phi}) 中的随机化是没必要的。这时取 $r=0$，即式 (\ref{eq:NP_phi}) 变为
+        $$\varphi(\mathbf{x}) = 
+            \begin{cases}
+            1, & f(\mathbf{x}, \theta_1)/f(\mathbf{x}, \theta_0) > c, \\
+            0, & f(\mathbf{x}, \theta_1)/f(\mathbf{x}, \theta_0) \le c.
+            \end{cases}$$
+        其中 $c$ 由 $E_{\theta_0}[\varphi(\mathbf{X})] = P(f(\mathbf{X}, \theta_1)/f(\mathbf{X}, \theta_0) > c | H_0) = \alpha$ 来确定。
+        \item 从 “似然性” 的观点去看 NP 基本引理是很清楚的：对每个样本 $\mathbf{X}$，$\theta_1$ 和$\theta_0$ 的 “似然度” 分别为 $f(\mathbf{x}, \theta_1)$ 和 $f(\mathbf{x}, \theta_0)$。比值 $f(\mathbf{x}, \theta_1)/f(\mathbf{x}, \theta_0)$ 越大，就反映在
+        得到样本 $\mathbf{X}$ 时，$\theta$ 越像 $\theta_1$ 而非 $\theta_0$，这样的样本 $\mathbf{X}$ 就越倾向于否定 “$H_0: \theta = \theta_0$”
+        的假设。
+    \end{enumerate}
+\end{remark}
+
+\begin{theorem}[单边检验问题的NP定理]\label{thm:5.4.2}
+    设样本 $\mathbf{X} = (X_1, \dots, X_n)$ 的分布为指数族
+    \begin{equation}
+        f(x,\theta = c(\theta)\exp\{Q(\theta)T(x)\}h
+        (x)
+    \end{equation}
+    参数空间 $\Theta$
+为 $R_1=(-\infty, +\infty)$ 的一有限或无限区间，$\theta_0$ 为 $\Theta$ 的一个内点且 $Q(\theta)$ 为 $\theta$ 的严格
+增函数，则检验问题
+\begin{equation}
+    H_0: \theta\le\theta_0 \leftrightarrow H_1: \theta>\theta_0
+\end{equation}的水平为 $\alpha$ 的 UMPT 存在 ($0 < \alpha < 1$), 且有形式
+\begin{equation}
+\varphi(\mathbf{x}) = \begin{cases}
+1, & T(\mathbf{x}) > c, \\
+r, & T(\mathbf{x}) = c, \\
+0, & T(\mathbf{x}) < c,
+\end{cases} \label{eq:UMP_form}
+\end{equation}
+其中 $c$ 和 $r$ ($0 \le r \le 1$) 满足条件
+\begin{equation}
+E_{\theta_0}[\varphi(\mathbf{X})] = P_{\theta_0}(T(\mathbf{X}) > c) + r \cdot P_{\theta_0}(T(\mathbf{X}) = c) = \alpha. \label{eq:UMP_alpha_condition}
+\end{equation}
+\end{theorem}
+

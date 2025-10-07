@@ -1,0 +1,52 @@
+\documentclass[lang=cn,newtx,12pt,scheme=chinese,device=pad,color=blue]{elegantbook}
+
+\title{概率论与数理统计}
+\subtitle{保研复习用}
+
+\author{王一鑫}
+\institute{兰州大学萃英学院}
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+\date{\today}
+
+\setcounter{tocdepth}{3}
+
+\logo{logo-blue.png}
+\cover{cover.jpg}
+
+% 本文档命令
+\usepackage{extarrows}
+\usepackage{blkarray}
+\usepackage{multirow}
+\usepackage{array}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\D}{\mathbb{D}}
+
+
+% 修改标题页的橙色带
+\definecolor{customcolor}{RGB}{32,178,170}
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect}
+\addbibresource[location = local]{reference.bib}
+
+\begin{document}
+
+\maketitle
+\frontmatter
+\tableofcontents
+\mainmatter
+
+%正文
+\input{chapter/前言.tex}
+\input{chapter/概率论与数理统计/概率论的基本工具}
+\input{chapter/概率论与数理统计/常见概率分布}
+\input{chapter/概率论与数理统计/极限定理}
+\input{chapter/概率论与数理统计/数理统计的预备知识}
+\input{chapter/概率论与数理统计/参数估计}
+\input{chapter/概率论与数理统计/假设检验}
+
+\printbibliography[heading=bibintoc, title=\ebibname]
+
+% %附录
+% \appendix
+
+\end{document}

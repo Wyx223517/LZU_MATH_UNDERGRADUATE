@@ -1,0 +1,502 @@
+\chapter{常见概率分布}\label{chap:常见概率分布}
+\begin{introduction}
+        \item 退化分布\quad \ref{subsec:退化分布}
+        \item Bernoulli分布 \quad\ref{subsec:Bernoulli分布}
+        \item 二项分布\quad \ref{subsec:二项分布和Poisson分布}
+        \item Poisson分布\quad \ref{subsec:二项分布和Poisson分布} 
+        \item 超几何分布 \ref{subsec:超几何分布}
+        \item 几何分布 \ref{subsec:几何分布} 
+        \item Pascal分布 \ref{subsec:Pascal分布}
+        \item 均匀分布 \ref{subsec:均匀分布}
+        \item 正态分布 \ref{subsec:正态分布}
+        \item 指数分布 \ref{subsec:指数分布}
+        \item $\Gamma$ 分布 \ref{subsec:Gamma分布}
+\end{introduction}
+\section{离散型}\label{sec:离散型}
+\subsection{退化分布}\label{subsec:退化分布}
+\begin{definition}[退化分布]\label{def:退化分布}
+     若随机变量 $\alpha$ 只取常数值 $c$, 即
+\[
+P\{ \alpha = c \} = 1
+\]
+这时分布函数为
+\begin{equation} \label{eq:degenerate_distribution_cdf}
+I_c(x)=
+\begin{cases}
+0, & x\le c \\
+1, & x>c
+\end{cases}
+\end{equation}
+称之为\textbf{退化分布}, 又称\textbf{单点分布}。
+\end{definition}
+\subsection{Bernoulli分布}\label{subsec:Bernoulli分布}
+\begin{definition}[\textbf{Bernoulli试验}] \label{def:bernoulli_trial}
+在一类只有两个可能结果的问题中，我们可以把事件域取为 $\mathcal{F} = \{\emptyset, A, \overline{A}, \Omega \}$, 并称出现 $A$ 为“成功”, 出现 $\overline{A}$ 为“失败”。这种只有两个可能结果的试验称为\textbf{Bernoulli试验}。其中
+\begin{equation} \label{eq:bernoulli_prob_pq}
+P(A)=p, \quad P(\overline{A})=q
+\end{equation}
+显然 $p\ge 0, q\ge 0$, 且 $p+q=1$.
+\end{definition}
+
+\begin{definition}[n重Bernoulli试验]
+    重复进行 $n$ 次独立的Bernoulli试验, 这种试验称为 \textbf{$n$ 重Bernoulli试验}, 记作 $E^n$，有下面四个约定:
+\begin{enumerate}
+    \item[(i)] 每次试验至多出现两个可能结果之一—$A$ 或 $\overline{A}$;
+    \item[(ii)] $A$ 在每次试验中出现的概率 $p$ 保持不变;
+    \item[(iii)] 各次试验相互独立;
+    \item[(iv)] 共进行 $n$ 次试验.
+\end{enumerate}
+\end{definition}
+\begin{definition}[\textbf{Bernoulli分布}] \label{def:bernoulli_distribution}
+若只进行一次Bernoulli试验, 则或是事件 $A$ 出现, 或是事件 $\overline{A}$ 出现, 其概率由 \eqref{eq:bernoulli_prob_pq} 给出, 称为\textbf{Bernoulli分布}。
+\end{definition}
+\begin{proposition}[\textbf{Bernoulli分布的数学期望}] \label{prop:bernoulli_expectation}
+事件 $A$ 发生的概率为 $p$, 若以 $\mathbf{1}_A$ 记其示性函数, 即 $A$ 发生时取值 $1$, 否则取值 $0$, 则
+\[
+\E\mathbf{1}_A = 1 \times p + 0 \times (1 - p) = p = P(A)
+\]
+\end{proposition}
+\begin{proposition}[\textbf{Bernoulli分布的方差}] \label{prop:bernoulli_variance}
+对于Bernoulli分布，其二阶矩为
+\[
+\E\xi^2 = 1^2 \cdot p + 0^2 \cdot (1 - p) = p
+\]
+因此，Bernoulli分布的方差为
+\begin{equation} \label{eq:bernoulli_variance_formula}
+\D\xi = \E\xi^2 - (\E\xi)^2 = p - p^2 = p(1-p) = pq
+\end{equation}
+\end{proposition}
+\subsection{二项分布和Poisson分布}\label{subsec:二项分布和Poisson分布}
+\begin{definition}[二项分布]\label{def:二项分布}
+    记$n$ 重Bernoulli试验中事件 $A$ 出现次数为$\mu$. 出现 $k$ 次的概率为 $b(k;n,p)$. 有
+    \begin{equation} \label{eq:binomial_prob_formula}
+b(k;n,p) = P\{\mu = k\} = \binom{n}{k} p^k q^{n-k}, \quad k=0,1,2,\ldots,n
+\end{equation}\eqref{eq:binomial_prob_formula} 称为 \textbf{二项分布} (binomial distribution)，简记作$\mu\sim B(n,p)$.
+\end{definition}
+\begin{remark}
+    特别地
+\begin{equation} \label{eq:binomial_sum_to_one}
+\sum_{k=0}^n b(k;n,p) = \sum_{k=0}^n \binom{n}{k} p^k q^{n-k} = (q+p)^n = 1
+\end{equation}
+\end{remark}
+\begin{definition}[Poisson分布]\label{def:Poisson分布}
+若随机变量$\xi$可取一切非负整数值，且
+    \begin{equation} \label{eq:poisson_pmf}
+P\{\xi = k\} =p(k;\lambda) = \frac{\lambda^k}{k!}e^{-\lambda}, \quad k = 0,1,2,\ldots
+\end{equation}
+其中$\lambda>0$，则称$\xi$服从\textbf{泊松分布} (Poisson distribution)，简记作$\xi\sim P(\lambda)$.
+\end{definition}
+\begin{remark}
+    特别地
+\begin{equation} \label{eq:poisson_sum_to_one}
+\sum_{k=0}^\infty p(k;\lambda) = \sum_{k=0}^\infty \frac{\lambda^k}{k!}e^{-\lambda} = e^{-\lambda} \cdot e^\lambda = 1
+\end{equation}
+\end{remark}
+\begin{theorem}[\textbf{Poisson定理}] \label{thm:poisson_theorem}
+在独立试验中, 以 $p_n$ 代表事件 $A$ 在试验中出现的概率, 它与试验总数 $n$ 有关, 如果 $np_n \to \lambda$, 则 $n\to\infty$ 时,
+\[
+b(k;n,p_n) \to \frac{\lambda^k}{k!}e^{-\lambda}
+\]
+\end{theorem}
+
+\begin{proof}
+记 $\lambda_n = np_n$, 则 $p_n = \lambda_n/n$.
+\begin{align*}
+b(k;n,p_n) &= \binom{n}{k} p_n^k (1-p_n)^{n-k} \\
+&= \frac{n(n-1)\cdots(n-k+1)}{k!} \left(\frac{\lambda_n}{n}\right)^k \left(1-\frac{\lambda_n}{n}\right)^{n-k} \\
+&= \frac{\lambda_n^k}{k!} \frac{n(n-1)\cdots(n-k+1)}{n^k} \left(1-\frac{\lambda_n}{n}\right)^{n-k} \\
+&= \frac{\lambda_n^k}{k!} \left(1-\frac{1}{n}\right) \left(1-\frac{2}{n}\right) \cdots \left(1-\frac{k-1}{n}\right) \left(1-\frac{\lambda_n}{n}\right)^{n-k}
+\end{align*}
+由于对固定的 $k$ 有
+\[
+\lim_{n\to\infty} \lambda_n^k = \lambda^k, \quad \lim_{n\to\infty} \left(1-\frac{\lambda_n}{n}\right)^{n-k} = \lim_{n\to\infty} \left[\left(1-\frac{\lambda_n}{n}\right)^{n/\lambda_n}\right]^{\lambda_n} \left(1-\frac{\lambda_n}{n}\right)^{-k} = e^{-\lambda} \cdot 1 = e^{-\lambda}
+\]
+及
+\[
+\lim_{n\to\infty} \left(1-\frac{1}{n}\right) \left(1-\frac{2}{n}\right) \cdots \left(1-\frac{k-1}{n}\right) = 1
+\]
+因此
+\[
+\lim_{n\to\infty} b(k;n,p_n) = \frac{\lambda^k}{k!}e^{-\lambda}
+\]
+定理证毕.
+\end{proof}
+\begin{proposition}[\textbf{二项分布的数学期望}] \label{prop:binomial_expectation}
+二项分布的数学期望为
+\[
+\E\sum_{k=0}^n X_k = \sum_{k=0}^n k p_k = \sum_{k=1}^n k\binom{n}{k} p^k q^{n-k} = np \sum_{k=1}^n \binom{n-1}{k-1} p^{k-1} q^{n-k} = np(p+q)^{n-1} = np
+\]
+\end{proposition}
+\begin{proposition}[\textbf{二项分布的方差}] \label{prop:binomial_variance}
+对于二项分布 $B(n,p)$, 其二阶矩为
+\[
+\E\xi^2 = \sum_{k=0}^n k^2 \binom{n}{k} p^k q^{n-k} = npq + n^2p^2
+\]
+因此，二项分布的方差为
+\begin{equation} \label{eq:binomial_variance_formula}
+\D\xi = \E\xi^2 - (\E\xi)^2 = (npq + n^2p^2) - (np)^2 = npq + n^2p^2 - n^2p^2 = npq
+\end{equation}
+\end{proposition}
+\begin{proposition}[\textbf{泊松分布的数学期望}] \label{prop:poisson_expectation}
+对于泊松分布 $p_k = \frac{\lambda^k}{k!}e^{-\lambda}$, $k=0,1,2,\ldots$, 其数学期望为
+\[
+\E\sum_{k=0}^\infty X_k = \sum_{k=0}^\infty k p_k = \sum_{k=1}^\infty k \cdot \frac{\lambda^k}{k!}e^{-\lambda} = \lambda e^{-\lambda} \sum_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!} = \lambda e^{-\lambda} \cdot e^\lambda = \lambda
+\]
+\end{proposition}
+\begin{proposition}[\textbf{泊松分布的方差}] \label{prop:poisson_variance}
+对于泊松分布 $P(\lambda)$, 其二阶矩为 $\lambda^2 + \lambda$.
+
+因此，泊松分布的方差为
+\begin{equation} \label{eq:poisson_variance_formula}
+\D\xi = \E\xi^2 - (\E\xi)^2 = (\lambda^2 + \lambda) - \lambda^2 = \lambda
+\end{equation}
+均值与方差都是 $\lambda$.
+\end{proposition}
+\begin{proof}
+    \begin{align*}
+\E\xi^2 &= \sum_{k=0}^\infty k^2 p_k = \sum_{k=0}^\infty k^2 \cdot \frac{\lambda^k}{k!}e^{-\lambda} 
+= \sum_{k=1}^\infty k^2 \frac{\lambda^k}{k!}e^{-\lambda}
+= \sum_{k=1}^\infty k \frac{\lambda^k}{(k-1)!}e^{-\lambda} \\
+&= \lambda e^{-\lambda} \sum_{k=1}^\infty k \frac{\lambda^{k-1}}{(k-1)!} 
+= \lambda e^{-\lambda} \sum_{j=0}^\infty (j+1) \frac{\lambda^j}{j!}
+= \lambda e^{-\lambda} \left( \sum_{j=0}^\infty j \frac{\lambda^j}{j!} + \sum_{j=0}^\infty \frac{\lambda^j}{j!} \right) \\
+&= \lambda e^{-\lambda} \left( \lambda \sum_{j=1}^\infty \frac{\lambda^{j-1}}{(j-1)!} + e^\lambda \right)
+= \lambda e^{-\lambda} (\lambda e^\lambda + e^\lambda)
+= \lambda^2 + \lambda
+\end{align*}
+\end{proof}
+\subsection{超几何分布}\label{subsec:超几何分布}
+\begin{definition}[超几何分布]\label{def:超几何分布}
+    对某批 $N$ 件产品进行不放回抽样检查, 若这批产品中有 $M$ 件次品, 现从整批产品中随机抽出 $n$ 件产品, 则在这 $n$ 件产品中出现的次品数 $\nu$ 是随机变量, 它取值 $0,1,2,\ldots,n$, 其概率分布为\textbf{超几何分布}.
+\begin{equation} \label{eq:hypergeometric_pmf}
+P\{\nu=k\} = \frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}, \quad 0 \le k \le n \le N, \quad k \le M
+\end{equation}
+\end{definition}
+\begin{remark}
+    当 $N$ 很大而 $n$ 较小时, 它可用二项分布来近似。
+\end{remark}
+\begin{proposition}[\textbf{超几何分布的数学期望}] \label{prop:hypergeometric_expectation}
+设从总数为 $N$ 件产品中，有 $M$ 件次品，其余为好品。从中不放回地抽取 $n$ 件产品，则抽到的次品数 $\xi$ 服从超几何分布。其数学期望为
+\[
+\E\xi = \frac{nM}{N}
+\]
+\end{proposition}
+
+\begin{proof}
+为了证明超几何分布的数学期望，我们引入示性随机变量 $\xi_i$：
+\[
+\xi_i = \begin{cases}
+1, & \text{第 } i \text{ 次抽得次品} \\
+0, & \text{第 } i \text{ 次抽得好品}
+\end{cases}
+\]
+对于每一次抽取，抽取到次品的概率为 $P\{ \xi_i=1 \} = \frac{M}{N}$。
+
+因此，$\E\xi_i = 1 \cdot P\{ \xi_i=1 \} + 0 \cdot P\{ \xi_i=0 \} = \frac{M}{N}$。
+
+总的次品数 $\xi$ 是这 $n$ 个示性变量的和：$\xi = \xi_1 + \xi_2 + \cdots + \xi_n$。
+
+利用数学期望的\textbf{线性性质} \ref{prop:expectation_properties}，我们有：
+\[
+\E\xi = \E(\xi_1 + \cdots + \xi_n) = \E\xi_1 + \cdots + \E\xi_n = \underbrace{\frac{M}{N} + \cdots + \frac{M}{N}}_{n \text{ 项}} = \frac{nM}{N}
+\]
+命题得证。
+\end{proof}
+\begin{remark} \label{rem:hypergeometric_expectation_clarification}
+考虑第 $i$ 次抽到次品的概率 $P(\xi_i=1)$，我们可以通过全概率公式来推导它，
+以 $P(\xi_2=1)$ 为例：
+\begin{align*}
+P(\xi_2=1) &= P(\xi_2=1 \mid \xi_1=1)P(\xi_1=1) + P(\xi_2=1 \mid \xi_1=0)P(\xi_1=0) \\
+&= \frac{M-1}{N-1} \cdot \frac{M}{N} + \frac{M}{N-1} \cdot \frac{N-M}{N} \\
+&= \frac{M(N-1) - M + MN - M^2}{(N-1)N} \\
+&= \frac{M(N-1)}{N(N-1)} \\
+&= \frac{M}{N}
+\end{align*}
+类似地，可以证明对任意 $i$， $P(\xi_i=1) = \frac{M}{N}$。因此，在计算超几何分布的期望时，可以直接将每次抽样示性变量的期望相加，这与不放回抽样的性质并不矛盾。
+\end{remark}
+\subsection{几何分布}\label{subsec:几何分布}
+\begin{definition}[几何分布]\label{def:几何分布}
+    记Bernoulli试验中首次成功出现在第 $k$ 次试验的概率为$g(k;p)$，以$\eta$记试验次数，有
+\begin{equation} \label{eq:geometric_prob_formula}
+g(k;p) = P\{\eta = k\} =q^{k-1}p, \quad k=1,2,\ldots
+\end{equation}
+$g(k;p)$ 是几何级数的一般项, 因此 \eqref{eq:geometric_prob_formula} 称为\textbf{几何分布}。
+\end{definition}
+\begin{remark}
+    这里有
+\begin{equation} \label{eq:geometric_sum_to_one}
+\sum_{k=1}^\infty g(k;p) = \sum_{k=1}^\infty q^{k-1}p = p \frac{1}{1-q} = 1
+\end{equation}
+\end{remark}
+\begin{proposition}[几何分布的无记忆性]\label{prop:几何分布的无记忆性}
+    现在假定已知在前 $m$ 次试验中没有出现成功, 那么为了达到首次成功再所需要的等待时间 $\eta'$, 其概率分布还是服从从几何分布 (\ref{eq:geometric_prob_formula}), 与前面的失败次数 $m$ 无关。在离散型分布中, 只有几何分布才具有这样一种特殊的性质。
+    \end{proposition}
+\begin{proof}
+    \begin{align*}
+P\{\eta'=k'\} &= P\{\eta=m+k' \mid \eta>m\} \\
+&= \frac{P\{\eta=m+k', \eta>m\}}{P\{\eta>m\}} \\
+&= \frac{P\{\eta=m+k'\}}{P\{\eta>m\}} \\
+&= \frac{q^{m+k'-1}p}{q^m} \\
+&= q^{k'-1}p, \quad k'=1,2,\ldots
+\end{align*}
+
+若 $\eta$ 是取正整数值的随机变量, 并且, 在已知 $\eta>k$ 的条件下, $\eta+1$ 的概率与 $k$ 无关, 那么 $\eta$ 服从几何分布。
+
+以 $p$ 记 上述条件概率, 并记 $q_k = P\{\eta>k\}$ 及 $p_k =P\{\eta=k\}$, 那么 $p_{k+1}=q_k-q_{k+1}$, 而且在已知 $\eta>k$ 的条件下, $\eta=k+1$ 的条件概率为 $\frac{P_{k+1}}{q_{k}}$, 因此
+\[
+\frac{P_{k+1}}{q_{k}} = p
+\]
+即
+\[
+\frac{q_{k+1}}{q_k} = 1-p
+\]
+注意到 $q_0=1$, 那么 $q_k = (1-p)^k$, 因此
+\[
+p_k = (1-p)^{k-1}p, \quad k=1,2,\ldots
+\]
+这正是几何分布 (\ref{eq:geometric_prob_formula}).
+\end{proof}
+\begin{proposition}[\textbf{几何分布的数学期望}] \label{prop:geometric_expectation}
+对于几何分布 $p_k = q^{k-1}p$, $k=1,2,\ldots$, 其数学期望为
+\[
+\E\sum_{k=1}^\infty X_k = \sum_{k=1}^\infty k p_k = \sum_{k=1}^\infty k q^{k-1}p = p(1 + 2q + 3q^2 + \cdots) = p\left(q + q^2 + q^3 + \cdots\right)' = p\left(\frac{q}{1-q}\right)'
+\]
+\[
+= p \frac{1}{(1-q)^2} = \frac{1}{p}
+\]
+\end{proposition}
+\subsection{Pascal分布}\label{subsec:Pascal分布}
+\begin{definition}[Pascal分布]\label{def:Pascal分布}
+    考虑Bernoulli试验要多长时间才会出现第 $r$ 次成功。以 $C_k$ 表示第 $r$ 次成功发生在第 $k$ 次试验这一事件, 并以 $f(k;r,p)$ 记其概率，称为 \textbf{帕斯卡分布}。
+\begin{equation} \label{eq:pascal_dist_formula}
+f(k;r,p) = \binom{k-1}{r-1} p^r q^{k-r}, \quad k=r,r+1,\ldots
+\end{equation}
+\end{definition}
+\begin{lemma}[推广的二项式]\label{lem:推广的二项式}
+   把排列公式推广到 $r$ 是正整数而 $n$ 是任意实数 $x$ 的场合, 有时是需要的, 这时记
+\[
+A_x^r=x(x-1)(x-2)\cdots(x-r+1)
+\]
+同样定义
+\[
+\binom{x}{r} = \frac{A_x^r}{r!} = \frac{x(x-1)(x-2)\cdots(x-r+1)}{r!}
+\]
+约定 $\binom{x}{0}=1$.
+不难验算:
+\begin{equation} \label{eq:generalized_binomial_coefficient}
+\binom{-a}{k} = (-1)^k\binom{a+k-1}{k}
+\end{equation} 
+\end{lemma}
+\begin{remark}
+    注意到
+\begin{align} \label{eq:pascal_sum_to_one}
+\sum_{k=r}^\infty f(k;r,p) &= \sum_{k=r}^\infty \binom{k-1}{r-1} p^r q^{k-r} \notag \\
+&= \sum_{l=0}^\infty \binom{r+l-1}{r-1} p^r q^l \quad (\text{令 } l=k-r) \notag \\
+&= \sum_{l=0}^\infty \binom{r+l-1}{l} p^r q^l \notag \\
+&= p^r \sum_{l=0}^\infty \binom{-r}{l} (-1)^l q^l \quad (\text{由引理 \ref{lem:推广的二项式}} \binom{n}{k} = (-1)^k \binom{k-n-1}{k}) \notag \\
+&= p^r \sum_{l=0}^\infty \binom{-r}{l} (-q)^l \notag \\
+&= p^r (1-q)^{-r} {k} x^k) \notag \\
+&= p^r (p)^{-r} = 1
+\end{align}
+\end{remark}
+\subsection{负二项分布}\label{subsec:负二项分布}
+\begin{definition}[负二项分布]\label{def:负二项分布}
+    对于任意实数 $r>0$, 称
+\begin{equation} \label{eq:negative_binomial_pmf}
+Nb(l;r,p) = \binom{-r}{l} p^r (-q)^l, \quad l=0,1,2,\ldots
+\end{equation}
+为\textbf{负二项分布}。
+\end{definition}
+\section{连续型}\label{sec:连续型}
+\subsection{均匀分布}\label{subsec:均匀分布}
+\begin{definition}[均匀分布]
+    若 $a,b$ 为有限数, 由下列密度函数定义的分布称为在 $[a,b]$ 上\textbf{均匀分布}:
+\begin{equation} \label{eq:uniform_pdf}
+p(x) = \begin{cases}
+\frac{1}{b-a}, & a \le x \le b \\
+0, & x < a \text{ 或 } x > b
+\end{cases}
+\end{equation}
+相应的分布函数为
+\begin{equation} \label{eq:uniform_cdf}
+F(x) = \begin{cases}
+0, & x \le a \\
+\frac{x-a}{b-a}, & a < x \le b \\
+1, & x > b
+\end{cases}
+\end{equation}
+在 $[a,b]$ 上均匀分布有时简记作 $U[a,b]$.
+\end{definition}
+
+\begin{proposition}[\textbf{均匀分布的期望与方差}] \label{prop:uniform_expectation_variance}
+对于均匀分布 $U[a,b]$，其数学期望和方差分别为：
+\[
+\E\xi = \frac{a+b}{2}
+\]
+\[
+\D\xi = \frac{(b-a)^2}{12}
+\]
+\end{proposition}
+
+\begin{proof}
+对于均匀分布 $U[a,b]$, 其数学期望和二阶矩分别为
+\[
+\E\xi = \int_a^b x \frac{1}{b-a}dx = \left. \frac{1}{b-a} \frac{x^2}{2} \right|_a^b = \frac{1}{b-a} \frac{b^2-a^2}{2}  = \frac{b+a}{2}
+\]
+\[
+\E\xi^2 = \int_a^b x^2 \frac{1}{b-a}dx = \left. \frac{1}{b-a} \frac{x^3}{3} \right|_a^b = \frac{1}{b-a} \frac{b^3-a^3}{3} = \frac{b^2+ab+a^2}{3}
+\]
+因此，均匀分布的方差为
+\begin{equation} \label{eq:uniform_variance_formula}
+\D\xi = \E\xi^2 - (\E\xi)^2 = \frac{b^2+ab+a^2}{3} - \left(\frac{b+a}{2}\right)^2 = \frac{b^2-2ab+a^2}{12} = \frac{(b-a)^2}{12}
+\end{equation}
+\end{proof}
+\subsection{正态分布}\label{subsec:正态分布}
+\begin{definition} [正态分布] 
+   密度函数为
+\begin{equation} \label{eq:normal_pdf}
+p(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\infty<x<\infty
+\end{equation}
+其中 $\sigma>0, \mu$ 与 $\sigma$ 均为常数, 相应的分布函数为
+\begin{equation} \label{eq:normal_cdf}
+F(x) = \frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^x e^{-\frac{(y-\mu)^2}{2\sigma^2}} dy, \quad -\infty<x<\infty
+\end{equation}
+这样的分布称为\textbf{正态分布} (normal distribution), 简记为 $N(\mu,\sigma^2)$.
+
+特别当 $\mu=0, \sigma=1$, 这时分布称为\textbf{标准正态分布}, 记为 $N(0,1)$, 相应的分布密度函数及分布函数分别记为 $\varphi(x)$ 及 $\Phi(x)$.
+\end{definition}
+\begin{definition}[多元正态分布]\label{def:多元正态分布}
+    若 $\boldsymbol{\Sigma}=(\sigma_{ij})$ 是 $n$ 阶正定对称矩阵，由密度函数
+\begin{equation} \label{eq:multivariate_normal_pdf_vector}
+p(\boldsymbol{x})=\frac{1}{(2\pi)^{\frac{n}{2}}(\det \boldsymbol{\Sigma})^{\frac{1}{2}}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu})^{\text{T}}\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu})\right\}
+\end{equation}
+定义的分布称为 $n$ 元\textbf{正态分布}, 简记为 $N(\boldsymbol{\mu},\boldsymbol{\Sigma})$.
+\end{definition}
+\begin{example}[ 二元正态分布]\label{ex:二元正态分布}
+    函数
+\begin{equation} \label{eq:bivariate_normal_pdf}
+p(x,y) = \frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}} \exp\left\{-\frac{1}{2(1-\rho^2)}\left[\frac{(x-\mu_1)^2}{\sigma_1^2} - 2\rho\frac{(x-\mu_1)(y-\mu_2)}{\sigma_1\sigma_2} + \frac{(y-\mu_2)^2}{\sigma_2^2}\right]\right\}
+\end{equation}
+这里 $\mu_1,\mu_2,\sigma_1,\sigma_2,\rho$ 为常数, $\sigma_1 > 0, \sigma_2 > 0, |\rho| < 1$, 称为\textbf{二元正态(分布)密度函数}，简记为 $N(\mu_1,\mu_2,\sigma_1^2,\sigma_2^2,\rho)$.
+此时
+\[
+\boldsymbol{\Sigma} = \begin{pmatrix} \sigma_1^2 & \rho\sigma_1\sigma_2 \\ \rho\sigma_1\sigma_2 & \sigma_2^2 \end{pmatrix}, \quad \boldsymbol{\mu} = (\mu_1,\mu_2)
+\]
+\end{example}
+\begin{remark}
+    二元正态分布的边际分布仍为正态分布。
+\end{remark}
+\begin{proposition}[\textbf{正态分布的数学期望}] \label{prop:normal_expectation}
+对于正态分布 $N(\mu,\sigma^2)$, 其数学期望为
+\[
+\E\xi = \int_{-\infty}^\infty xp(x) dx = \int_{-\infty}^\infty x \frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/(2\sigma^2)} dx
+\]
+令 $z = \frac{x-\mu}{\sigma}$, 则 $x = \sigma z + \mu$, $dx = \sigma dz$. 积分变为
+\[
+= \frac{1}{\sqrt{2\pi}\sigma} \int_{-\infty}^\infty (\sigma z + \mu) e^{-z^2/2} \sigma dz = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty (\sigma z + \mu) e^{-z^2/2} dz
+\]
+\[
+= \frac{\sigma}{\sqrt{2\pi}} \int_{-\infty}^\infty z e^{-z^2/2} dz + \frac{\mu}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-z^2/2} dz
+\]
+由于 $z e^{-z^2/2}$ 是奇函数，其在对称区间上的积分是 $0$。而 $\frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-z^2/2} dz = 1$ (标准正态分布密度函数的总积分)。
+\[
+= 0 + \mu \cdot 1 = \mu
+\]
+可见 $N(\mu,\sigma^2)$ 中的参数 $\mu$ 正是它的数学期望。
+\end{proposition}
+\begin{proposition}[\textbf{正态分布的方差}] \label{prop:normal_variance}
+对于正态分布 $N(\mu,\sigma^2)$, 其方差为
+\begin{align*}
+\D\xi &= \int_{-\infty}^\infty (x - \mu)^2 \frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/(2\sigma^2)} dx = \int_{-\infty}^\infty (\sigma z)^2 \frac{1}{\sqrt{2\pi}\sigma}e^{-z^2/2} \sigma dz \\
+&= \frac{\sigma^2}{\sqrt{2\pi}} \int_{-\infty}^\infty z^2 e^{-z^2/2} dz \
+= \frac{\sigma^2}{\sqrt{2\pi}} \left[ \left( -ze^{-z^2/2} \right) \Big|_{-\infty}^\infty - \int_{-\infty}^\infty -e^{-z^2/2} dz \right] \\
+&= \frac{\sigma^2}{\sqrt{2\pi}} \left[ 0 + \int_{-\infty}^{\infty} e^{-z^2/2} dz \right]\
+= \frac{\sigma^2}{\sqrt{2\pi}} \sqrt{2\pi} 
+= \sigma^2
+\end{align*}
+\end{proposition}
+\subsection{指数分布}\label{subsec:指数分布}
+\begin{definition}[指数分布]\label{def:指数分布}
+分布密度函数为
+\begin{equation} \label{eq:exponential_pdf}
+p(x)=
+\begin{cases}
+\lambda e^{-\lambda x}, & x\ge 0 \\
+0, & x<0
+\end{cases}
+\end{equation}
+分布函数为
+\begin{equation} \label{eq:exponential_cdf}
+F(x)=
+\begin{cases}
+1-e^{-\lambda x}, & x\ge 0 \\
+0, & x<0
+\end{cases}
+\end{equation}
+这里 $\lambda>0$, 是参数, 这分布称为\textbf{指数分布}。简记为 $\text{Exp}(\lambda)$.
+\end{definition}
+\begin{remark}
+    类似于几何分布\eqref{def:几何分布}，指数分布\eqref{def:指数分布}有着类似的无记忆性。
+\end{remark}
+\begin{proposition}[\textbf{指数分布的数学期望}] \label{prop:exponential_expectation}
+对于指数分布 $p(x) = \lambda e^{-\lambda x}$, $x\ge0$, 其数学期望为
+\begin{align*}
+\E\xi &= \int_0^\infty x \lambda e^{-\lambda x} dx 
+= -\int_0^\infty x de^{-\lambda x} 
+= \left. -xe^{-\lambda x} \right|_0^\infty - \int_0^\infty -e^{-\lambda x} dx \\
+&= 0 + \int_0^\infty e^{-\lambda x} dx 
+= \left. -\frac{1}{\lambda}e^{-\lambda x} \right|_0^\infty 
+= 0 - \left(-\frac{1}{\lambda}\right)
+= \frac{1}{\lambda}
+\end{align*}
+\end{proposition}
+\subsection{$\Gamma$分布}\label{subsec:Gamma分布}
+\begin{definition}[\textbf{$\Gamma$ 分布}]
+    称密度函数为
+\begin{equation} \label{eq:gamma_pdf}
+f(x)=
+\begin{cases}
+\frac{\lambda^r}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x}, & x>0 \\
+0, & x\le 0
+\end{cases}
+\end{equation}
+的分布为\textbf{$\Gamma$ 分布}, 其中 $\lambda>0, \alpha>0$ 为参数. 简记作 $\Gamma(\alpha,\lambda)$. 这里 $\alpha$ 称为形状参数, $\lambda$ 称为尺度参数。
+\end{definition}
+\begin{remark}
+    $\alpha = n$时，$\Gamma$分布是$n$个独立同分布的随机变量之和的分布，它们服从参数为$\lambda$的指数分布。在数理统计中有重要应用。
+\end{remark}
+
+\begin{proposition}[\textbf{$\Gamma$ 分布的期望与方差}] \label{prop:gamma_expectation_variance}
+对于服从 $\Gamma(r,\lambda)$ 分布的随机变量 $X$，其数学期望和方差分别为：
+\[
+\E X = \frac{\alpha}{\lambda}
+\]
+\[
+\D X = \frac{\alpha}{\lambda^2}
+\]
+\end{proposition}
+
+\begin{proof}
+计算期望：
+\begin{align*}
+\E X &= \int_0^{+\infty} x \cdot \frac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x} dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \int_0^{+\infty} x^\alpha e^{-\lambda x} dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha+1)}{\lambda^{\alpha+1}} \int_0^{+\infty} \frac{\lambda^{\alpha+1}}{\Gamma(\alpha+1)} x^{(\alpha+1)-1} e^{-\lambda x} dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha+1)}{\lambda^{\alpha+1}} \cdot 1
+= \frac{\alpha}{\lambda}
+\end{align*}
+计算二阶矩：
+\begin{align*}
+\E X^2 &= \int_0^{+\infty} x^2 \cdot \frac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x} dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \int_0^{+\infty} x^{\alpha+1} e^{-\lambda x} dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha+2)}{\lambda^{\alpha+2}} \int_0^{+\infty} \frac{\lambda^{\alpha+2}}{\Gamma(\alpha+2)} x^{(\alpha+2)-1} e^{-\lambda x} dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha+2)}{\lambda^{\alpha+2}} \cdot 1 = \frac{\alpha(\alpha+1)}{\lambda^2}
+\end{align*}
+由方差的计算公式，有：
+\begin{align*}
+\D X &= \frac{\alpha(\alpha+1)}{\lambda^2} - \left(\frac{\alpha}{\lambda}\right)^2 \\
+&= \frac{\alpha^2+\alpha}{\lambda^2} - \frac{\alpha^2}{\lambda^2} \\
+&= \frac{\alpha}{\lambda^2}
+\end{align*}
+\end{proof}
+ 

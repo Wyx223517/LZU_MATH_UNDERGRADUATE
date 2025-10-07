@@ -1,0 +1,672 @@
+\chapter{概率论的基本工具}\label{chap:概率论的基本工具}
+\begin{introduction}
+        \item 概率空间\quad 定义\ref{def:概率空间}
+        \item 条件概率\quad 定义 \ref{def:conditional_probability}
+        \item 乘法公式 \quad 式\ref{eq:multiplication_formula}
+        \item 全概率公式\quad 命题\ref{prop:全概率公式}
+        \item 贝叶斯公式\quad 命题 \ref{prop:bayes_formula}
+        \item 事件独立性\quad 定义 \ref{def:statistical_independence}
+        \item 随机变量\quad 定义\ref{def:random_variable}
+        \item 分布函数\quad 定义 \ref{def:distribution_function}
+        \item 概率分布\quad 定义\ref{def:概率分布}
+        \item 分布密度函数\quad 定义 \ref{def:pdf}
+        \item 边际分布函数\quad 定义 \ref{def:边际分布}
+        \item 条件分布 \quad 定义\ref{def:条件分布（离散型）}
+        \item 随机变量函数的分布 \quad  命题\ref{prop:随机变量函数的分布}
+        \item 数学期望 \quad 定义\ref{def:mathematical_expectation_general}
+        \item 佚名统计学家公式\quad 命题 \ref{prop:anonymous_statistician_formula}
+        \item 方差\quad 定义 \ref{def:variance}
+        \item 协方差 \quad 定义\ref{def:covariance}
+        \item 相关系数 \quad 定义\ref{def:correlation_coefficient}
+        \item 原点矩 \quad 定义\ref{def:kth_raw_moment}
+        \item 条件数学期望 \quad 定义\ref{def:conditional_expectation}
+        \item 重期望公式  \quad 命题\ref{prop:law_of_total_expectation}
+        \item 特征函数 \quad 定义\ref{def:characteristic_function}
+\end{introduction}
+\section{事件与概率}\label{sec:事件与概率}
+\begin{definition}[样本空间]\label{def:样本空间}
+    随机试验的结果为样本点，它们的全体构成样本空间 $\boldsymbol{\Omega}$。
+\end{definition}
+\begin{definition}[$\sigma$代数]\label{def:sigma代数}
+    $\mathcal{F}$是空间 $\boldsymbol{\Omega}$ 上的一个集类，且满足：
+\begin{enumerate}
+    \item[(i)] $\boldsymbol{\Omega}\in\mathcal{F}$;
+    \item[(ii)] 若 $A\in\mathcal{F}$，则 $\overline{A}\in\mathcal{F}$;
+    \item[(iii)] 若 $A_n\in\mathcal{F}$，$n=1,2,\ldots$，则 $\bigcup_{n=1}^\infty A_n\in\mathcal{F}$。
+\end{enumerate}
+则称$\mathcal{F}$为 \textbf{$\sigma$ 域}，亦称 \textbf{$\sigma$ 代数}。
+\end{definition}
+\begin{definition}[事件] \label{def:event_field}
+若 $\mathcal{F}$ 是由样本空间 $\boldsymbol{\Omega}$ 的一些子集构成的一个 $\sigma$ 域，则称它为\textbf{事件域}，$\mathcal{F}$ 中的元素称为\textbf{事件}，$\boldsymbol{\Omega}$ 称为\textbf{必然事件}，$\emptyset$ 称为\textbf{不可能事件}。
+\end{definition}
+\begin{example}[一维Borel\ $\sigma$域]\label{ex:一维Borelsigma域}
+    称由一切形为 $[a,b)$ 的有界左闭右开区间构成的集类所产生的 $\sigma$ 域为\textbf{一维Borel\  $\sigma$ 域}，记之为 $\mathcal{B}_1$，称 $\mathcal{B}_1$ 中的集为\textbf{一维Borel点集}。
+
+若 $x,y$ 为任意实数，由于
+\[
+\{x\} = \bigcap_{n=1}^\infty \left[x,x+\frac{1}{n}\right)
+\]
+\[
+(x,y) = [x,y) - \{x\}
+\]
+\[
+[x,y] = [x,y) + \{y\}
+\]
+\[
+(x,y] = [x,y) + \{y\} - \{x\}
+\]
+因此，$\mathcal{B}_1$ 中包含一切开区间，闭区间，闭半区间，单个实数，可列个实数，以及由它们经可列次逆、并、交运算而得出的集合。
+\end{example}
+
+\begin{definition}[概率] \label{def:probability}
+定义在事件域 $\mathcal{F}$ 上的一个集合函数 $P$ 称为\textbf{概率}，如果它满足如下三个要求:
+\begin{enumerate}
+    \item[(i)] $P(A) \ge 0$，对一切 $A \in \mathcal{F}$;
+    \item[(ii)] $P(\boldsymbol{\Omega}) = 1$;
+    \item[(iii)] 若 $A_i \in \mathcal{F}$，$i=1,2,\ldots$ 且两两互不相容，则
+    \begin{equation} \label{eq:countable_additivity}
+    P\left(\sum_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty P(A_i)
+    \end{equation}
+\end{enumerate}
+性质 (i) 称为\textbf{非负性}，性质 (ii) 称为\textbf{规范性}，性质 (iii) 称为\textbf{可列可加性}或\textbf{完全可加性}。
+\end{definition}
+
+\begin{proposition}[加法公式]\label{prop:加法公式}
+\begin{equation}
+    P(A \cup B) = P(A) + P(B) - P(AB)\label{eq:union_prob}
+\end{equation}
+\end{proposition}
+\begin{proof}
+    因 $A \cup B = A \cup (B - AB)$，而且 $A \cap (B - AB) = \emptyset$，故 $P(A \cup B) = P(A) + P(B - AB)$，又 $AB \subset B$，于是得到
+\[
+P(A \cup B) = P(A) + P(B) - P(AB)
+\]
+\end{proof}
+\begin{proposition}[一般加法公式]\label{prop:一般加法公式}
+    若 $A_1，A_2，\ldots，A_n$ 为 $n$ 个事件，则
+\begin{equation} \label{eq:general_addition_formula}
+\begin{aligned}
+P(A_1 \cup A_2 \cup \cdots \cup A_n) &= \sum_{i=1}^n P(A_i) - \sum_{\substack{i<j \\ i,j=1,\ldots,n}} P(A_i A_j) \\
+&\quad + \sum_{\substack{i<j<k \\ i,j,k=1,\ldots,n}} P(A_i A_j A_k) - \cdots + (-1)^{n-1}P(A_1 A_2 \cdots A_n)
+\end{aligned}
+\end{equation}
+\end{proposition}
+
+\begin{definition}[概率空间]\label{def:概率空间}
+    在科尔莫哥洛夫的概率论公理化结构中，称\textbf{三元总体}$(\boldsymbol{\Omega},\mathcal{F},P)$为\textbf{概率空间}，其中 $\boldsymbol{\Omega}$ 是样本空间，$\mathcal{F}$ 是事件域，$P$ 是概率。
+\end{definition}
+
+\section{条件概率与统计独立性}\label{sec:条件概率与统计独立性}
+\subsection{条件概率、全概率公式、Bayes公式}\label{subsec:条件概率、全概率公式、Bayes公式}
+\begin{definition}[条件概率] \label{def:conditional_probability}
+设 $(\boldsymbol{\Omega},\mathcal{F},P)$ 是一个概率空间，$B \in \mathcal{F}$，而且 $P(B)>0$，则对任意 $A \in \mathcal{F}$，记
+\begin{equation} \label{eq:conditional_probability_formula}
+P(A \mid B) = \frac{P(AB)}{P(B)}
+\end{equation}
+并称 $P(A \mid B)$ 为在事件 $B$ 发生的条件下事件 $A$ 发生的\textbf{条件概率}。
+\end{definition}
+\begin{remark}\label{rmk:乘法公式}
+    由 \eqref{def:conditional_probability} 式立刻得到
+\begin{equation} \label{eq:multiplication_formula}
+P(AB) = P(B)P(A \mid B)
+\end{equation}
+这个等式被称为\textbf{概率的乘法公式}。
+若还有 $P(A)>0$，则也可定义 $P(B \mid A)$，这时有
+\begin{equation} \label{eq:multiplication_formula_symmetric}
+P(AB) = P(A)P(B \mid A) = P(B)P(A \mid B)
+\end{equation}
+\end{remark}
+\begin{proposition}[推广的乘法公式]\label{prop:推广的乘法公式}
+    任意 $n$ 个事件之交的场合的乘法公式:
+\begin{equation} \label{eq:generalized_multiplication_formula}
+P(A_1 A_2 \cdots A_n) = P(A_1)P(A_2 \mid A_1)P(A_3 \mid A_1 A_2)\cdots P(A_n \mid A_1 A_2 \cdots A_{n-1})
+\end{equation}
+\end{proposition}
+\begin{proposition}[全概率公式]\label{prop:全概率公式}
+    \begin{equation} \label{eq:total_probability_formula}
+P(B) = \sum_{i=1}^\infty P(A_i)P(B \mid A_i)
+\end{equation}
+\end{proposition}
+\begin{proposition}[\textbf{贝叶斯公式}] \label{prop:bayes_formula}
+若事件 $B$ 能且只能与两两互不相容的事件 $A_1，A_2，\ldots，A_n，\ldots$ 之一同时发生，即 $B = \sum_{i=1}^\infty BA_i$，且 $P(B) > 0$，则
+\begin{equation} \label{eq:bayes_formula}
+P(A_i \mid B) = \frac{P(A_i)P(B \mid A_i)}{\sum_{j=1}^\infty P(A_j)P(B \mid A_j)}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+根据条件概率的定义 \eqref{eq:conditional_probability_formula}，我们有
+\[
+P(A_i \mid B) = \frac{P(A_i B)}{P(B)}
+\]
+再利用概率的乘法公式 \eqref{eq:multiplication_formula}，分子可以写为 $P(A_i B) = P(A_i)P(B \mid A_i)$。
+
+而分母 $P(B)$ 根据全概率公式 \eqref{eq:total_probability_formula} 可写为
+\[
+P(B) = \sum_{j=1}^\infty P(A_j)P(B \mid A_j)
+\]
+将这两部分代入条件概率的定义，即可得到贝叶斯公式：
+\[
+P(A_i \mid B) = \frac{P(A_i)P(B \mid A_i)}{\sum_{j=1}^\infty P(A_j)P(B \mid A_j)}
+\]
+定理证毕。
+\end{proof}
+\subsection{事件独立性}\label{subsec:事件独立性}
+\begin{definition}[独立性] \label{def:statistical_independence}
+对事件 $A$ 及 $B$，若
+\begin{equation} \label{eq:statistical_independence_formula}
+P(AB) = P(A)P(B)
+\end{equation}
+则称它们是\textbf{统计独立的}，简称\textbf{独立的}。
+\end{definition}
+\begin{definition}[三个事件的独立性] \label{def:mutual_independence_three_events}
+对于三个事件 $A,B,C$，若下列四个等式同时成立，则称它们\textbf{相互独立}。
+\begin{gather}
+P(AB)=P(A)P(B) \notag \\
+P(BC)=P(B)P(C) \notag \\
+P(AC)=P(A)P(C) \label{eq:pairwise_independence_three_events} \\
+P(ABC)=P(A)P(B)P(C) \label{eq:mutual_independence_three_events}
+\end{gather}
+\end{definition}
+\begin{example}[ Bernstein反例]
+    一个均匀的正四面体，其第一面染成红色，第二面染成白色，第三面染成黑色，而第四面同时染上红，白，黑三种颜色。现在以 $A,B,C$ 分别记投一次四面体出现红，白，黑颜色朝下的事件，则由于在四面体中有两面有红色，因此
+\[
+P(A)=\frac{1}{2}
+\]
+同理 $P(B)=P(C)=\frac{1}{2}$，容易算出
+\[
+P(AB)=P(BC)=P(AC)=\frac{1}{4}
+\]
+所以 \eqref{eq:pairwise_independence_three_events} 成立，即 $A,B,C$ 两两独立，但是
+\[
+P(ABC) = \frac{1}{4} \ne \frac{1}{8} = P(A)P(B)P(C)
+\]
+因此 \eqref{eq:mutual_independence_three_events} 不成立，从而 $A,B,C$ 不相互独立。
+\end{example}
+\section{随机变量与分布函数}\label{sec:rvandcdf}
+随机变量是样本点的一个函数。
+\begin{definition}[随机变量] \label{def:random_variable}
+设 $\xi(\omega)$ 是定义于概率空间 $(\boldsymbol{\Omega},\mathcal{F},P)$ 上的\textbf{单值实函数}，如果对于直线上任一Borel点集 $B$，有
+\begin{equation} \label{eq:measurable_function_condition}
+\{\omega:\xi(\omega) \in B\} \in \mathcal{F}
+\end{equation}
+则称 $\xi(\omega)$ 为\textbf{随机变量}，而 $P\{\xi(\omega) \in B\}$ 称为随机变量（r.v.）$\xi(\omega)$ 的\textbf{概率分布}。
+\end{definition}
+\begin{definition}[分布函数] \label{def:distribution_function}
+称
+\begin{equation} \label{eq:distribution_function_formula}
+F(x) = P\{\xi(\omega) < x\}，\quad -\infty < x < \infty
+\end{equation}
+为随机变量 $\xi(\omega)$ 的\textbf{分布函数} (distribution function)。
+\end{definition}
+\subsection{离散型随机变量}
+\begin{definition}[概率分布]\label{def:概率分布}
+    设 $\{x_i\}$ 为离散型随机变量 $\xi$ 的所有可能值; 而 $p(x_i)$ 是 $\xi$ 取 $x_i$ 的概率，即
+\begin{equation} \label{eq:discrete_prob_mass_function}
+P\{ \xi=x_i \} = p(x_i)，\quad i=1,2,3,\ldots
+\end{equation}
+$\{p(x_i)，i=1,2,3,\ldots \}$ 称为随机变量 $\xi$ 的\textbf{概率分布}，它应满足下面关系:
+\begin{equation} \label{eq:pmf_non_negative}
+p(x_i) \ge 0，\quad i=1,2,3,\ldots
+\end{equation}
+\begin{equation} \label{eq:pmf_sum_to_one}
+\sum_{i=1}^\infty p(x_i) = 1
+\end{equation}
+\end{definition}
+\begin{remark}
+    常见的离散型随机变量的概率分布见 \ref{sec:离散型}节。
+\end{remark}
+\subsection{连续型随机变量}\label{subsec:连续型随机变量}
+\begin{definition}[分布密度函数]\label{def:pdf}
+    连续型随机变量 $\xi$ 可取某个区间 $[c,d]$ 或 $(-\infty,\infty)$ 中的一切值，而且其分布函数 $F(x)$ 是\textbf{绝对连续函数}，即存在可积函数 $p(x)$，使
+\begin{equation} \label{eq:cdf_from_pdf}
+F(x) = \int_{-\infty}^x p(y) dy
+\end{equation}
+称 $p(x)$ 为 $\xi$ 的 (\textbf{分布})\textbf{密度函数} (density function)。
+\end{definition}
+\begin{remark}
+    显然
+\begin{equation} \label{eq:pdf_from_cdf}
+p(x) = F'(x)
+\end{equation}
+由分布函数的性质可知对 $p(x)$ 应有
+\begin{equation} \label{eq:pdf_non_negative}
+p(x)\ge 0
+\end{equation}
+\begin{equation} \label{eq:pdf_integral_one}
+\int_{-\infty}^\infty p(x) dx = 1
+\end{equation}
+反之，对于定义在 $(-\infty,\infty)$ 上的可积函数 $p(x)$，若它满足 \eqref{eq:pdf_non_negative} 及 \eqref{eq:pdf_integral_one}，则由 \eqref{eq:cdf_from_pdf} 定义的函数 $F(x)$ 是一个分布函数。
+\end{remark}
+\begin{remark}
+    对任意实数 $c$，计算 $P\{ \xi=c \}$，因为
+\[
+P\{ \xi=c \} \le P\{ c \le \xi < c+h \} = \int_c^{c+h} p(x)dx
+\]
+故
+\[
+0 \le P\{ \xi=c \} \le \lim_{h\to 0} \int_c^{c+h} p(x)dx = 0
+\]
+因此
+\[
+P\{ \xi=c \} = 0
+\]
+\textbf{一个事件的概率等于零，这事件并不一定是不可能事件}; 同样地，一个事件的概率等于 $1$，这事件也不一定是必然事件。
+\end{remark}
+
+\section{多元随机变量}\label{sec:多元随机变量}
+\subsection{边际分布}\label{subsec:边际分布}
+\begin{definition}[n维随机变量] \label{def:n_dimensional_random_vector}
+若随机变量 $\xi_1(\omega),\xi_2(\omega),\ldots,\xi_n(\omega)$ 定义在同一概率空间 $(\boldsymbol{\Omega},\mathcal{F},P)$ 上，则称
+\begin{equation} \label{eq:n_dimensional_random_vector}
+\boldsymbol{\xi}(\omega) = (\xi_1(\omega),\xi_2(\omega),\ldots,\xi_n(\omega))
+\end{equation}
+构成一个 $n$ \textbf{维随机向量}，亦称 $n$ \textbf{维随机变量}。显然，一维随机向量即为随机变量。
+\end{definition}
+
+\begin{definition}[联合分布函数] \label{def:joint_distribution_function}
+称 $n$ 元函数
+\begin{equation} \label{eq:joint_distribution_function_formula}
+F(x_1,x_2,\ldots,x_n) = P\{\xi_1(\omega)<x_1,\xi_2(\omega)<x_2,\ldots,\xi_n(\omega)<x_n\}
+\end{equation}
+为随机向量 $\boldsymbol{\xi}(\omega) = (\xi_1(\omega),\xi_2(\omega),\ldots,\xi_n(\omega))$ 的 (\textbf{联合}) \textbf{分布函数}。
+\end{definition}
+\begin{remark}
+    给定了联合分布函数后，可以计算事件 $\{a_1 \le \xi_1 < b_1，a_2 \le \xi_2 < b_2，\ldots，a_n \le \xi_n < b_n\}$ 的概率，例如当 $n=2$ 时,
+\begin{equation} \label{eq:prob_for_n_2}
+P\{a_1 \le \xi_1 < b_1，a_2 \le \xi_2 < b_2\} = F(b_1,b_2)-F(a_1,b_2)-F(b_1,a_2)+F(a_1,a_2)
+\end{equation}
+\end{remark}
+\begin{definition}[边际分布函数]\label{def:边际分布}
+    一般地，若 $(\xi,\eta)$ 是二维随机向量，其分布函数为 $F(x,y)$，我们能由 $F(x,y)$ 得出 $\xi$ 或 $\eta$ 的分布函数。事实上,
+\begin{equation} \label{eq:marginal_cdf_xi}
+F_1(x) = P\{\xi < x\} = P\{\xi < x，\eta < +\infty \} = F(x，+ \infty)
+\end{equation}
+同理
+\[
+F_2(y) = P\{\eta < y\} = F(+\infty，y)
+\]
+$F_1(x)$ 及 $F_2(y)$ 称为 $F(x,y)$ 的\textbf{边际分布函数}。
+\end{definition}
+
+\begin{definition}[边际密度函数]\label{def:边际密度函数}
+    若 $F(x,y)$ 是连续型分布函数，有密度函数 $p(x,y)$，那么
+\[
+F_1(x) = \int_{-\infty}^x \int_{-\infty}^\infty p(u,y) dudy
+\]
+因此 $F_1(x)$ 是连续型分布函数，其密度函数为
+\begin{equation} \label{eq:marginal_pdf_x}
+p_1(x) = \int_{-\infty}^\infty p(x,y) dy
+\end{equation}
+同理 $F_2(x)$ 是连续型分布函数，其密度函数为
+\begin{equation} \label{eq:marginal_pdf_y}
+p_2(y) = \int_{-\infty}^\infty p(x,y) dx
+\end{equation}
+$p_1(x)$ 及 $p_2(y)$ 称为 $p(x,y)$ 的\textbf{边际(分布)密度函数}。
+\end{definition}
+\subsection{条件分布}\label{subsec:条件分布}
+对二维的场合的离散型随机变量
+\begin{definition}[条件分布（离散型）]\label{def:条件分布（离散型）}
+若已知 $\xi = x_i (p_1(x_i) > 0)$，则事件 $\{\eta = y_j\}$ 的条件概率为
+\begin{equation} \label{eq:conditional_prob_discrete}
+P\{ \eta = y_j \mid \xi = x_i \} = \frac{P\{ \xi = x_i，\eta = y_j \}}{P\{ \xi = x_i \}} = \frac{p(x_i，y_j)}{p_1(x_i)}
+\end{equation}
+该式定义了随机变量 $\eta$ 关于随机变量 $\xi$ 的\textbf{条件分布}。
+\end{definition}
+连续型则有
+\begin{definition}[条件分布（连续型）]\label{def:条件分布（连续型）}
+    因此在给定 $\xi = x$ 的条件下，$\eta$ 的分布密度函数为
+\begin{equation} \label{eq:conditional_pdf_y_given_x}
+p(y \mid x) = \frac{p(x,y)}{p_1(x)}
+\end{equation}
+在给定 $\eta = y$ 的条件下，$\xi$ 的分布密度函数为
+\begin{equation} \label{eq:conditional_pdf_x_given_y}
+p(x \mid y) = \frac{p(x,y)}{p_2(y)}
+\end{equation}
+\end{definition}
+\section{随机变量的函数及其分布}\label{sec:随机变量的函数及其分布}
+这里的一般问题是: 已知随机变量 $\xi$ 的分布函数 $F(x)$ 或密度函数 $p(x)$，要求 $\eta=g(\xi)$ 的分布函数 $G(y)$ 或密度函数 $q(y)$。
+\begin{equation} \label{eq:transformed_cdf_integral}
+G(y)=P\{\eta<y\}=P\{g(\xi)<y\} = \int_{g(x)<y} p(x) dx
+\end{equation}
+若 $\eta=g(\xi_1，\ldots，\xi_n)$，而 $(\xi_1，\ldots，\xi_n)$ 的密度函数为 $p(x_1，\ldots，x_n)$，则
+\begin{equation} \label{eq:transformed_cdf_multivariate_integral}
+G(y) = P\{\eta < y\} = \idotsint_{g(x_1，\ldots，x_n) < y} p(x_1，\ldots，x_n) dx_1 \cdots dx_n
+\end{equation}
+
+若$(\xi_1,\ldots,\xi_n)$的密度函数为 $p(x_1,\ldots,x_n)$，求 $\eta_1 = g_1(\xi_1,\ldots,\xi_n)，\ldots，\eta_m = g_m(\xi_1,\ldots,\xi_n)$ 的分布。这时有
+\begin{equation} \label{eq:joint_cdf_transformed}
+G(y_1,\ldots,y_m) = P\{\eta_1<y_1,\ldots,\eta_m<y_m\} = \idotsint_{\substack{g_1(x_1,\ldots,x_n)<y_1 \\ \ldots \\ g_m(x_1,\ldots,x_n)<y_m}} p(x_1,\ldots,x_n) dx_1\cdots dx_n
+\end{equation}
+
+\begin{proposition}[随机变量函数的分布]\label{prop:随机变量函数的分布}
+    如果对 $y_i=g_i(x_1,\ldots,x_n)$，$i=1,2,\ldots,n$，存在唯一的反函数 $x_i(y_1,\ldots,y_n)=x_i(i=1,\ldots,n)$，而且 $(\eta_1,\ldots,\eta_n)$ 的密度函数为 $q(y_1,\ldots,y_n)$，那么
+\begin{equation} \label{eq:transformed_joint_cdf_integral}
+G(y_1,\ldots,y_n) = \idotsint_{\substack{u_1<y_1 \\ \ldots \\ u_n<y_n}} q(u_1,\ldots,u_n) du_1\cdots du_n
+\end{equation}比较 $m=n$ 时的 \eqref{eq:joint_cdf_transformed} 与 \eqref{eq:transformed_joint_cdf_integral} 可知
+\begin{equation} \label{eq:transformed_joint_pdf}
+q(y_1,\ldots,y_n) = \begin{cases} p(x_1(y_1,\ldots,y_n),\ldots,x_n(y_1,\ldots,y_n))|J|，& \text{若}(y_1,\ldots,y_n)\text{属于 }g_1,\ldots,g_n\text{的值域} \\ 0，& \text{其他} \end{cases}
+\end{equation}
+其中 $J$ 为坐标变换的雅可比行列式
+\begin{equation} \label{eq:jacobian_determinant}
+J=
+\begin{vmatrix}
+\frac{\partial x_1}{\partial y_1} & \cdots & \frac{\partial x_1}{\partial y_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial x_n}{\partial y_1} & \cdots & \frac{\partial x_n}{\partial y_n}
+\end{vmatrix}
+\end{equation}
+这里，我们假定上述偏导数存在而且连续。
+\end{proposition}
+
+\begin{example}[ 随机变量和的分布]\label{ex:随机变量和的分布}
+ 若 $\eta = \xi_1 + \xi_2$, 而 $(\xi_1, \xi_2)$ 的密度函数为 $p(x_1, x_2)$, 则
+\begin{align*}
+G(y) &= P\{\eta < y\} = \int_{x_1+x_2<y} p(x_1, x_2) dx_1 dx_2 \\
+&= \int_{-\infty}^\infty \left[ \int_{-\infty}^{y-x_1} p(x_1, x_2) dx_2 \right] dx_1
+\end{align*}
+特别当 $\xi_1, \xi_2$ 相互独立时, 有 $p(x_1, x_2) = p_1(x_1)p_2(x_2)$, 这里 $p_1(x_1)$ 为 $\xi_1$ 的密度函数, $p_2(x_2)$ 为 $\xi_2$ 的密度函数。
+\begin{align*}
+G(y) &= \int_{-\infty}^\infty \left[ \int_{-\infty}^{y-x_1} p_1(x_1)p_2(x_2) dx_2 \right] dx_1 \\
+&= \int_{-\infty}^\infty \left[ p_1(x_1) \int_{-\infty}^{y-x_1} p_2(x_2) dx_2 \right] dx_1
+\end{align*}
+因此 $\eta$ 的密度函数为
+\begin{equation} \label{eq:convolution_formula_1}
+q(y) = \int_{-\infty}^\infty p_1(u) p_2(y - u) du
+\end{equation}
+也可写为
+\begin{equation} \label{eq:convolution_formula_2}
+q(y) = \int_{-\infty}^\infty p_1(y - u) p_2(u) du
+\end{equation}
+\end{example}
+\begin{remark}
+    \eqref{eq:convolution_formula_1} 或 \eqref{eq:convolution_formula_2} 称为\textbf{卷积公式}。
+\end{remark}
+
+\begin{example}[ 随机变量商的分布]\label{ex:随机变量商的分布}
+    若 $\eta = \frac{\xi_1}{\xi_2}$, 而 $(\xi_1, \xi_2)$ 的密度函数为 $p(x_1, x_2)$, 则
+\begin{align} \label{eq:quotient_distribution_cdf}
+G(x) &= P\{\eta < x\} = P\left\{\frac{\xi_1}{\xi_2} < x\right\} = \int_{x_1/x_2<x} p(x_1, x_2) dx_1 dx_2 \notag \\
+&= \int_0^\infty \left[ \int_{-\infty}^{zx} p(y,z) dy \right] dz + \int_{-\infty}^0 \left[ \int_{zx}^\infty p(y,z) dy \right] dz
+\end{align}
+$\eta$ 的密度函数为
+\begin{equation} \label{eq:quotient_distribution_pdf}
+q(x) = \int_0^\infty p(zx,z)z dz - \int_{-\infty}^0 p(zx,z)z dz = \int_{-\infty}^\infty |z|p(zx,z) dz
+\end{equation}
+\end{example}
+
+\section{数字特征与特征函数}\label{sec:数字特征与特征函数}
+\subsection{数学期望}\label{subsec:数学期望}
+\begin{definition}[离散型随机变量的数学期望] \label{def:mathematical_expectation_discrete}
+设 $\xi$ 为一离散型随机变量，它取值 $x_1,x_2,x_3,\ldots$ 对应的概率为 $p_1,p_2,p_3,\ldots$。如果级数
+\begin{equation} \label{eq:mathematical_expectation_series}
+\sum_{i=1}^\infty x_i p_i
+\end{equation}
+绝对收敛，则把它称为 $\xi$ 的\textbf{数学期望} (mathematical expectation)，简称\textbf{期望}、\textbf{期望值}或\textbf{均值} (mean)，记作 $\E\xi$。
+
+\end{definition}
+\begin{remark}
+    当 $\sum_{i=1}^\infty |x_i|p_i$ 发散时，则说 $\xi$ 的数学期望不存在。
+\end{remark}
+
+\begin{definition}[连续型随机变量的数学期望] \label{def:mathematical_expectation_continuous}
+设 $\xi$ 为具有密度函数 $p(x)$ 的连续型随机变量，当积分 $\int_{-\infty}^\infty xp(x)dx$ 绝对收敛时，我们称它为 $\xi$ 的\textbf{数学期望} (或\textbf{均值})，记作 $\E\xi$，即
+\begin{equation} \label{eq:mathematical_expectation_integral}
+\E\xi = \int_{-\infty}^\infty xp(x) dx
+\end{equation}
+\end{definition}
+\begin{definition}[一般情形下的数学期望] \label{def:mathematical_expectation_general}
+若 $\xi$ 的分布函数为 $F(x)$，则定义
+\begin{equation} \label{eq:mathematical_expectation_stieltjes_integral}
+\E\xi = \int_{-\infty}^\infty xdF(x)
+\end{equation}
+为 $\xi$ 的\textbf{数学期望} (或\textbf{均值})。上述积分需要绝对收敛，否则数学期望不存在。
+\end{definition}
+\begin{remark}
+    这里应用了Stieltjes积分。
+\end{remark}
+随机变量的函数 $\eta=g(\xi)$ 的数学期望的定义，这里 $\xi$ 是分布函数为 $F_\xi(x)$ 的随机变量，而 $g(x)$ 是一元Borel函数。
+\begin{proposition}[\textbf{佚名统计学家公式}] \label{prop:anonymous_statistician_formula}
+\begin{equation} \label{eq:expectation_of_function_of_rv}
+\E g(\xi) = \int_{-\infty}^\infty g(x)dF_\xi(x)
+\end{equation}
+这里要求这个积分绝对收敛。
+\end{proposition}
+\begin{proposition}[\textbf{数学期望的性质}] \label{prop:expectation_properties}
+\begin{itemize}
+    \item [(1)] 若 $a\le\xi\le b$，则 $a \le \E\xi \le b$。特别地 $\E c=c$，这里 $a,b,c$ 是常数。
+    \item [(2)] 线性性质: 对任意常数 $c_i，i=1,\ldots,n$ 及 $b$，有
+\[
+\E\left(\sum_{i=1}^n c_i \xi_i + b\right) = \sum_{i=1}^n c_i \E\xi_i + b
+\]
+\end{itemize}
+\end{proposition}
+\subsection{方差，相关系数和矩}\label{subsec:方差，相关系数和矩}
+\begin{definition}[方差] \label{def:variance}
+若 $\E (\xi-\E\xi)^2$ 存在，则称它为随机变量 $\xi$ 的\textbf{方差} (variance)，并记为 $\D\xi$，而 $\sqrt{\D\xi}$ 称为\textbf{根方差}、\textbf{均方差}或更多地称为\textbf{标准差} (standard deviation)。
+\end{definition}
+\begin{proposition}[\textbf{方差的计算公式}] \label{prop:variance_calculation}
+利用数学期望的线性性质，随机变量 ξ 的方差 $\D\xi$ 可由以下公式计算：
+\begin{equation} \label{eq:variance_calculation_formula}
+\D\xi = \E (\xi-\E\xi)^2 = \E[\xi^2 - 2\xi \cdot \E\xi + (\E\xi)^2] = \E\xi^2 - 2\E\xi \cdot \E\xi + (\E\xi)^2 = \E\xi^2 - (\E\xi)^2
+\end{equation}
+在计算中，这个公式甚至比定义式更常用。
+\end{proposition}
+\begin{proposition}[\textbf{方差的性质}] \label{prop:variance_properties}
+\begin{itemize}
+    \item [(1)]常数的方差为 $0$。即 $\D c = 0$。
+    \item [(2)]$\D(\xi+c) = \D\xi$，这里 $c$ 是常数。
+    \item [(3)]$\D(c\xi) = c^2\D\xi$，这里 $c$ 是常数。
+\end{itemize}
+\end{proposition}
+\begin{proposition}[\textbf{方差的极值性质}] \label{prop:variance_minimal_property}
+若 $c \ne \E\xi$，则 $\D\xi < \E(\xi-c)^2$。
+\end{proposition}
+
+\begin{proof}
+因为
+\begin{align} \label{eq:variance_minimal_proof}
+\D\xi &= \E(\xi-\E\xi)^2 \\
+&= \E((\xi-c) - (\E\xi-c))^2 \notag \\
+&= \E(\xi-c)^2 - (\E\xi-c)^2 \label{eq:variance_minimal_proof_step}
+\end{align}
+由于 $(\E\xi-c)^2 \ge 0$，且当 $c \ne \E\xi$ 时 $(\E\xi-c)^2 > 0$，因此 $\D\xi < \E(\xi-c)^2$。
+\end{proof}
+\begin{remark}
+    这个性质表明数学期望具有一个重要的极值性质：在 $\E(\xi-c)^2$ 中，当 $c=\E\xi$ 时达到极小; 这也说明在 $\D\xi$ 的定义中取 $c=\E\xi$ 的合理性。
+\end{remark}
+\begin{definition}[协方差] \label{def:covariance}
+称
+\begin{equation} \label{eq:covariance_definition}
+\sigma_{ij}=\text{cov}(\xi_i,\xi_j) = \E[ (\xi_i-\E\xi_i) (\xi_j-\E\xi_j) ]，\quad i,j=1,2,\ldots,n
+\end{equation}
+为 $\xi_i$ 与 $\xi_j$ 的\textbf{协方差} (covariance)。
+\end{definition}
+\begin{proposition}[\textbf{协方差的性质}] \label{prop:covariance_properties}
+\begin{itemize}
+    \item [(1)]\begin{equation} \label{eq:covariance_calculation}
+\text{cov}(\xi_i,\xi_j)=\E\xi_i\xi_j-\E\xi_i \cdot \E\xi_j
+\end{equation}
+    \item [(2)]\begin{equation} \label{eq:variance_of_sum}
+\D\left(\sum_{i=1}^n \xi_i\right) = \sum_{i=1}^n \D\xi_i + 2 \sum_{1\le i<j\le n} \text{cov}(\xi_i,\xi_j)
+\end{equation}
+    \item [(3)]
+\end{itemize}特别地
+\begin{equation} \label{eq:variance_of_sum_two_vars}
+\D(\xi_i\pm\xi_j) = \D\xi_i+\D\xi_j\pm2\text{cov}(\xi_i,\xi_j)
+\end{equation}
+\end{proposition}
+
+\begin{remark}
+    方差是协方差的特例，显然 $\sigma_{ii}=\D\xi_i$。
+\end{remark}
+
+\begin{definition}[协方差矩阵]\label{def:协方差矩阵}
+    矩阵
+\begin{equation} \label{eq:covariance_matrix}
+\boldsymbol{\Sigma} = \begin{pmatrix}
+\sigma_{11} & \sigma_{12} & \cdots & \sigma_{1n} \\
+\sigma_{21} & \sigma_{22} & \cdots & \sigma_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+\sigma_{n1} & \sigma_{n2} & \cdots & \sigma_{nn}
+\end{pmatrix}
+\end{equation}
+称为 $\boldsymbol{\xi}$ 的\textbf{协方差矩阵}，简记作 $\D\boldsymbol{\xi}$。
+\end{definition}
+ 对任何实数 $t_j(j=1,2,\ldots,n)$ 有
+\[
+\sum_{j,k} \sigma_{jk}t_j t_k = \E\left[ \left(\sum_{j=1}^n t_j(\xi_j-\E\xi_j)\right)^2 \right] \ge 0
+\]
+因此 $\boldsymbol{\Sigma}$ 是一个非负定矩阵，所以若 $\det \boldsymbol{\Sigma}$ 记 $\boldsymbol{\Sigma}$ 的行列式，则有 $\det \boldsymbol{\Sigma} \ge 0$。
+\begin{definition}[相关系数] \label{def:correlation_coefficient}
+称
+\begin{equation} \label{eq:correlation_coefficient_formula}
+\rho_{ij}=\frac{\text{cov}(\xi_i,\xi_j)}{\sqrt{\D\xi_i}\sqrt{\D\xi_j}}
+\end{equation}
+为 $\xi_i$ 与 $\xi_j$ 的\textbf{相关系数} (correlation coefficient)，这里当然要求 $\D\xi_i$ 与 $\D\xi_j$ 不为零。
+\end{definition}
+\begin{theorem}[\textbf{柯西-施瓦茨 (Cauchy-Schwarz) 不等式}] \label{thm:cauchy_schwarz}
+对任意随机变量 $\xi$ 与 $\eta$ 都有
+\begin{equation} \label{eq:cauchy_schwarz_inequality}
+|\E\xi\eta|^2\le\E\xi^2 \cdot \E\eta^2
+\end{equation}
+等式成立当且仅当
+\begin{equation} \label{eq:cauchy_schwarz_equality_condition}
+P\{\eta=t_0\xi\}=1
+\end{equation}
+这里 $t_0$ 是某一个常数。
+\end{theorem}
+
+\begin{definition}[相关性] \label{def:uncorrelated}
+若随机变量 $\xi$ 与 $\eta$ 的相关系数 $\rho=0$，则我们称 $\xi$ 与 $\eta$ \textbf{不相关}。
+\end{definition}
+
+\begin{proposition}[\textbf{不相关性的等价条件}] \label{prop:uncorrelated_equivalences}
+对随机变量 $\xi$ 与 $\eta$，下面事实是等价的:
+\begin{enumerate}
+\item[(i)] $\text{cov}(\xi,\eta) = 0$;
+\item[(ii)] $\xi$ 与 $\eta$ 不相关;
+\item[(iii)] $\E\xi\eta = \E\xi \E\eta$;
+\item[(iv)] $\D(\xi+\eta) = \D\xi+\D\eta$。
+\end{enumerate}
+\end{proposition}
+\begin{proposition}[\textbf{独立性与不相关性}] \label{prop:independence_implies_uncorrelation}
+若 $\xi$ 与 $\eta$ 独立，则 $\xi$ 与 $\eta$ 不相关。
+\end{proposition}
+
+\begin{proof}
+我们只对连续型随机变量给出证明。因为 $\xi$ 与 $\eta$ 独立，故其联合密度函数 $p(x,y)=p_1(x)p_2(y)$，因此
+\begin{align*}
+\text{cov}(\xi,\eta) &= \E[(\xi-\E\xi)(\eta-\E\eta)] \\
+&= \int_{-\infty}^\infty \int_{-\infty}^\infty (x - \E\xi)(y - \E\eta)p(x,y) dx dy \\
+&= \int_{-\infty}^\infty \int_{-\infty}^\infty (x - \E\xi)(y - \E\eta)p_1(x)p_2(y) dx dy \\
+&= \int_{-\infty}^\infty (x - \E\xi)p_1(x) dx \cdot \int_{-\infty}^\infty (y - \E\eta)p_2(y) dy \\
+&= \E(\xi-\E\xi) \cdot \E(\eta-\E\eta) \\
+&= (\E\xi - \E\xi) \cdot (\E\eta - \E\eta) \\
+&= 0 \cdot 0 \\
+&= 0
+\end{align*}
+由于 $\text{cov}(\xi,\eta) = 0$，根据不相关性的等价条件 \ref{prop:uncorrelated_equivalences} (i) 和 (ii) 是等价的，所以 $\xi$ 与 $\eta$ 不相关。
+\end{proof}
+
+\begin{example}[\textbf{不相关但非独立的反例}] \label{ex:uncorrelated_not_independent}
+\newline 设 $\theta$ 服从 $[0,2\pi]$ 均匀分布，$\xi=\cos\theta$，$\eta=\cos(\theta+a)$，这里 $a$ 是定数。我们有
+\[
+\E\xi = \frac{1}{2\pi}\int_0^{2\pi} \cos t \,dt = 0
+\]
+\[
+\E\eta = \frac{1}{2\pi}\int_0^{2\pi} \cos(t+a) \,dt = 0
+\]
+\[
+\E\xi^2 = \frac{1}{2\pi}\int_0^{2\pi} \cos^2 t \,dt = \frac{1}{2\pi}\int_0^{2\pi} \frac{1+\cos(2t)}{2} \,dt = \frac{1}{2\pi}\left[\frac{t}{2}+\frac{\sin(2t)}{4}\right]_0^{2\pi} = \frac{1}{2}
+\]
+\[
+\E\eta^2 = \frac{1}{2\pi}\int_0^{2\pi} \cos^2(t+a) \,dt = \frac{1}{2}
+\]
+\[
+\E\xi\eta = \frac{1}{2\pi}\int_0^{2\pi} \cos t \cos(t+a) \,dt = \frac{1}{2\pi}\int_0^{2\pi} \frac{1}{2}[\cos(2t+a) + \cos a] \,dt = \frac{1}{2\pi}\left[\frac{\sin(2t+a)}{4} + \frac{t \cos a}{2}\right]_0^{2\pi} = \frac{1}{2}\cos a
+\]
+因此
+\[
+\text{cov}(\xi,\eta) = \E\xi\eta - \E\xi\E\eta = \frac{1}{2}\cos a - 0 \cdot 0 = \frac{1}{2}\cos a
+\]
+相关系数为
+\[
+\rho = \frac{\text{cov}(\xi,\eta)}{\sqrt{\D\xi}\sqrt{\D\eta}} = \frac{\frac{1}{2}\cos a}{\sqrt{\E\xi^2 - (\E\xi)^2}\sqrt{\E\eta^2 - (\E\eta)^2}} = \frac{\frac{1}{2}\cos a}{\sqrt{\frac{1}{2}}\sqrt{\frac{1}{2}}} = \cos a
+\]
+当 $a=0$ 时，$\rho=1$，$\xi=\eta$，存在完全线性关系。
+当 $a=\pi$ 时，$\rho=-1$，$\xi=-\eta$，存在完全线性关系。
+但是，当 $a=\frac{\pi}{2}$ 或 $\frac{3\pi}{2}$ 时，$\rho=0$，这时 $\xi$ 与 $\eta$ 不相关。不过，这时却有 $\xi^2+\eta^2=\cos^2\theta + \cos^2(\theta+\frac{\pi}{2}) = \cos^2\theta + (-\sin\theta)^2 = \cos^2\theta + \sin^2\theta = 1$。这是一个确定性关系，表明 $\xi$ 与 $\eta$ 之间存在非线性函数关系，因此 $\xi$ 与 $\eta$ 不独立。
+\end{example}
+\begin{remark}
+    事实上，相关系数只是线性联系程度的一个度量。
+\end{remark}
+\begin{remark}
+    二元正态分布/二值随机变量的情况下，独立性和不相关性是等价的。
+\end{remark}
+\begin{definition}[原点矩] \label{def:kth_raw_moment}
+对正整数 $k$, 称
+\begin{equation} \label{eq:kth_raw_moment}
+m_k = \E\xi^k
+\end{equation}
+为 $k$ \textbf{阶原点矩}，数学期望是一阶原点矩。
+由于 $|x^{k-1}|\le 1+|x|^k$, 因此若 $k$ 阶矩存在，则所有低阶矩都存在。
+\end{definition}
+
+\begin{definition}[中心矩] \label{def:kth_central_moment}
+对正整数 $k$，称
+\begin{equation} \label{eq:kth_central_moment}
+c_k = \E(\xi - \E\xi)^k
+\end{equation}
+为 $k$ \textbf{阶中心矩}，方差是 2 阶中心矩。
+\end{definition}
+
+\begin{definition}[条件数学期望] \label{def:conditional_expectation}
+两个随机变量 $\xi$ 与 $\eta$ 的场合下，假定它们具有密度函数 $p(x,y)$, 并以 $p(y|x)$ 记已知 $\xi=x$ 的条件下，$\eta$ 的条件密度函数，以 $p_1(x)$ 记 $\xi$ 的密度函数. 在 $\xi=x$ 的条件下，$\eta$ 的\textbf{条件数学期望}定义为
+\begin{equation} \label{eq:conditional_expectation}
+\E\{\eta \mid \xi = x\} = \int_{-\infty}^\infty y p(y \mid x) dy
+\end{equation}
+\end{definition}
+
+若 $\xi,\eta$ 是偏依的随机变量，我们要找 $\xi$ 与 $\eta$ 的函数关系，设这个关系是 $y=h(x)$。如果 $\E\eta^2$ 及 $\E[h(\xi)]^2$ 都存在，我们的目的是找函数 $h(x)$，使 $\eta$ 与 $h(\xi)$ “尽可能靠近”，这里的“靠近”需要一个标准，最常用的是\textbf{高斯斯最小二乘法} (least squares)，这时要求使如下的均方误差达到最小:
+\begin{equation} \label{eq:least_squares_min}
+\E[\eta - h(\xi)]^2 = \min
+\end{equation}
+因为
+\begin{equation} \label{eq:least_squares_expansion}
+\E[\eta - h(\xi)]^2 = \int_{-\infty}^\infty \int_{-\infty}^\infty [y - h(x)]^2 p(x,y)dxdy = \int_{-\infty}^\infty p_1(x)\left\{\int_{-\infty}^\infty [y - h(x)]^2 p(y \mid x) dy\right\} dx
+\end{equation}
+由 命题 \ref{prop:variance_minimal_property} 知，当 $h(x)=\E\{\eta \mid \xi=x\}$ 时，$\int_{-\infty}^\infty [y-h(x)]^2 \cdot p(y \mid x)dy$ 达到最小，从而使 \eqref{eq:least_squares_expansion} 达到最小，即当我们观察到 $\xi=x$ 时, $\E\{\eta \mid \xi=x\}$ 是对一切对 $\eta$ 的估计中均方误差最小的一个。
+
+\begin{definition}[回归]\label{def:回归}
+    称 $Y=\E\{\eta \mid \xi=x\}$ 是 $\eta$ 关于 $\xi$ 的回归。
+\end{definition}
+\begin{proposition}[\textbf{重期望公式}] \label{prop:law_of_total_expectation}
+\begin{equation} \label{eq:law_of_total_expectation_formula}
+\E\eta = \E[\E\{\eta \mid \xi\}]
+\end{equation}
+这是条件数学期望的一个重要的性质，称为\textbf{重期望公式}。
+\end{proposition}
+
+\begin{proof}
+下面对连续型随机变量的场合加以证明。
+\begin{align*}
+\E[\E\{\eta \mid \xi\}] &= \int_{-\infty}^\infty \E\{\eta \mid \xi=x\}p_1(x) dx \\
+&= \int_{-\infty}^\infty \left[ \int_{-\infty}^\infty yp(y \mid x) dy \right] p_1(x) dx \\
+&= \int_{-\infty}^\infty \int_{-\infty}^\infty yp(y \mid x)p_1(x) dx dy \\
+&= \int_{-\infty}^\infty \int_{-\infty}^\infty yp(x,y) dx dy \\
+&= \E\eta
+\end{align*}
+命题得证。
+\end{proof}
+\subsection{特征函数}\label{subsec:特征函数}
+\begin{definition}[特征函数] \label{def:characteristic_function}
+若随机变量 $\xi$ 的分布函数为 $F_\xi(x)$，则称
+\begin{equation} \label{eq:characteristic_function_formula}
+f_\xi(t) = \E e^{it\xi} = \int_{-\infty}^\infty e^{itx} dF_\xi(x)
+\end{equation}
+为 $\xi$ 的\textbf{特征函数} (characteristic function)。
+\end{definition}
+\begin{remark}
+    分布函数由特征函数唯一确定。
+\end{remark}

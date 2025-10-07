@@ -1,0 +1,783 @@
+\chapter{数理统计的预备知识}\label{chap:数理统计的预备知识}
+
+\section{统计量}\label{sec:统计量}
+数理统计的基本任务是通过样本去推断总体，而样本需要进行加工处理才能得到一些有用特征。
+\begin{definition}[统计量] \label{def:statistic}
+由样本算出的量称为\textbf{统计量} (statistic)。或者说，统计量是样本的函数。
+\end{definition}
+以下是一些常用统计量。
+\begin{definition}[\textbf{样本均值}] \label{def:sample_mean}
+设 $X_1,\ldots,X_n$ 是从某总体 $X$ 中抽取的样本，则称
+\[
+\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i
+\]
+为\textbf{样本均值} (sample mean)，它反映了总体均值的信息。
+\end{definition}
+\begin{definition}[\textbf{样本方差}] \label{def:sample_variance}
+设 $X_1,\ldots,X_n$ 是从某总体 $X$ 中抽取的样本，则称
+\[
+S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})^2
+\]
+为\textbf{样本方差} (sample variance)。它反映了总体方差的信息，而 $S$ 称为\textbf{样本标准差}。
+\end{definition}
+\begin{remark}
+    用 $S^2$ 定义样本方差的好处是 $\E(S^2) = \sigma^2 = \D(X)$，其中 $n-1$ 称为其自由度。
+\end{remark}
+
+\begin{definition}[\textbf{样本矩}] \label{def:sample_moments}
+设 $X_1,\ldots,X_n$ 为从总体 $F$ 中抽取的样本，则称
+\[
+a_{n,k} = \frac{1}{n}\sum_{i=1}^n X_i^k，\quad k=1,2,\ldots
+\]
+为\textbf{样本 $k$ 阶原点矩}。特别 $k=1$ 时，$a_{n,1} = \overline{X}$，即样本均值。称
+\[
+m_{n,k} = \frac{1}{n}\sum_{i=1}^n (X_i - \overline{X})^k, \quad k=2,3,\ldots
+\]
+为\textbf{样本 $k$ 阶中心矩}。
+样本的原点矩和中心矩统称为\textbf{样本矩} (sample moments)。
+\end{definition}
+
+\begin{definition}[\textbf{二维随机向量的样本矩}] \label{def:sample_moments_bivariate}
+设 $(X_1,Y_1),\ldots,(X_n,Y_n)$ 为从二维总体 $F(x,y)$ 中抽取的样本，则
+\[
+\overline{X} = \frac{1}{n}\sum_{i=1}^n X_i, \quad S_X^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X})^2,
+\]
+\[
+\overline{Y} = \frac{1}{n}\sum_{i=1}^n Y_i, \quad S_Y^2 = \frac{1}{n-1}\sum_{i=1}^n (Y_i - \overline{Y})^2,
+\]
+\[
+S_{XY} = \frac{1}{n}\sum_{i=1}^n (X_i - \overline{X})(Y_i - \overline{Y})
+\]
+分别称为为 $X$ 和 $Y$ 的\textbf{样本均值}、\textbf{样本方差}及 $X$ 和 $Y$ 的\textbf{样本协方差} (sample covariance)。
+\end{definition}
+
+\begin{definition}[\textbf{次序统计量}] \label{def:order_statistics}
+设 $X_1,\ldots,X_n$ 为从总体 $F$ 中抽取的样本，将其按大小排列为 $X_{(1)} \le X_{(2)} \le \cdots \le X_{(n)}$，则 $(X_{(1)}, X_{(2)}, \ldots, X_{(n)})$ 称为样本 $(X_1, \ldots, X_n)$ 的\textbf{次序统计量} (order statistics)，$X_{(1)}, \ldots, X_{(n)}$ 的任一部分也称为次序统计量。
+\end{definition}
+
+\begin{definition}[经验分布函数] \label{def:empirical_distribution_function}
+设 $X_1,\ldots,X_n$ 为自总体 $F(x)$ 中抽取的 i.i.d. 样本，将其按大小排列为 $X_{(1)} \le X_{(2)} \le \cdots \le X_{(n)}$，对任意实数 $x$，称下列函数:
+\begin{equation} \label{eq:empirical_distribution_function}
+F_n(x)=
+\begin{cases}
+0, & x \le X_{(1)}, \\
+\frac{k}{n}, & X_{(k)} < x \le X_{(k+1)}, \quad k=1,2,\ldots,n-1, \\
+1, & X_{(n)} < x
+\end{cases}
+\end{equation}
+为\textbf{经验分布函数} (empirical distribution function)。
+\end{definition}
+
+\begin{remark}
+    经验分布函数是单调、非降、左连续函数，具有分布函数的基本性质。它在 $x=X_{(k)}$，$k=1,2,\ldots,n$ 处有间断，它是在每个间断点跳跃的幅度为 $1/n$ 的阶梯函数。$F_n(x)$ 可以看成总体分布函数 $F(x) = P(X < x)$ 的一个估计量。若记示性函数
+\[
+I_A(x)=
+\begin{cases}
+1, & x \in A， \\
+0, & \text{其他}，
+\end{cases}
+\]
+则 $F_n(x)$ 可表示为
+\begin{equation} \label{eq:fn_as_sum_of_indicators}
+F_n(x) = \frac{1}{n}\sum_{i=1}^n I_{(-\infty,x)}(X_i)
+\end{equation}
+\end{remark}
+记 $Y_i = I_{(-\infty,x]}(X_i)$，$i=1,2,\ldots,n$，则 $P(Y_i=1) = F(x)$，$P(Y_i=0) = 1-F(x)$，且 $Y_1, Y_2, \ldots, Y_n$ i.i.d. $\sim b(1,F(x))$，故 $nF_n(x) = \sum_{i=1}^n Y_i \sim B(n,F(x))$，因此对 $k=0,1,\ldots,n$ 有
+\[
+P\left(nF_n(x)=k\right) = P\left(\sum_{i=1}^n Y_i=k\right) = \binom{n}{k}[F(x)]^k[1-F(x)]^{n-k}
+\]
+利用二项分布的性质可知对任一固定的 $x \in (-\infty,\infty)$，$F_n(x)$ 具有大样本性质:
+\begin{proposition}[经验分布函数的大样本性质]\label{prop:经验分布函数的大样本性质}
+    \begin{enumerate}
+    \item[(1)] 由中心极限定理 \ref{thm:lindeberg_levy_clt}，则当 $n \to \infty$ 时
+    \[
+    \frac{\sqrt{n}(F_n(x) - F(x))}{\sqrt{F(x)(1-F(x))}} \xrightarrow{\mathscr{L}} N(0,1)；
+    \]
+    此处 $\xrightarrow{\mathscr{L}}$ 表示依分布收敛。
+
+    \item[(2)] 由 Bernoulli大数定律 \ref{prop:bernoulli_lln}，在 $n \to \infty$ 时
+    \[
+    F_n(x) \xrightarrow{P} F(x)；
+    \]
+    \item[(3)] 由 Borel 强大数定律 \ref{thm:borel_lln}，有
+    \[
+    P\left( \lim_{n\to\infty} F_n(x) = F(x) \right) = 1；
+    \]
+\end{enumerate}
+\end{proposition}
+
+\section{抽样分布}\label{sec:抽样分布}
+统计量的概率分布称为抽样分布。
+\subsection{正态总体统计量的分布}\label{subsec:正态总体统计量的分布}
+
+\begin{theorem}[正态变量线性组合的分布] \label{thm:sum_of_normals}
+设随机变量 $X_1, \ldots, X_n$ 相互独立且 $X_k \sim N(a_k, \sigma_k^2)$, $k=1, \ldots, n$.
+令 $c_1, c_2, \ldots, c_n$ 为常数, 记 $T = \sum_{k=1}^n c_k X_k$, 则 $T \sim N(\mu, \tau^2)$, 其中 $\mu = \sum_{k=1}^n c_k a_k$, $\tau^2 = \sum_{k=1}^n c_k^2 \sigma_k^2$.
+\end{theorem}
+\begin{proof}
+因 $X_k \sim N(a_k, \sigma_k^2)$, $k=1,2,\ldots,n$, 故其特征函数 (c.f.) 为
+\[
+\varphi_k(t) = \E(e^{itX_k}) = e^{ia_k t - \frac{1}{2}\sigma_k^2 t^2}
+\]
+所以 $T$ 的 c.f. 为
+\begin{align*}
+\varphi(t) &= \E(e^{itT}) = \E\left(e^{it\sum_{k=1}^n c_k X_k}\right) \\
+&= \E\left(\prod_{k=1}^n e^{it c_k X_k}\right) \\
+&= \prod_{k=1}^n \E(e^{i(tc_k) X_k}) \quad (\text{因 } X_k \text{ 相互独立}) \\
+&= \prod_{k=1}^n e^{ia_k (tc_k) - \frac{1}{2}\sigma_k^2 (tc_k)^2} \\
+&= \prod_{k=1}^n e^{i(c_k a_k) t - \frac{1}{2}(c_k^2 \sigma_k^2) t^2} \\
+&= e^{i\left(\sum_{k=1}^n c_k a_k\right) t - \frac{1}{2}\left(\sum_{k=1}^n c_k^2 \sigma_k^2\right) t^2}
+\end{align*}
+可见 $T \sim N(\mu, \tau^2)$, 其中 $\mu = \sum_{k=1}^n c_k a_k$, $\tau^2 = \sum_{k=1}^n c_k^2 \sigma_k^2$. 定理得证。
+\end{proof}
+
+\begin{corollary}[]\label{cor:sum_of_normals_same_mean_var}
+在定理 \ref{thm:sum_of_normals} 中, 若 $a_1 = \cdots = a_n = a$, $\sigma_1^2 = \cdots = \sigma_n^2 = \sigma^2$, 则有
+\[
+T \sim N\left(a \sum_{k=1}^n c_k, \sigma^2 \sum_{k=1}^n c_k^2\right).
+\]
+\end{corollary}
+
+\begin{corollary}[] \label{cor:sample_mean_distribution}
+在推论 \ref{cor:sum_of_normals_same_mean_var} 中若取 $c_1 = \cdots = c_n = 1/n$, 即 $X_1, \ldots, X_n$ i.i.d. $\sim N(a,\sigma^2)$, $T = \sum_{k=1}^n X_k/n = \overline{X}$, 则
+\[
+\overline{X} \sim N\left(a,\sigma^2/n\right).
+\]
+\end{corollary}
+
+\begin{theorem}[独立同分布正态变量线性变换的性质] \label{thm:linear_transformation_of_normals}
+设 $X_1, \ldots, X_n$ i.i.d. $\sim N(a,\sigma^2)$, $\boldsymbol{X} = (X_1, \ldots, X_n)'$, $\boldsymbol{Y} = (Y_1, \ldots, Y_n)'$, $\boldsymbol{A} = (a_{ij})$ 为 $n \times n$ 的常数方阵, 记 $\boldsymbol{Y} = \boldsymbol{A}\boldsymbol{X}$, 即
+\begin{equation} \label{eq:matrix_transformation}
+\begin{pmatrix} Y_1 \\ \vdots \\ Y_n \end{pmatrix} = \begin{pmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{n1} & \cdots & a_{nn} \end{pmatrix} \begin{pmatrix} X_1 \\ \vdots \\ X_n \end{pmatrix}
+\end{equation}
+则有
+\begin{itemize}
+    \item [(1)] $Y_1, \ldots, Y_n$ 也是正态随机变量, 且
+\[
+\E(Y_i) = a \sum_{k=1}^n a_{ik}, \quad \D(Y_i) = \sigma^2 \sum_{k=1}^n a_{ik}^2,
+\]
+\[
+\text{Cov}(Y_i, Y_j) = \sigma^2 \sum_{k=1}^n a_{ik}a_{jk}.
+\]
+    \item [(2)] 特别当 $\boldsymbol{A} = (a_{ij})$ 为 $n$ 阶正交阵时, $Y_1, Y_2, \ldots, Y_n$ 也相互独立且 $Y_i \sim N(\mu_i, \sigma^2)$, 此处 $\mu_i = a \sum_{k=1}^n a_{ik}$.
+
+    \item [(3)] 若再进一步假定 $a=0$, 则 $Y_1, Y_2, \ldots, Y_n$ i.i.d. $\sim N(0, \sigma^2)$. 此事实说明: i.i.d. 服从正态分布 $N(0, \sigma^2)$ 的随机变量经正交变换后仍为 i.i.d. 服从 $N(0, \sigma^2)$ 的随机变量.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+\begin{itemize}
+    \item [(1)] 由式 \eqref{eq:matrix_transformation} 可知 $Y_i = \sum_{k=1}^n a_{ik}X_k$. 再由推论 \ref{cor:sum_of_normals_same_mean_var} 可知
+\[
+Y_i \sim N\left(a \sum_{k=1}^n a_{ik}, \sigma^2 \sum_{k=1}^n a_{ik}^2\right).
+\]
+因此有 $\E(Y_i) = a \sum_{k=1}^n a_{ik}$, $\D(Y_i) = \sigma^2 \sum_{k=1}^n a_{ik}^2$. 而
+\begin{align*}
+\text{Cov}(Y_i, Y_j) &= \E[(Y_i - \E Y_i)(Y_j - \E Y_j)] \\
+&= \E\left[\left(\sum_{k=1}^n a_{ik}X_k - a\sum_{k=1}^n a_{ik}\right)\left(\sum_{l=1}^n a_{jl}X_l - a\sum_{l=1}^n a_{jl}\right)\right] \\
+&= \E\left[\left(\sum_{k=1}^n a_{ik}(X_k - a)\right)\left(\sum_{l=1}^n a_{jl}(X_l - a)\right)\right] \\
+&= \sum_{k=1}^n \sum_{l=1}^n a_{ik}a_{jl} \E[(X_k - a)(X_l - a)] \\
+&= \sum_{k=1}^n \sum_{l=1}^n a_{ik}a_{jl} \text{Cov}(X_k, X_l) \\
+&= \sum_{k=1}^n \sum_{l=1}^n a_{ik}a_{jl} \delta_{kl}\sigma^2 \\
+&= \sigma^2 \sum_{k=1}^n a_{ik}a_{jk}.
+\end{align*}
+    \item [(2)] 当 $\boldsymbol{A} = (a_{ij})$ 为 $n$ 阶正交阵时, $\sum_{k=1}^n a_{ik}a_{jk} = \delta_{ij}$ (正交阵的性质).
+所以 $\text{Cov}(Y_i, Y_j) = \sigma^2 \delta_{ij}$.
+当 $i \ne j$ 时, $\text{Cov}(Y_i, Y_j) = 0$. 由于 $Y_i$ 都是正态随机变量, 协方差为零蕴含独立 (正态随机变量的性质).
+又 $\D(Y_i) = \sigma^2 \sum_{k=1}^n a_{ik}^2 = \sigma^2 \cdot 1 = \sigma^2$.
+    \item [(3)] 特别若 $a=0$, 则 $\mu_i = a \sum_{k=1}^n a_{ik} = 0$, 故此时 $Y_1, \ldots, Y_n$ i.i.d. $\sim N(0, \sigma^2)$.
+\end{itemize}
+\end{proof}
+
+\begin{lemma}[\textbf{Fisher引理}] \label{lem:fisher}
+设 $X_1, X_2, \ldots, X_n$ i.i.d. $\sim N(a, \sigma^2)$, $\overline{X} = \sum_{i=1}^n X_i/n$ 和 $S^2 = \sum_{i=1}^n (X_i - \overline{X})^2/(n-1)$ 分别为样本均值和样本方差，则有：
+\begin{enumerate}
+    \item[(1)] $\overline{X} \sim N(a, \sigma^2/n)$；
+    \item[(2)] $(n-1)S^2/\sigma^2 \sim \chi_{n-1}^2$；
+    \item[(3)] $\overline{X}$ 和 $S^2$ 独立。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) 由推论 \ref{cor:sample_mean_distribution} 立得 $\overline{X} \sim N(a, \sigma^2/n)$.
+
+下证 (2) 和 (3)，设
+\[
+\boldsymbol{A} = \begin{pmatrix}
+1/\sqrt{n} & 1/\sqrt{n} & \cdots & 1/\sqrt{n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{nn}
+\end{pmatrix}
+\]
+为一正交阵 (这一正交阵的存在性由施密特正交化方法保证)。作正交变换 $\boldsymbol{Y} = \boldsymbol{A}\boldsymbol{X}$, 其中 $\boldsymbol{Y}$ 和 $\boldsymbol{X}$ 如定理\ref{thm:linear_transformation_of_normals} 所示, 故有
+\[
+Y_1 = \frac{1}{\sqrt{n}}\sum_{i=1}^n X_i = \sqrt{n}\overline{X}
+\]
+由正交变换保持向量长度不变可知
+\[
+Y_1^2 + Y_2^2 + \cdots + Y_n^2 = X_1^2 + X_2^2 + \cdots + X_n^2.
+\]
+所以
+\begin{align}
+(n-1)S^2 &= \sum_{i=1}^n (X_i - \overline{X})^2 
+= \sum_{i=1}^n X_i^2 - n\overline{X}^2 \notag
+= \sum_{i=1}^n Y_i^2 - (\sqrt{n}\overline{X})^2 \notag \\
+&= \sum_{i=1}^n Y_i^2 - Y_1^2 
+= \sum_{i=2}^n Y_i^2. \label{eq:sum_of_squares_S2}
+\end{align}
+由定理 \ref{thm:linear_transformation_of_normals} (2) 可知 $Y_1, \ldots, Y_n$ 相互独立且 $Y_i \sim N(\mu_i, \sigma^2)$, $i=2, \ldots, n$. 再由 $\boldsymbol{A}$ 的行向量正交可得
+\begin{equation}\label{eq:正交行向量推均值为0}
+    \mu_i = \E(Y_i) = a \sum_{k=1}^n a_{ik} = \sqrt{n}a \cdot \sum_{k=1}^{n}\frac{1}{\sqrt{n}}\cdot a_{ik} = 0
+\end{equation}
+即 $Y_2, \ldots, Y_n$ i.i.d. $\sim N(0, \sigma^2)$, 故 $Y_i/\sigma \sim N(0,1)$.
+由式 \eqref{eq:sum_of_squares_S2} 得
+\[
+\frac{(n-1)S^2}{\sigma^2} = \sum_{i=2}^n (Y_i/\sigma)^2 \sim \chi_{n-1}^2.
+\]
+
+由上述 (2) 的证明中可知 $Y_1$ 和 $Y_2, \ldots, Y_n$ 相互独立, $S^2$ 只和 $Y_2, \ldots, Y_n$ 有关, $\overline{X}$ 只和 $Y_1$ 有关, 因此 $\overline{X}$ 和 $S^2$ 独立, 故 (3) 得证，定理证毕.
+\end{proof}
+
+\subsection{次序统计量的分布}\label{subsec:次序统计量的分布}
+\begin{proposition}[\textbf{单个次序统计量的分布}] \label{prop:single_order_statistic_distribution}
+设 $X_1, X_2, \ldots, X_n$ i.i.d. $\sim F$, $f$ 为 $F$ 的密度, 则第 $m$ 个次序统计量 $X_{(m)}$ 的分布函数 $F_m(x)$ 为
+\begin{equation} \label{eq:order_statistic_cdf}
+F_m(x) = \sum_{i=m}^n \binom{n}{i} (F(x))^i (1-F(x))^{n-i}
+\end{equation}
+其密度函数 $f_m(x)$ 为
+\begin{equation} \label{eq:order_statistic_pdf}
+f_m(x) = m \binom{n}{m} (F(x))^{m-1}(1-F(x))^{n-m} f(x)
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+$F_m(x) = P(X_{(m)} \le x)$。
+事件 $\{X_{(m)} \le x\}$ 意味着在 $n$ 个样本 $X_1, X_2, \ldots, X_n$ 中至少有 $m$ 个小于等于 $x$。
+若记事件 $A_i = \{X_i \le x\}$，$i=1,2,\ldots,n$，则 $P(A_i) = P(X_i \le x) = F(x)$。
+事件 $\{X_{(m)} \le x\}$ 等价于“事件 $A_1, A_2, \ldots, A_n$ 中至少有 $m$ 个发生”。
+对于每次试验，事件 $A_i$ 发生的概率为 $F(x)$，不发生的概率为 $1-F(x)$。由于 $X_i$ 是独立同分布的，这构成了一个二项试验的场合。
+在 $n$ 次试验中，恰好有 $i$ 个事件发生（即有 $i$ 个 $X_k \le x$）的概率服从二项分布 $b(n, i, F(x))$，即 $\binom{n}{i} (F(x))^i (1-F(x))^{n-i}$。
+因此，$X_{(m)}$ 的分布函数 $F_m(x)$ 为：
+\[
+F_m(x) = P(X_{(m)} \le x) = \sum_{i=m}^n P(\text{恰有 } i \text{ 个 } X_k \le x) = \sum_{i=m}^n \binom{n}{i} (F(x))^i (1-F(x))^{n-i}
+\]
+
+对任意的实数 $x$，考虑次序统计量 $X_{(k)}$ 取值落在小区间 $(x,x+\Delta x]$ 内这一事件，它等价于“样本容量为 $n$ 的样本中有一个观测值落在 $(x,x+\Delta x]$ 之间 (多于一个观测值落在区间 $(x,x+\Delta x]$ 的概率是 $\Delta x$ 的高阶无穷小量, 后同)，而有 $k-1$ 个观测值小于等于 $x$，有 $n-k$ 个观测值大于 $x+\Delta x$”，于是由多项分布知：
+\begin{align*}
+F_m(x+\Delta x) - F_m(x) &= \frac{n!}{(m-1)!1!(n-m)!} [F(x)]^{m-1} [F(x+\Delta x)-F(x)] [1-F(x)]^{n-m} \\
+f_m(x) &= \lim_{\Delta x \to 0} \frac{F_m(x+\Delta x) - F_m(x)}{\Delta x} \\
+&= m \binom{n}{m} [F(x)]^{m-1} [1-F(x)]^{n-m} f(x)
+\end{align*}
+\end{proof}
+\begin{remark}
+    样本极小值 $X_{(1)}$ 的分布函数和密度函数 ($m=1$)：
+    由 \eqref{eq:order_statistic_cdf}，当 $m=1$ 时：
+    $F_1(x) = \sum_{i=1}^n \binom{n}{i} (F(x))^i (1-F(x))^{n-i} = 1 - \binom{n}{0} (F(x))^0 (1-F(x))^{n-0} = 1 - (1-F(x))^n$.
+    由 \eqref{eq:order_statistic_pdf}，当 $m=1$ 时：
+    $f_1(x) = 1 \binom{n}{1} (F(x))^{1-1}(1-F(x))^{n-1} f(x) = n(1-F(x))^{n-1}f(x)$.
+
+    样本极大值 $X_{(n)}$ 的分布函数和密度函数 ($m=n$)：
+    由 \eqref{eq:order_statistic_cdf}，当 $m=n$ 时：
+    $F_n(x) = \sum_{i=n}^n \binom{n}{i} (F(x))^i (1-F(x))^{n-i} = \binom{n}{n} (F(x))^n (1-F(x))^0 = (F(x))^n$.
+    由 \eqref{eq:order_statistic_pdf}，当 $m=n$ 时：
+    $f_n(x) = n \binom{n}{n} (F(x))^{n-1}(1-F(x))^{n-n} f(x) = n(F(x))^{n-1}f(x)$.
+\end{remark}
+
+\begin{proposition}[\textbf{$n$ 个次序统计量 $(X_{(1)}, \ldots, X_{(n)})$ 的联合分布}] \label{prop:joint_order_statistics_distribution}
+令 $y_i = x_{(i)}$, $i = 1, \ldots, n$, 则 $n$ 个次序统计量的联合分布函数 $G(y_1, y_2, \ldots, y_n)$ 为
+\begin{align*}
+G(y_1, y_2, \ldots, y_n) &= P(X_{(1)} < y_1, X_{(2)} < y_2, \ldots, X_{(n)} < y_n) \\
+&=\begin{cases}
+n!P(X_{j_1} < y_1, X_{j_2} < y_2, \ldots, X_{j_n} < y_n), & \text{若 } y_1 < y_2 < \cdots < y_n, \\
+0, & \text{其他}.
+\end{cases}
+\end{align*}
+其中 $X_{j_1} < \cdots < X_{j_n}$, $(j_1, \ldots, j_n)$ 是 $(1, \ldots, n)$ 的任一排列.
+$n$ 个次序统计量的联合密度为
+\begin{equation} \label{eq:joint_order_statistics_pdf}
+g(y_1, y_2, \ldots, y_n) =
+\begin{cases}
+n!f(y_1)f(y_2)\cdots f(y_n), & \text{若 } y_1 < y_2 < \cdots < y_n, \\
+0, & \text{其他}.
+\end{cases}
+\end{equation}
+\end{proposition}
+
+\begin{proposition}[\textbf{两个次序统计量的联合分布}] \label{prop:joint_two_order_statistics_distribution}
+设 $X_1, \ldots, X_n$ i.i.d. $\sim F$ 有密度 $f$. 记 $\boldsymbol{X} = (X_1, \ldots, X_n)$, 则 $\boldsymbol{X}$ 的次序统计量 $(X_{(1)}, \ldots, X_{(n)})$ 中的任意两个 $(X_{(i)}, X_{(j)})$ ($i<j$) 的联合密度为
+\begin{equation} \label{eq:joint_two_order_statistics_pdf}
+f_{ij}(x, y) =
+\begin{cases}
+\frac{n!}{(i-1)!(j-i-1)!(n-j)!} (F(x))^{i-1}(F(y) - F(x))^{j-i-1}(1-F(y))^{n-j} f(x)f(y), & \text{若 } x < y, \\
+0, & \text{其他}.
+\end{cases}
+\end{equation}
+此处 $x = x_{(i)}$, $y = x_{(j)}$.
+\end{proposition}
+\begin{proof}
+    同命题 \ref{prop:single_order_statistic_distribution}的思想。
+\end{proof}
+
+\begin{proposition}[\textbf{均匀分布下极差的分布}] \label{prop:uniform_range_distribution}
+设 $X_1, X_2, \ldots, X_n$ i.i.d. $\sim U(0,1)$，其分布函数 $F(x)$ 和密度函数 $f(x)$ 分别为
+\[
+F(x)=
+\begin{cases}
+0, & x \le 0 \\
+x, & 0 < x \le 1 \\
+1, & x > 1
+\end{cases}
+\quad \text{和} \quad
+f(x)=
+\begin{cases}
+1, & 0 < x < 1 \\
+0, & \text{其他}
+\end{cases}
+\]
+则极差 $R = X_{(n)} - X_{(1)}$ 的密度函数 $g_R(r)$ 为
+\begin{equation} \label{eq:uniform_range_pdf}
+g_R(r)=
+\begin{cases}
+n(n-1)r^{n-2}(1-r), & 0 < r < 1, \\
+0, & \text{其他}.
+\end{cases}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+我们首先需要找到 $X_{(1)}$ 和 $X_{(n)}$ 的联合密度函数 $f_{1n}(x,y)$。
+根据命题 \ref{prop:joint_two_order_statistics_distribution} 中两个次序统计量联合密度的通用公式，设 $i=1, j=n$：
+\[
+f_{1n}(x, y) = \frac{n!}{(i-1)!(j-i-1)!(n-j)!} (F(x))^{i-1}(F(y) - F(x))^{j-i-1}(1-F(y))^{n-j} f(x)f(y)
+\]
+代入 $i=1, j=n$：
+\[
+f_{1n}(x, y) = \frac{n!}{(1-1)!(n-1-1)!(n-n)!} (F(x))^{1-1}(F(y) - F(x))^{n-1-1}(1-F(y))^{n-n} f(x)f(y)
+\]
+\[
+= \frac{n!}{(n-2)!} (F(x))^0 (F(y) - F(x))^{n-2} (1-F(y))^0 f(x)f(y)
+\]
+\[
+= n(n-1) (F(y) - F(x))^{n-2} f(x)f(y) \quad \text{for } 0 < x < y < 1.
+\]
+对于 $U(0,1)$ 分布，我们有 $F(x)=x$ 和 $f(x)=1$ 对于 $x \in (0,1)$。
+所以，
+\begin{equation} \label{eq:joint_X1_Xn_pdf}
+f_{1n}(x, y) = n(n-1) (y - x)^{n-2} \quad 0 < x < y < 1.
+\end{equation}
+进行变量变换。令 $R = X_{(n)} - X_{(1)}$ 和 $V = X_{(1)}$。
+则反变换为 $X_{(1)} = V$ 和 $X_{(n)} = R + V$。
+雅可比行列式为：
+\[
+J = \det \begin{pmatrix} \frac{\partial x_{(1)}}{\partial r} & \frac{\partial x_{(1)}}{\partial v} \\ \frac{\partial x_{(n)}}{\partial r} & \frac{\partial x_{(n)}}{\partial v} \end{pmatrix} = \det \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix} = 0 \cdot 1 - 1 \cdot 1 = -1.
+\]
+所以 $|J| = 1$.
+
+转换后的联合密度函数为 $g(r,v) = f_{1n}(v, r+v) |J|$：
+\[
+g(r,v) = n(n-1)((r+v) - v)^{n-2} \cdot 1 = n(n-1)r^{n-2}.
+\]
+此密度函数的有效区域由 $0 < x < y < 1$ 变换而来：
+$0 < v < r+v < 1 \implies 0 < v < 1-r$ 且 $r > 0$.
+所以 $0 < r < 1$ 且 $0 < v < 1-r$.
+
+最后，我们通过对 $V$ 积分来得到极差 $R$ 的边际密度函数 $g_R(r)$：
+\[
+g_R(r) = \int_{-\infty}^\infty g(r,v) dv = \int_0^{1-r} n(n-1)r^{n-2} dv
+\]
+\[
+= n(n-1)r^{n-2} v|_0^{1-r} = n(n-1)r^{n-2}(1-r).
+\]
+结合其有效区域，我们得到 $g_R(r)$ 的最终形式：
+\[
+g_R(r)=
+\begin{cases}
+n(n-1)r^{n-2}(1-r), & 0 < r < 1, \\
+0, & \text{其他}.
+\end{cases}
+\]
+命题得证。
+\end{proof}
+\subsection{统计量的极限分布}\label{subsec:统计量的极限分布}
+\begin{definition}[极限分布] \label{def:limit_distribution}
+当样本容量 $n$ 趋向无穷时, 统计量的分布趋于一确定分布, 则后者的分布称为\textbf{统计量的极限分布}, 也常称为\textbf{大样本分布}.
+\end{definition}
+
+\begin{definition}[大样本与小样本性质] \label{def:large_small_sample_properties}
+当样本容量 $n \to \infty$ 时, 一个统计量或统计推断方法的性质称为\textbf{大样本性质} (large sample properties)。当样本大小固定时, 统计量或统计推断方法的性质称为\textbf{小样本性质} (small sample properties).
+\end{definition}
+\begin{remark}
+    两者的差别在于样本容量是否趋于无穷，而不是样本大小；大样本性质有 第\ref{chap:极限定理} 章中的几种收敛情况，小样本性质有无偏性等。
+\end{remark}
+\begin{lemma}[Slutsky引理] \label{lem:slutsky}
+令 $\{X_n\}$ 和 $\{Y_n\}$ 是两个随机变量的序列, 满足当 $n \to \infty$ 时 $X_n \xrightarrow{\mathscr{L}} X$, $Y_n \xrightarrow{P} c$, $-\infty < c < \infty$ 为常数, 则有
+(1) $X_n \pm Y_n \xrightarrow{\mathscr{L}} X \pm c$,
+(2) $X_n Y_n \xrightarrow{\mathscr{L}} cX$,
+(3) $X_n / Y_n \xrightarrow{\mathscr{L}} X/c$ ($c \ne 0$).
+\end{lemma}
+
+\begin{example}\label{ex:binomial_sample_mean_limit_distribution}
+设 $X \sim b(1,p)$, 令 $X_1, \ldots, X_n$ 为自总体 $X$ 中抽取的简单样本。试证 $\sqrt{n}(\overline{X}-p)/\sqrt{\overline{X}(1-\overline{X})}$ 的极限分布为 $N(0,1)$.
+\end{example}
+
+\begin{proof}
+利用上述引理证明所求问题如下: 令 $\hat{p} = \overline{X} = \sum_{i=1}^n X_i/n$, 由中心极限定理和大数定律可知, 当 $n \to \infty$ 时
+\[
+\frac{\hat{p}-p}{\sqrt{p(1-p)/n}} \xrightarrow{\mathscr{L}} N(0,1), \quad \frac{\sqrt{p(1-p)}}{\sqrt{\hat{p}(1-\hat{p})}} \xrightarrow{P} 1.
+\]
+故由 Slutsky 引理 \ref{lem:slutsky} 可知, 当 $n \to \infty$ 时
+\[
+\frac{\sqrt{n}(\overline{X}-p)}{\sqrt{\overline{X}(1-\overline{X})}} = \frac{\hat{p}-p}{\sqrt{p(1-p)/n}} \cdot \frac{\sqrt{p(1-p)}}{\sqrt{\hat{p}(1-\hat{p})}} \xrightarrow{\mathscr{L}} N(0,1).
+\]
+问题得证.
+\end{proof}
+\section{统计三大分布}\label{sec:统计三大分布}
+
+\begin{definition}[$\chi^2$ 分布] \label{def:chi_squared_distribution}
+设 $X_1,X_2,\ldots,X_n$ i.i.d. $\sim N(0,1)$, 则称
+\[
+\xi = \sum_{i=1}^n X_i^2
+\]
+是\textbf{自由度为 $n$ 的 $\chi^2$ 变量}, 其分布称为\textbf{自由度为 $n$ 的 $\chi^2$ 分布}, 记为 $\xi \sim \chi_n^2$.
+\end{definition}
+
+\begin{theorem}[$\chi^2$变量的概率密度函数] \label{thm:chi_squared_pdf}
+设随机变量 $\xi$ 是自由度 $n$ 的 $\chi^2$ 随机变量, 则其概率密度为
+\begin{equation} \label{eq:chi_squared_pdf_formula}
+g_n(x)=
+\begin{cases}
+\frac{1}{2^{n/2}\Gamma(n/2)}x^{n/2-1}e^{-x/2}, & x > 0, \\
+0, & x \le 0.
+\end{cases}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+由于 $X_1, X_2, \ldots, X_n$ i.i.d. $\sim N(0,1)$, 故其联合密度为
+\[
+f(x_1, x_2, \ldots, x_n) = \left(\frac{1}{\sqrt{2\pi}}\right)^n \exp\left\{-\frac{1}{2}\sum_{i=1}^n x_i^2\right\}.
+\]
+令 r.v. $\xi = \sum_{i=1}^n X_i^2$ 的分布函数为 $G_n(x)$, 则有
+\[
+G_n(x) = P\left(\sum_{i=1}^n X_i^2 < x\right) = \left(\frac{1}{\sqrt{2\pi}}\right)^n \int_{\sum_{i=1}^n x_i^2 < x} \exp\left\{-\frac{1}{2}\sum_{i=1}^n x_i^2\right\} dx_1 \cdots dx_n.
+\]
+作 $n$ 维球坐标变换
+\begin{equation} \label{eq:n_dim_spherical_coordinates}
+\begin{cases}
+x_1 = \rho\cos\theta_1 \cos\theta_2 \cdots \cos\theta_{n-1} \\
+x_2 = \rho\cos\theta_1 \cos\theta_2 \cdots \sin\theta_{n-1} \\
+\cdots\cdots \\
+x_n = \rho\sin\theta_1.
+\end{cases}
+\end{equation}
+变换的 Jacobi 行列式的绝对值为
+\[
+|J| = \left|\frac{\partial(x_1, x_2, \ldots, x_n)}{\partial(\rho, \theta_1, \ldots, \theta_{n-1})}\right| = \rho^{n-1}D(\theta_1,\ldots,\theta_{n-1}),
+\]
+其中 $D(\theta_1,\ldots,\theta_{n-1})$ 表示 $\theta_1,\ldots,\theta_{n-1}$ 的某个函数; $0 < \rho < \sqrt{x}$; $-\pi/2 < \theta_i < \pi/2$, $i=1,\ldots,n-2$; $-\pi < \theta_n < \pi$. 因此有
+\[
+G_n(x) = \left(\frac{1}{\sqrt{2\pi}}\right)^n \int_0^{\sqrt{x}} \rho^{n-1}e^{-\rho^2/2} d\rho \int_{-\pi/2}^{\pi/2} \cdots \int_{-\pi/2}^{\pi/2} \int_{-\pi}^\pi D(\theta_1\cdots\theta_{n-1}) d\theta_1 \cdots d\theta_{n-1}.
+\]
+令 $C_n = \left(\frac{1}{\sqrt{2\pi}}\right)^n \int_{-\pi/2}^{\pi/2} \cdots \int_{-\pi/2}^{\pi/2} \int_{-\pi}^\pi D(\theta_1\cdots\theta_{n-1}) d\theta_1 \cdots d\theta_{n-1}$.
+则 $G_n(x) = C_n \int_0^{\sqrt{x}} \rho^{n-1}e^{-\rho^2/2} d\rho$.
+令 $y = \rho^2$, 则 $dp = 1/(2\sqrt{y})dy$, 故有
+\begin{equation} \label{eq:Gn_x_integral_y}
+G_n(x) = \frac{1}{2}C_n \int_0^x y^{\frac{n}{2}-1}e^{-\frac{y}{2}}dy.
+\end{equation}
+下面确定 $C_n$. 由于
+\[
+1 = G_n(+\infty) = \frac{1}{2}C_n \int_0^\infty y^{\frac{n}{2}-1}e^{-\frac{y}{2}}dy = C_n 2^{n/2-1} \Gamma(n/2) \cdot 2 = C_n 2^{n/2} \Gamma(n/2),
+\]
+故有 $C_n = 1/[2^{n/2}\Gamma(n/2)]$. 将其代入 \eqref{eq:Gn_x_integral_y} 得
+\[
+G_n(x) = \frac{1}{2^{n/2}\Gamma(n/2)} \int_0^x y^{\frac{n}{2}-1}e^{-\frac{y}{2}}dy.
+\]
+因此 $\xi$ 的密度函数 $g_n(x)$ 为
+\[
+g_n(x) = G_n'(x) =
+\begin{cases}
+\frac{1}{2^{n/2}\Gamma(n/2)}x^{n/2-1}e^{-x/2}, & x > 0, \\
+0, & x \le 0.
+\end{cases}
+\]
+\end{proof}
+\begin{remark}
+    自由度为$n$的$\chi^2$分布的概率密度函数服从$\Gamma(n/2,1/2)$. 其中Gamma分布的密度函数见式 \eqref{eq:gamma_pdf}.
+\end{remark}
+\begin{proposition}[\textbf{$\chi^2$ 分布的性质}] \label{prop:chi_squared_properties}
+$\chi^2$ 变量具有下列性质:
+\begin{enumerate}
+    \item[(1)] 设 r.v. $\xi \sim \chi_n^2$, 则 $\xi$ 的特征函数为 $\varphi(t)=(1-2it)^{-n/2}$;
+    \item[(2)] r.v. $\xi$ 的均值和方差分别为 $\E(\xi)=n$, $\D(\xi)=2n$;
+    \item[(3)] 设 $Z_1 \sim \chi_{n_1}^2$, $Z_2 \sim \chi_{n_2}^2$, 且 $Z_1$ 和 $Z_2$ 独立, 则 $Z_1+Z_2 \sim \chi_{n_1+n_2}^2$.
+\end{enumerate}
+\end{proposition}
+
+\begin{definition}[t分布] \label{def:t_distribution}
+设 r.v. $X \sim N(0,1)$, $Y \sim \chi_n^2$ 且 $X$ 和 $Y$ 独立, 则称
+\[
+T = \frac{X}{\sqrt{Y/n}}
+\]
+是\textbf{自由度为 $n$ 的 $t$ 变量}, 其分布称为\textbf{自由度为 $n$ 的 $t$ 分布}, 记为 $T \sim t_n$.
+\end{definition}
+\begin{remark}
+    t分布是厚尾的，其极限分布为标准正态分布。
+\end{remark}
+
+\begin{definition}[F分布] \label{def:f_distribution}
+设 r.v. $X \sim \chi_m^2$, $Y \sim \chi_n^2$ 且 $X$ 和 $Y$ 独立, 则称
+\[
+F = \frac{X/m}{Y/n}
+\]
+是\textbf{自由度为 $m$ 和 $n$ 的 $F$ 变量}, 其分布称为\textbf{自由度是 $m$ 和 $n$ 的 $F$ 分布}, 记为 $F \sim F_{m,n}$.
+\end{definition}
+
+\begin{proposition}[\textbf{$F$ 分布的性质}] \label{prop:f_distribution_properties}
+$F$ 变量具有下列性质:
+\begin{enumerate}
+    \item[(1)] 若 $Z \sim F_{m,n}$, 则 $1/Z \sim F_{n,m}$.
+    \item[(2)] 若 $T \sim t_n$, 则 $T^2 \sim F_{1,n}$.
+    \item[(3)] $F_{m,n}(1-\alpha) = 1/F_{n,m}(\alpha)$.
+\end{enumerate}
+\end{proposition}
+从定义出发可以得到如下几个推论。
+\begin{corollary} \label{cor:standardized_chi_squared}
+设 $X_1, X_2, \ldots, X_n$ 相互独立, 且 $X_i \sim N(a_i, \sigma_i^2)$, $i=1,2,\ldots,n$, 则
+\[
+\sum_{i=1}^n \left(\frac{X_i - a_i}{\sigma_i}\right)^2 \sim \chi_n^2.
+\]
+特别当 $a_i = a$, $\sigma_i^2 = \sigma^2$, $i=1, \ldots, n$ 时 $\sum_{i=1}^n (X_i - a)^2/\sigma^2 \sim \chi_n^2$.
+\end{corollary}
+
+\begin{corollary} \label{cor:t_statistic_one_sample}
+设 $X_1, X_2, \ldots, X_n$ i.i.d. $\sim N(a,\sigma^2)$, 则
+\[
+T = \frac{\sqrt{n}(\overline{X} - a)}{S} \sim t_{n-1}.
+\]
+\end{corollary}
+
+\begin{corollary} \label{cor:t_statistic_two_sample}
+设 $X_1, X_2, \ldots, X_m$ i.i.d. $\sim N(a_1,\sigma^2)$, $Y_1, Y_2, \ldots, Y_n$ i.i.d. $\sim N(a_2,\sigma^2)$, 且样本 $X_1, X_2, \ldots, X_m$ 和 $Y_1, Y_2, \ldots, Y_n$ 独立, 则
+\[
+T = \frac{(\overline{X} - \overline{Y}) - (a_1 - a_2)}{S_w} \cdot \sqrt{\frac{mn}{n+m}} \sim t_{n+m-2},
+\]
+其中 $(n+m-2)S_w^2 = (m-1)S_1^2 + (n-1)S_2^2$, 此处
+\[
+S_1^2 = \frac{1}{m-1}\sum_{i=1}^m (X_i - \overline{X})^2, \quad S_2^2 = \frac{1}{n-1}\sum_{j=1}^n (Y_j - \overline{Y})^2.
+\]
+\end{corollary}
+
+\begin{corollary} \label{cor:f_statistic_two_sample}
+设 $X_1, X_2, \ldots, X_m$ i.i.d. $\sim N(a_1,\sigma_1^2)$, $Y_1, Y_2, \ldots, Y_n$ i.i.d. $\sim N(a_2,\sigma_2^2)$, 且样本 $X_1, X_2, \ldots, X_m$ 和 $Y_1, Y_2, \ldots, Y_n$ 独立, 则
+\[
+F = \frac{S_1^2}{S_2^2} \cdot \frac{\sigma_2^2}{\sigma_1^2} \sim F_{m-1,n-1},
+\]
+此处 $S_1^2$ 和 $S_2^2$ 定义如推论 \ref{cor:t_statistic_two_sample} 所述.
+\end{corollary}
+\begin{corollary}[服从指数分布的随机变量的线性函数的分布] \label{cor:sum_of_exponentials_to_chi_squared}
+设 $X_1, X_2, \ldots, X_n$ i.i.d. 服从指数分布 $f(x, \lambda) = \lambda e^{-\lambda x}I_{(0,\infty)}(x)$, 则有
+\[
+2\lambda n \overline{X} = 2\lambda \sum_{i=1}^n X_i \sim \chi_{2n}^2.
+\]
+\end{corollary}
+\begin{proof}
+首先证明 $2\lambda X_1 \sim \chi_2^2$. 因为
+\[
+F(y) = P(2\lambda X_1 < y) = P\left(X_1 < \frac{y}{2\lambda}\right) = \int_0^{\frac{y}{2\lambda}} \lambda e^{-\lambda x}dx = \left[-e^{-\lambda x}\right]_0^{\frac{y}{2\lambda}} = 1 - e^{-\frac{y}{2}}.
+\]
+所以
+\[
+f(y) = F'(y) =
+\begin{cases}
+\frac{1}{2}e^{-\frac{y}{2}}, & y>0, \\
+0, & y\le 0.
+\end{cases}
+\]
+因此 $f(y)$ 即为自由度为 2 的 $\chi^2$ 密度, 即 $2\lambda X_1 \sim \chi_2^2$.
+再利用 $\chi^2$ 分布的性质 \ref{prop:chi_squared_properties} (3), $2\lambda X_i \sim \chi_2^2$, $i=1,2,\ldots,n$; 又它们相互独立, 故有
+\[
+2\lambda \sum_{i=1}^n X_i \sim \chi_{2n}^2.
+\]
+\end{proof}
+
+\section{充分统计量}\label{sec:充分统计量}
+\begin{definition}[充分统计量] \label{def:sufficient_statistic}
+设样本 $\boldsymbol{X}$ 的分布族为 $\{f(\theta,\boldsymbol{x}), \theta \in \Theta\}$, $\theta$ 是参数空间。令 $T=T(\boldsymbol{X})$ 为一统计量, 若在已知 $T$ 的条件下, 样本 $\boldsymbol{X}$ 的条件分布与参数 $\theta$ 无关, 则称 $T(\boldsymbol{X})$ 为 $\theta$ 的\textbf{充分统计量} (sufficient statistic).
+\end{definition}
+\begin{remark}
+    关于样本 $\boldsymbol{X} = (X_1, X_2, \ldots, X_n)$ 的信息可以设想成如下的公式:
+\[
+\{\text{样本}\boldsymbol{X}\text{中的信息}\} = \{T(\boldsymbol{X})\text{中所含样本的信息}\} + \{\text{在知道}T(\boldsymbol{X})\text{后样本}\boldsymbol{X}\text{尚含有的剩余信息}\}
+\]
+故 $T(\boldsymbol{X})$ 为充分统计量的要求归结为: 要求后一项信息为 $0$。用统计的语言来描述, 即要求 $P_\theta(\boldsymbol{X}\in A|T=t)$ 与 $\theta$ 无关, 其中 $A$ 为任一事件。
+\end{remark}
+
+\begin{example}[判断充分统计量的方法：从定义出发]
+\label{ex:bernoulli_sum_sufficient}
+设 $\boldsymbol{X} = (X_1, X_2, \ldots, X_n)$ 为从 $0-1$ 分布中抽取的简单样本, 则 $T(\boldsymbol{X}) = \sum_{i=1}^n X_i$ 为充分统计量.
+
+记 $T=T(\boldsymbol{X})$, 按定义只要证明下列条件概率与 $\theta$ 无关。当 $\sum_{i=1}^n x_i = t_0$ 时有
+\begin{align*}
+P(X_1 = x_1, \ldots, X_n = x_n \mid T = t_0) &= \frac{P(X_1 = x_1, \ldots, X_n = x_n, T = t_0)}{P(T = t_0)} \\
+&= \frac{P\left(X_1 = x_1, \ldots, X_n = x_n, \sum_{i=1}^n x_i = t_0\right)}{P(T = t_0)} \\
+&= \frac{\theta^{t_0}(1-\theta)^{n-t_0}}{\binom{n}{t_0}\theta^{t_0}(1-\theta)^{n-t_0}}\\
+&= \frac{1}{\binom{n}{t_0}}.
+\end{align*}
+与 $\theta$ 无关, 因此 $T(\boldsymbol{X}) = \sum_{i=1}^n X_i$ 为 $\theta$ 的充分统计量。
+\end{example}
+
+\begin{theorem}[因子分解定理] \label{thm:factorization_theorem}
+设样本 $\boldsymbol{X} = (X_1,\ldots,X_n)$ 的概率函数 $f(\boldsymbol{x},\theta)$ 依赖于参数 $\theta$, $T=T(\boldsymbol{X})$ 是一个统计量, 则 $\boldsymbol{T}$ 为充分统计量的充要条件是 $f(\boldsymbol{x},\theta)$ 可以分解为
+\begin{equation} \label{eq:factorization_formula}
+f(\boldsymbol{x},\theta) = g(t(\boldsymbol{x}),\theta)h(\boldsymbol{x})
+\end{equation}
+的形状。注意此处函数 $h(\boldsymbol{x})=h(x_1,\ldots,x_n)$ 不依赖于 $\theta$, $t(\boldsymbol{x})$ 为 $T(\boldsymbol{X})$ 的观察值.
+这里概率函数是指若 $\boldsymbol{X}$ 为连续型, 则 $f(\boldsymbol{x},\theta)$ 是其密度函数; 若 $\boldsymbol{X}$ 是离散型, 则 $f(\boldsymbol{x},\theta) = P_\theta(X_1=x_1, \ldots, X_n=x_n)$, 即样本 $\boldsymbol{X}$ 的概率分布.
+\end{theorem}
+\begin{corollary}\label{cor:function_of_sufficient_statistic}
+设 $T=T(\boldsymbol{X})$ 为 $\theta$ 的充分统计量, $S=\varphi(T)$ 是单值可逆函数, 则 $S=\varphi(T)$ 也是 $\theta$ 的充分统计量.
+\end{corollary}
+
+\begin{example}[判断充分统计量的方法：因子分解定理] \label{ex:normal_mean_variance_sufficient}
+设 $\boldsymbol{X} = (X_1, \ldots, X_n)$ 为从正态总体 $N(a,\sigma^2)$ 中抽取的简单样本, 令 $\theta = (a,\sigma^2)$, 则 $(\overline{X}, S^2)$ 为 $\theta$ 的充分统计量。此处 $\overline{X}, S^2$ 分别为样本均值和样本方差。
+\end{example}
+
+\begin{proof}
+样本 $\boldsymbol{X}$ 的联合密度为
+\begin{align*}
+f(\boldsymbol{x},\theta) &= \left(\frac{1}{\sqrt{2\pi}\sigma}\right)^n \exp\left\{-\frac{1}{2\sigma^2}\sum_{i=1}^n (x_i-a)^2\right\} \\
+&= \left(\frac{1}{\sqrt{2\pi}\sigma}\right)^n \exp\left\{-\frac{1}{2\sigma^2}\left(\sum_{i=1}^n x_i^2 - 2a\sum_{i=1}^n x_i + na^2\right)\right\} \\
+\end{align*}
+此形式符合因子分解定理 \ref{thm:factorization_theorem} 的结构 $f(\boldsymbol{x},\theta) = g(t(\boldsymbol{x}),\theta)h(\boldsymbol{x})$，其中
+$h(\boldsymbol{x}) \equiv 1$.
+由因子分解定理 \ref{thm:factorization_theorem} 可知 $T(\boldsymbol{X}) = \left(\sum_{i=1}^n X_i, \sum_{i=1}^n X_i^2\right)$ 为 $\theta$ 的充分统计量。
+
+由于 $\left(\sum_{i=1}^n X_i, \sum_{i=1}^n X_i^2\right)$ 与 $(\overline{X}, S^2)$ 为一一对应的变换，由推论 \ref{cor:function_of_sufficient_statistic} 可知 $(\overline{X}, S^2)$ 也是 $\theta$ 的充分统计量。
+\end{proof}
+
+\begin{example}\label{ex:uniform_max_sufficient}
+设 $\boldsymbol{X} = (X_1, \ldots, X_n)$ 为从均匀分布 $U(0,\theta)$ 中抽取的简单样本, 则 $T(\boldsymbol{X}) = X_{(n)} = \max\{X_1, \ldots, X_n\}$ 为 $\theta$ 的充分统计量。
+
+样本 $\boldsymbol{X}$ 的联合密度为
+\[
+f(\boldsymbol{x},\theta) = \frac{1}{\theta^n}I_{(0,\theta)}(x_1) \cdots I_{(0,\theta)}(x_n) = \frac{1}{\theta^n} I_{(0,\theta)}(x_{(n)}),
+\]
+此形式符合因子分解定理 \ref{thm:factorization_theorem} 的结构 $f(\boldsymbol{x},\theta) = g(t(\boldsymbol{x}),\theta)h(\boldsymbol{x})$，其中
+$g(t(\boldsymbol{x}),\theta) = \frac{1}{\theta^n} I_{(0,\theta)}(x_{(n)})$ (这里的 $t(\boldsymbol{x}) = x_{(n)}$),
+而 $h(\boldsymbol{x}) = 1$。
+由因子分解定理 \ref{thm:factorization_theorem} 可知 $T(\boldsymbol{X}) = X_{(n)}$ 为 $\theta$ 的充分统计量。
+\end{example}
+
+\begin{definition}[极小充分统计量] \label{def:minimal_sufficient_statistic}
+设 $T$ 是分布族 $\mathcal{F}$ 的充分统计量，若对 $\mathcal{F}$ 的任一充分统计量 $S(\boldsymbol{X})$，存在一个函数 $q_S(\cdot)$ 使得 $T(\boldsymbol{X}) = q_S(S(\boldsymbol{X}))$，则称 $T(\boldsymbol{X})$ 是此分布族的\textbf{极小充分统计量}。
+\end{definition}
+\begin{remark}
+    先把样本加工成 $S(\boldsymbol{X})$，然后通过 $T = q_S(S)$ 的方式，再将半成品 $S(\boldsymbol{X})$ 加工成 $T(\boldsymbol{X})$，这两步加工中信息都没有损失。
+\end{remark}
+
+\section{指数族}\label{sec:指数族}
+\begin{definition}[指数族] \label{def:exponential_family}
+设 $\mathcal{F} = \{f(\boldsymbol{x}, \theta): \theta \in \Theta\}$ 是定义在样本空间 $\mathcal{X}$ 上的分布族，其中 $\Theta$ 是参数空间。若其概率函数 $f(\boldsymbol{x}, \theta)$ 可表示成如下形式:
+\begin{equation} \label{eq:exponential_family_form}
+f(\boldsymbol{x}, \theta) = C(\theta) \exp\left\{\sum_{i=1}^k Q_i(\theta)T_i(\boldsymbol{x})\right\} h(\boldsymbol{x}),
+\end{equation}
+则称此分布族为\textbf{指数型分布族}，其中 $k$ 为正整数, $C(\theta)>0$ 和 $Q_i(\theta)$ ($i=1,2,\ldots,k$) 都是定义在参数空间 $\Theta$ 上的函数，$h(\boldsymbol{x})>0$ 和 $T_i(\boldsymbol{x})$ ($i=1,2,\ldots,k$) 都是定义在样本空间 $\mathcal{X}$ 上的函数。
+\end{definition}
+\begin{remark}
+    由因子分解定理 \ref{thm:factorization_theorem} 知 $T_i(\boldsymbol{x})$为充分统计量。正态分布族，Gamma分布族，Poisson分布族，二项分布族均为指数族；均匀分布族不是指数族，可以通过指数分布族有共同支撑这一性质，而均匀分布族的支撑集与$\theta$有关。
+\end{remark}
+
+\begin{definition}[指数族的自然形式] \label{def:natural_form_exponential_family}
+如果指数族有下列形式:
+\begin{equation} \label{eq:natural_form_exponential_family}
+f(\boldsymbol{x}, \theta) = C^*(\theta) \exp\left\{\sum_{i=1}^k \theta_i T_i(\boldsymbol{x})\right\} h(\boldsymbol{x}),
+\end{equation}
+则称它为\textbf{指数族的自然形式} (natural form)。此时集合
+\begin{equation} \label{eq:natural_parametric_space}
+\Theta^* = \left\{(\theta_1, \theta_2, \ldots, \theta_k): \int_{\mathcal{X}} \exp\left\{\sum_{i=1}^k \theta_i T_i(\boldsymbol{x})\right\} h(\boldsymbol{x})d\boldsymbol{x} < \infty \right\}
+\end{equation}
+称为\textbf{自然参数空间} (natural parametric space)。
+\end{definition}
+\begin{remark}
+    指数族的自然形式下，自然参数空间为凸集。
+\end{remark}
+
+\section{完全统计量}\label{sec:完全统计量}
+\begin{definition}[完全统计量] \label{def:complete_statistic}
+设 $\mathcal{F}=\{f(\boldsymbol{x},\theta), \theta \in \Theta\}$ 为一分布族，$\theta$ 是参数空间。设 $T=T(\boldsymbol{X})$ 为一统计量; 若对任何满足条件
+\begin{equation} \label{eq:complete_statistic_condition_expectation}
+\E_\theta(\varphi(T(\boldsymbol{X}))) = 0, \quad \text{一切 } \theta \in \Theta
+\end{equation}
+的 $\varphi(T(\boldsymbol{X}))$，都有
+\begin{equation} \label{eq:complete_statistic_condition_prob}
+P_\theta(\varphi(T(\boldsymbol{X}))) = 0, \quad \text{一切 } \theta \in \Theta,
+\end{equation}
+则称 $T(\boldsymbol{X})$ 是\textbf{完全统计量} (complete statistic)。
+\end{definition}
+\begin{remark}
+    由定义 \ref{def:complete_statistic} 可见，若 $T(\boldsymbol{X})$ 是完全统计量，则它的任一 (可测) 函数 $\delta(T)$ 也是完全统计量。
+\end{remark}
+
+\begin{remark}
+    完全性 (亦称完备性) 这个名称，来源于正交函数理论中的一个类似概念。为简单计, 设统计量 $T(\boldsymbol{X})$ 有密度函数 $g_\theta(t)$, 则 \eqref{eq:complete_statistic_condition_expectation} 可写为
+\begin{equation} \label{eq:complete_statistic_condition_integral}
+\int \varphi(t)g_\theta(t) dt = 0, \quad \text{一切 } \theta \in \Theta.
+\end{equation}
+积分 \eqref{eq:complete_statistic_condition_integral} 形式上可看作与 $g_\theta$ 正交。于是条件 \eqref{eq:complete_statistic_condition_integral} $\implies$ \eqref{eq:complete_statistic_condition_prob} 可说成是“若 $\varphi$ 与函数系 $\{g_\theta, \theta \in \Theta\}$ 正交, 则 $\varphi$ 必为 $0$”。在正函数论中, 若 $M$ 表示一正函数系, 且不存在与 $M$ 正交的非零函数, 则称 $M$ 为完全正函数系. 由式 \eqref{eq:complete_statistic_condition_integral} $\implies$ \eqref{eq:complete_statistic_condition_prob} 可以看出, 这里的完全性正好与正函数系的完全性相当。
+\end{remark}
+
+\begin{theorem}[指数族中统计量的完全性] \label{thm:complete_statistic_exponential_family}
+设样本 $\boldsymbol{X} = (X_1, X_2, \ldots, X_n)$ 的概率函数
+\[
+f(\boldsymbol{x},\theta) = C(\theta) \exp\left\{\sum_{i=1}^k \theta_i T_i(\boldsymbol{x})\right\} h(\boldsymbol{x}), \quad \theta = (\theta_1,\ldots,\theta_k) \in \Theta^*
+\]
+为指数族的自然形式。令 $T(\boldsymbol{X}) = (T_1(\boldsymbol{X}), \ldots, T_k(\boldsymbol{X}))$, 若自然参数空间 $\Theta^*$ 作为 $R_k$ 的子集有内点，则 $T(\boldsymbol{X})$ 是\textbf{完全统计量}。
+\end{theorem}
+充分统计量未必是完全统计量，下面给出一个例子。
+\begin{example}
+    设 $\mathbf{X} = (X_1, \dots, X_n)$ 是从均匀分布 $U(\theta - 1/2, \theta + 1/2)$ 中抽取
+的简单样本，则 $T(\mathbf{X}) = (X_{(1)}, X_{(n)})$ 是充分统计量，但不是完全统计量。
+\end{example}
+\begin{proof}
+    要证明一个统计量 $T(\mathbf{X})$ 不是完全的，只要找到一个实函数 $\varphi(t)$ 使得 $E_\theta\varphi(T) =
+0$，但 “$\varphi(T) = 0$, a.s. $P_\theta$” 是不成立的即可。
+
+令 $Y_i = X_i - (\theta - 1/2), i = 1,2,\dots,n$, 则 $Y_1, \dots, Y_n \stackrel{i.i.d.}{\sim} U(0,1)$ 与 $\theta$ 无关。
+而此时 $Z = X_{(n)} - X_{(1)} = Y_{(n)} - Y_{(1)}$ 的分布也与 $\theta$ 无关。找常数 $a < b$ 使得
+$$P(Z < a) = P(Z > b) > 0.$$
+\textbf{定义}
+$$ \varphi(t) = \begin{cases}
+1, & Z < a, \\
+-1, & Z > b, \\
+0, & \text{其他},
+\end{cases} $$
+则易见 $\varphi(t)$ 满足 $E_\theta\varphi(T) = 0$，但 $\varphi(T) \not\equiv 0$ (即 $P(\varphi(T) \neq 0) > 0$)。按定义 $T(\mathbf{X}) =
+(X_{(1)}, X_{(n)})$ 不是完全统计量。
+\end{proof}
+
+\begin{definition}[有界完全统计量]\label{def:有界完全统计量}
+    若对任何满足
+$$E_\theta\varphi(T(\mathbf{X})) = 0, \text{一切 } \theta \in \Theta$$
+的有的界 (或 a.s. 有界) 的函数 $\varphi(\cdot)$ 都有
+$$P_\theta(\varphi(T(\mathbf{X})) = 0) = 1, \text{一切 } \theta \in \Theta,$$
+则称 $T(\mathbf{X})$ 为有界完全统计量。
+
+\end{definition}
+\begin{remark}
+    由定义可见，一个 “完全统计量” 必为 “有界完全统计量”，反之不必对。
+\end{remark}
+
+\begin{theorem}[Basu]\label{thm:Basu}
+    设 $\mathcal{F} = \{f(\mathbf{x}, \theta), \theta \in \Theta\}$ 为一分布族，$\theta$ 是参数空
+间。样本 $\mathbf{X} = (X_1, \dots, X_n)$ 是从分布族 $\mathcal{F}$ 中抽取的简单样本，设 $T(\mathbf{X})$ 是一有
+界完全统计量，且是充分统计量。若 r.v. $V(\mathbf{X})$ 的分布与 $\theta$ 无关，则对任何 $\theta \in \Theta$,
+$V(\mathbf{X})$ 与 $T(\mathbf{X})$ 独立。
+\end{theorem}
+\begin{corollary}\label{cor:Basu}
+    设样本 $\mathbf{X}$ 的分布族为指数族，即
+$$f(\mathbf{x}, \theta) = C(\theta)\exp\left\{\sum_{j=1}^k \theta_j T_j(\mathbf{x})\right\}h(\mathbf{x}),$$
+
+而自然参数空间 $\Theta^*$ 作为 $R_k$ 的子集有内点。若 r.v. $V(\mathbf{X})$ 的分布与 $\theta$ 无关，对任
+何 $\theta$, 则 $V(\mathbf{X})$ 与 $T(\mathbf{X}) = (T_1(\mathbf{X}), \dots, T_k(\mathbf{X}))$ 独立。
+\end{corollary}

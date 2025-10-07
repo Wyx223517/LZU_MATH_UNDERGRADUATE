@@ -1,0 +1,771 @@
+\chapter{极限定理}\label{chap:极限定理}
+\begin{introduction}
+\item \textbf{Chebyshev大数定律}\quad 命题 \ref{prop:chebyshev_lln}
+\item \textbf{Markov大数定律}\quad 命题 \ref{prop:markov_lln}
+\item \textbf{Bernoulli大数定律}\quad 命题 \ref{prop:bernoulli_lln}
+\item \textbf{Poisson大数定律}\quad 命题 \ref{prop:poisson_lln}
+\item \textbf{De Moivre-Laplace极限定理}\quad 定理 \ref{thm:de_moivre_laplace}
+\item \textbf{依分布收敛}\quad 定义 \ref{def:convergence_in_distribution}
+\item \textbf{依概率收敛}\quad 定义 \ref{def:convergence_in_probability}
+\item \textbf{$r$ 阶收敛}\quad 定义 \ref{def:r_order_convergence}
+\item \textbf{以概率 1 收敛}\quad 定义 \ref{def:convergence_almost_surely}
+\item \textbf{Khinchine大数定律}\quad 定理 \ref{thm:khinchine_lln}
+\item \textbf{Lindeberg-Levy中心极限定理}\quad 定理 \ref{thm:lindeberg_levy_clt}
+\item \textbf{Borel强大数定律}\quad 定理 \ref{thm:borel_lln}
+\item \textbf{Kolmogorov强大数定律}\quad 定理 \ref{thm:kolmogorov_slln}
+\item \textbf{i.i.d.下的Kolmogorov强大数定律}\quad 定理 \ref{thm:kolmogorov_slln_iid}
+\end{introduction}
+\section{伯努利试验场合的极限定理}\label{sec:伯努利试验场合的极限定理}
+\subsection{问题引入}\label{subsec:问题引入}
+\elegantnewtheorem{explain}{}{defstyle}
+\begin{definition}[大数定律]\label{def:law_of_large_numbers}
+    若 $\xi_1, \xi_2, \ldots, \xi_n, \ldots$ 是随机变量序列, 令
+\begin{equation} \label{eq:eta_n}
+\eta_n = \frac{\xi_1 + \xi_2 + \cdots + \xi_n}{n}
+\end{equation}
+如果存在这样的一个常数序列 $a_1, a_2, \ldots, a_n, \ldots$, 对任意的 $\varepsilon > 0$, 恒有
+\begin{equation} \label{eq:law_of_large_numbers}
+\lim_{n \to \infty} P \left\{ |\eta_n - a_n| < \varepsilon \right\} = 1
+\end{equation}
+则称序列 $\{ \xi_n \}$ 服从大数定律。
+\end{definition}
+
+关于中心极限定理, 我们总是对独立随机变量序列 $\xi_1, \xi_2, \ldots, \xi_n, \ldots$ 进行讨论, 假定 $\E\xi_i$ 及 $\D\xi_i$ 存在, 令
+\begin{equation} \label{eq:zeta_n}
+\zeta_n = \frac{\sum_{i=1}^n \xi_i - \sum_{i=1}^n \E\xi_i}{\sqrt{\sum_{i=1}^n \D\xi_i}}
+\end{equation}
+我们的目的是寻求使
+\begin{equation} \label{eq:central_limit_theorem}
+\lim_{n \to \infty} P \left\{ \zeta_n < x \right\} = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^x e^{-t^2/2} dt
+\end{equation}
+成立的条件。
+\begin{definition}[中心极限定理]\label{def:central_limit_theorem}
+    若独立随机变量序列 $\xi_1, \xi_2, \ldots, \xi_n, \ldots$ 的标准化和 $\zeta_n$ 使 \eqref{eq:central_limit_theorem} 式成立, 则我们称 $\{ \xi_i \}$ 服从\textbf{中心极限定理}。
+\end{definition}
+\subsection{切比雪夫大数定律}\label{subsubsec:切比雪夫大数定律}
+首先证明一个更强的命题。
+\begin{lemma}[切比雪夫不等式]\label{lem:chebyshev_inequality}
+    对于任何具有有限方差的随机变量 $\xi$, 都有
+\begin{equation} \label{eq:chebyshev_inequality}
+P\{|\xi - \E\xi| \ge \varepsilon\} \le \frac{\D\xi}{\varepsilon^2}
+\end{equation}
+其中 $\varepsilon$ 是任一正数。
+\end{lemma}
+\begin{proof}
+    若 $F(x)$ 是 $\xi$ 的分布函数, 则显然有
+\begin{align}
+\D\xi &= \int_{-\infty}^{\infty} (x - \E\xi)^2 dF(x) \notag \\
+&\ge \int_{|x - \E\xi| \ge \varepsilon} (x - \E\xi)^2 dF(x) \ge \int_{|x - \E\xi| \ge \varepsilon} \varepsilon^2 dF(x) \notag \\
+&= \varepsilon^2 P\{|\xi - \E\xi| \ge \varepsilon\} \label{eq:chebyshev_proof}
+\end{align}
+这就证得了不等式\eqref{eq:chebyshev_inequality}。有时把\eqref{eq:chebyshev_inequality}改写成
+\begin{equation} \label{eq:chebyshev_form2}
+P\{|\xi - \E\xi|<\varepsilon\} \ge 1 - \frac{\D\xi}{\varepsilon^2}
+\end{equation}
+或
+\begin{equation} \label{eq:chebyshev_form3}
+P\left\{\left|\frac{\xi - \E\xi}{\sqrt{\D\xi}}\right| \ge \delta\right\} \le \frac{1}{\delta^2}
+\end{equation}
+
+\end{proof}
+
+\begin{proposition}[切比雪夫大数定律]\label{prop:chebyshev_lln}
+    设 $\xi_1, \xi_2, \ldots, \xi_n, \ldots$ 是由两两不相关的随机变量所构成的序列, 每一随机变量都有有限的方差, 并且它们有公共上界
+\[
+\D\xi_1 \le C, \quad \D\xi_2 \le C, \quad \ldots, \quad \D\xi_n \le C, \quad \ldots
+\]
+则对任意的 $\varepsilon>0$, 皆有
+\begin{equation} \label{eq:chebyshev_lln}
+\lim_{n\to\infty} P\left\{ \left|\frac{1}{n}\sum_{k=1}^n \xi_k - \frac{1}{n}\sum_{k=1}^n \E\xi_k \right| < \varepsilon \right\} = 1
+\end{equation}
+\end{proposition}
+\begin{proof}
+    因为 $\{ \xi_k \}$ 两两不相关, 故
+\begin{align*}
+\D\left(\frac{1}{n}\sum_{k=1}^n \xi_k\right) &= \frac{1}{n^2}\sum_{k=1}^n \D\xi_k \\
+&\le \frac{1}{n^2}\sum_{k=1}^n C = \frac{nC}{n^2} = \frac{C}{n}
+\end{align*}
+再由切比雪夫不等式得到
+\[
+P\left\{ \left|\frac{1}{n}\sum_{k=1}^n \xi_k - \frac{1}{n}\sum_{k=1}^n \E\xi_k \right| < \varepsilon \right\} \ge 1 - \frac{\D\left(\frac{1}{n}\sum_{k=1}^n \xi_k\right)}{\varepsilon^2} \ge 1 - \frac{C}{n\varepsilon^2}
+\]
+所以
+\[
+1 \ge P\left\{ \left|\frac{1}{n}\sum_{k=1}^n \xi_k - \frac{1}{n}\sum_{k=1}^n \E\xi_k \right| < \varepsilon \right\} \ge 1 - \frac{C}{n\varepsilon^2}
+\]
+于是, 当 $n\to\infty$ 时有 \eqref{eq:chebyshev_lln}, 因此定理得证。
+\end{proof}
+
+\begin{proposition}[马尔可夫大数定律]\label{prop:markov_lln}
+    对于随机变量序列 $\xi_1, \xi_2, \ldots, \xi_n, \ldots$, 若 
+    \begin{equation} \label{eq:markov_condition}
+\frac{1}{n^2}\D\left(\sum_{k=1}^n \xi_k\right) \to 0
+\end{equation}
+成立, 则对任意 $\varepsilon>0$, 均有 \eqref{eq:chebyshev_lln}。通常条件 \eqref{eq:markov_condition} 为\textbf{马尔可夫条件}。
+\end{proposition}
+\begin{remark}
+    马尔可夫大数定律已经没有任何关于独立性的假定。
+\end{remark}
+
+
+\subsection{伯努利大数定律与泊松大数定律}\label{subsec:伯努利大数定律与泊松大数定律}
+\begin{proposition}[伯努利大数定律]\label{prop:bernoulli_lln}
+    设 $\mu_n$ 是 $n$ 次伯努利试验中事件 $A$ 出现的次数, 而 $p$ 是事件 $A$ 在每次试验中出现的概率, 则对任意 $\varepsilon>0$, 都有
+\begin{equation} \label{eq:bernoulli_lln}
+\lim_{n\to\infty} P\left\{ \left|\frac{\mu_n}{n}-p\right| < \varepsilon \right\} = 1
+\end{equation}
+\end{proposition}
+\begin{proof}
+    定义随机变量 $\xi_i$ 如
+\begin{equation} \label{eq:xi_i_def}
+\xi_i = \begin{cases}
+1, & \text{第 } i \text{ 次试验出现 } A \\
+0, & \text{第 } i \text{ 次试验不出现 } A
+\end{cases}
+\end{equation}
+则 $\E\xi_i = p$, $\D\xi_i = pq \le \frac{1}{4}$。
+
+而
+\[
+\frac{1}{n}\sum_{k=1}^n \xi_k - \frac{1}{n}\sum_{k=1}^n \E\xi_k = \frac{\mu_n}{n} - p
+\]
+故由切比雪夫大数定律立即推出伯努利大数定律。
+
+显然, 伯努利大数定律也可以通过切比雪夫不等式直接加以证明:
+\begin{equation} \label{eq:bernoulli_proof_chebyshev}
+P\left\{ \left|\frac{\mu_n}{n}-p\right| \ge \varepsilon \right\} \le \frac{1}{\varepsilon^2}\D\left[\frac{\mu_n}{n}\right] = \frac{1}{\varepsilon^2 n^2}\sum_{i=1}^n \D\xi_i = \frac{1}{\varepsilon^2 n^2} \cdot n pq \le \frac{1}{4n\varepsilon^2}
+\end{equation}
+\end{proof}
+
+\begin{proposition}[泊松大数定律]\label{prop:poisson_lln}
+    如果在一个独立试验序列中, 事件 $A$ 在第 $k$ 次试验中出现的概率等于 $p_k$, 以 $\mu_n$ 记在前 $n$ 次试验中事件 $A$ 出现的次数, 则对任意 $\varepsilon>0$, 都有
+\begin{equation} \label{eq:poisson_lln}
+\lim_{n\to\infty} P\left\{ \left|\frac{\mu_n}{n} - \frac{p_1+p_2+\cdots+p_n}{n}\right| < \varepsilon \right\} = 1
+\end{equation}
+\end{proposition}
+\begin{proof}
+    定义 $\xi_k$ 为第 $k$ 次试验中事件 $A$ 出现的次数, 则
+\[
+\E\xi_k = p_k, \quad \D\xi_k = p_k(1-p_k) \le \frac{1}{4}
+\]
+再用切比雪夫大数定律立刻可以推出 \eqref{eq:poisson_lln}。
+\end{proof}
+\subsection{棣莫弗-拉普拉斯极限定理}\label{subsec:棣莫弗-拉普拉斯极限定理}
+\begin{theorem}[棣莫弗-拉普拉斯极限定理]\label{thm:de_moivre_laplace}
+    若 $\mu_n$ 是 $n$ 次伯努利试验中事件 $A$ 出现的次数, $0<p<1$, 则对任意有限区间 $[a,b]$:
+
+(i) 当 $a \le x_k = \frac{k-np}{\sqrt{npq}} \le b$ 及 $n\to\infty$ 时, 一致地有
+\begin{equation} \label{eq:de_moivre_laplace_point}
+P\left\{\mu_n = k\right\} \div \left(\frac{1}{\sqrt{npq}} \cdot \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}x_k^2}\right) \to 1
+\end{equation}
+
+(ii) 当 $n\to\infty$ 时, 一致地有
+\begin{equation} \label{eq:de_moivre_laplace_integral}
+P\left\{a \le \frac{\mu_n - np}{\sqrt{npq}} < b\right\} \to \int_a^b \varphi(x) dx
+\end{equation}
+其中 $\varphi(x)=\frac{1}{\sqrt{2\pi}}e^{-x^2/2}$ ($-\infty < x < \infty$).
+\end{theorem}
+\section{收敛性}\label{sec:收敛性}
+\subsection{分布函数弱收敛}\label{{subsec:分布函数弱收敛}}
+\begin{definition}[弱收敛]\label{def:weak_convergence}
+    对于分布函数列 $\{F_n(x)\}$, 如果存在一个非降函数 $F(x)$ 使
+\begin{equation} \label{eq:weak_convergence}
+\lim_{n\to\infty} F_n(x) = F(x)
+\end{equation}
+在 $F(x)$ 的每一连续点上都成立, 则称 $F_n(x)$ \textbf{弱收敛于} $F(x)$, 并记为 $F_n(x) \xlongrightarrow{W} F(x)$.
+
+\end{definition}
+
+\begin{remark}
+    连续点条件不可去；这样得到的极限函数不一定是一个分布函数。
+\end{remark}
+
+\begin{lemma}\label{lem:fn_convergence}
+    设 $\{F_n(x)\}$ 是实变量 $x$ 的非降函数列, $D$ 是 $\mathbb{R}^1$ 上的稠密集. 若对于 $D$ 中的所有点 $x$, 序列 $\{F_n(x)\}$ 收敛于 $F(x)$, 则对 $F(x)$ 的一切连续点 $x$ 有
+\begin{equation} \label{eq:lemma_5_2_1_convergence}
+\lim_{n\to\infty} F_n(x) = F(x)
+\end{equation}
+\end{lemma}
+\begin{proof}
+    设 $x$ 是任意点, 选 $x' \in D, x'' \in D$, 使 $x' \le x \le x''$, 由非降性知
+\[
+F_n(x') \le F_n(x) \le F_n(x'')
+\]
+因此
+\[
+F(x') \le \varliminf_{n\to\infty} F_n(x) \le \varlimsup_{n\to\infty} F_n(x) \le F(x'')
+\]
+因为 $D$ 在 $\mathbb{R}^1$ 上稠密, 故
+\[
+F(x-0) \le \varliminf_{n\to\infty} F_n(x) \le \varlimsup_{n\to\infty} F_n(x) \le F(x+0)
+\]
+所以对于 $F(x)$ 的连续点 $x$, 成立 \eqref{eq:lemma_5_2_1_convergence}。
+
+\end{proof}
+\begin{theorem}[海莱第一定理]\label{thm:helly_first}
+    任意一致有界的非降函数列 $\{F_n(x)\}$ 中必有一子序列 $\{F_{n_k}(x)\}$ 弱收敛于某一有界的非降函数 $F(x)$。
+\end{theorem}
+\begin{proof}
+    （Cantor对角线法）任取 $\mathbb{R}^1$ 上的一个到处稠密的\textbf{可数点集} $D$, 下面我们就取有理数全体, 并排列为 $r_1, \ldots, r_m, \ldots$. 对于序列 $\{F_{n}(r_1)\}$, 这是一个有界的实数序列, 故必包含一收敛于某极限 $G(r_1)$ 的子序列 $\{F_{1,n}(r_1)\}$, 即
+\[
+\lim_{n\to\infty} F_{1,n}(r_1) = G(r_1)
+\]
+现在考虑序列 $\{F_{1,n}(r_2)\}$, 同样由于有界性, 在其中存在子序列 $\{F_{2,n}(r_2)\}$ 收敛于某一值 $G(r_2)$。这时, 同时成立着
+\[
+\lim_{n\to\infty} F_{2,n}(r_1)=G(r_1), \quad \lim_{n\to\infty} F_{2,n}(r_2)=G(r_2)
+\]
+继续这样做, 可得序列 $\{F_{m,n}(x)\}$, 使
+\begin{equation} \label{eq:F_m_n_convergence}
+\lim_{n\to\infty} F_{m,n}(r_k) = G(r_k), \quad k=1,2,\ldots,m
+\end{equation}
+同时成立。
+
+这样, 我们得到了 $\{F_n(x)\}$ 的如下子序列
+\begin{equation} \label{eq:subsequence_array}
+\begin{blockarray}{ccccccc}
+F_{1,1}(x), & F_{1,2}(x), & F_{1,3}(x), & \ldots, & F_{1,n}(x), & \ldots \\
+F_{2,1}(x), & F_{2,2}(x), & F_{2,3}(x), & \ldots, & F_{2,n}(x), & \ldots \\
+\ldots\ldots\ldots \\
+F_{m,1}(x), & F_{m,2}(x), & F_{m,3}(x), & \ldots, & F_{m,n}(x), & \ldots \\
+\end{blockarray}
+\end{equation}
+这里每行都是前一行的一个子序列, 而且它们具有性质 \eqref{eq:F_m_n_convergence}。选取这个阵列的对角线元素 $F_{n,n}(x)$ 构成新序列 $\{F_{n,n}(x)\}$, 由于它是从 $\{F_{1,n}(x)\}$ 分出来的, 故 $\lim_{n\to\infty} F_{n,n}(r_1) = G(r_1)$。其次, 除了 $r_1$ 以外, 它是从 $\{F_{2,n}(x)\}$ 分出来的, 故 $\lim_{n\to\infty} F_{n,n}(r_2) = G(r_2)$。一般地, 对任何固定的 $k$, 皆有 $\lim_{n\to\infty} F_{n,n}(r_k) = G(r_k)$, 因此对一切有理数 $r$,
+\begin{equation} \label{eq:diagonal_convergence}
+\lim_{n\to\infty} F_{n,n}(r) = G(r)
+\end{equation}
+这里的 $G(r)$ 是定义在有理数上的函数, 它也是有界与非降的。
+
+对一切 $x\in\mathbb{R}^1$, 定义
+\[
+F(x) = \sup_{r_k \le x} G(r_k)
+\]
+这函数在一切有理数上与 $G(x)$ 相等, 它显然也是有界与非降的。由引理 \eqref{lem:fn_convergence} 知
+\begin{equation} \label{eq:final_convergence}
+\lim_{n\to\infty} F_{n,n}(x) = F(x)
+\end{equation}
+对 $F(x)$ 的一切连续点成立。
+
+\end{proof}
+\begin{theorem}[海莱第二定理]\label{thm:helly_second}
+设 $f(x)$ 是 $[a,b]$ 上的连续函数, 又 $\{F_n(x)\}$ 是在 $[a,b]$ 上弱收敛于函数 $F(x)$ 的一致有界非降函数序列, 且 $a$ 和 $b$ 是 $F(x)$ 的连续点, 则
+\[
+\lim_{n\to\infty} \int_a^b f(x) dF_n(x) = \int_a^b f(x) dF(x)
+\]
+\end{theorem}
+\begin{proof}
+由函数 $f(x)$ 的连续性推知, 对任意正数 $\varepsilon$, 总可以找到一种分割, 把区间 $[a, b]$ 分为 $[x_0, x_1], [x_1, x_2], \ldots, [x_{N-1}, x_N]$ (其中 $x_0=a, x_N=b$) 等 $N$ 个小区问, 使得当 $x \in [x_k, x_{k+1}]$ 时, $|f(x) - f(x_k)| < \varepsilon$. 构造辅助函数 $f_\varepsilon(x)$, 它只取有限个值, 并且当 $x_k \le x < x_{k+1}$ 时, $f_\varepsilon(x) = f(x_k)$.
+
+这样显然对 $a \le x \le b$ 的一切 $x$ 皆有不等式
+\begin{equation} \label{eq:5.2.9}
+|f(x) - f_\varepsilon(x)| < \varepsilon
+\end{equation}
+在此我们可以预先选取分点 $x_1, x_2, \ldots, x_{N-1}$, 使它们是 $F(x)$ 的连续点。 因为 $\{F_n(x)\}$ 弱收敛于 $F(x)$, 故当 $n$ 充分大时, 在此 $N-1$ 个分点及 $x_0, x_N$ 上成立不等式
+\begin{equation} \label{eq:5.2.10}
+|F(x_k) - F_n(x_k)| < \frac{\varepsilon}{MN}
+\end{equation}
+这里 $M$ 是 $|f(x)|$ 在区间 $a \le x \le b$ 中的最大值。 显然,
+\[
+\left|\int_a^b f(x) dF(x) - \int_a^b f(x) dF_n(x)\right|
+\]
+\begin{align*}
+&\le \left|\int_a^b f(x) dF(x) - \int_a^b f_\varepsilon(x) dF(x)\right| \\
+&\quad + \left|\int_a^b f_\varepsilon(x) dF(x) - \int_a^b f_\varepsilon(x) dF_n(x)\right| \\
+&\quad + \left|\int_a^b f_\varepsilon(x) dF_n(x) - \int_a^b f(x) dF_n(x)\right| \label{eq:5.2.11} % This label will apply to the last line of the align* block
+\end{align*}
+由于\eqref{eq:5.2.9}式,
+\begin{equation} \label{eq:5.2.12}
+\left|\int_a^b f(x) dF(x) - \int_a^b f_\varepsilon(x) dF(x)\right| \le \varepsilon [F(b) - F(a)]
+\end{equation}
+\begin{equation} \label{eq:5.2.13}
+\left|\int_a^b f_\varepsilon(x) dF_n(x) - \int_a^b f(x) dF_n(x)\right| \le \varepsilon [F_n(b) - F_n(a)]
+\end{equation}
+而由\eqref{eq:5.2.9}式, \eqref{eq:5.2.10}式可知
+\begin{align}
+&\left|\int_a^b f_\varepsilon(x) dF(x) - \int_a^b f_\varepsilon(x) dF_n(x)\right| \notag \\
+&= \left|\sum_{k=0}^{N-1} f(x_k) [F(x_{k+1}) - F(x_k)] - \sum_{k=0}^{N-1} f(x_k) [F_n(x_{k+1}) - F_n(x_k)]\right| \notag \\
+&= \left|\sum_{k=0}^{N-1} f(x_k) [F(x_{k+1}) - F_n(x_{k+1})] - \sum_{k=0}^{N-1} f(x_k) [F(x_k) - F_n(x_k)]\right| \notag \\
+&\le N\left(M \frac{\varepsilon}{MN} + M \frac{\varepsilon}{MN}\right) = 2\varepsilon \label{eq:5.2.14}
+\end{align}
+因此
+\[
+\left|\int_a^b f(x) dF(x) - \int_a^b f(x) dF_n(x)\right| \le \varepsilon [F(b) - F(a)] + \varepsilon [F_n(b) - F_n(a)] + 2\varepsilon
+\]
+由于$\{F_n(x)\}$ 的一致有界性, 上式右边可以任意小, 故定理得证。
+\end{proof}
+
+\begin{theorem}[拓广的海莱第二定理]\label{thm:helly_second_extended}
+设 $f(x)$ 在 $(-\infty, \infty)$ 上有界连续, 又 $\{F_n(x)\}$ 是在 $(-\infty, \infty)$ 上弱收敛于函数 $F(x)$ 的一致有界非降函数序列, 且
+\[
+\lim_{n\to\infty} F_n(-\infty) = F(-\infty), \quad \lim_{n\to\infty} F_n(\infty) = F(\infty)
+\]
+则
+\[
+\lim_{n\to\infty} \int_{-\infty}^\infty f(x) dF_n(x) = \int_{-\infty}^\infty f(x) dF(x)
+\]
+\end{theorem}
+
+\begin{proof}
+设 $A<0, B>0$, 令
+\begin{align*}
+J_1 &= \left|\int_{-\infty}^A f(x) dF_n(x) - \int_{-\infty}^A f(x) dF(x)\right| \\
+J_2 &= \left|\int_A^B f(x) dF_n(x) - \int_A^B f(x) dF(x)\right| \\
+J_3 &= \left|\int_B^\infty f(x) dF_n(x) - \int_B^\infty f(x) dF(x)\right|
+\end{align*}
+显然
+\[
+\left|\int_{-\infty}^\infty f(x) dF_n(x) - \int_{-\infty}^\infty f(x) dF(x)\right| \le J_1 + J_2 + J_3
+\]
+由于 $f(x)$ 是有界的, 存在常数 $M>0$, 使得 $|f(x)|<M$。又由于序列$\{F_n(x)\}$ 的一致有界性, 只要 $A$ 与 $B$ 的绝对值充分大, 并使 $A$ 和 $B$ 是 $F(x)$ 的连续点, 而 $n$ 也取得充分大, 则可使 $J_1, J_3$ 小到预先给定的程度。事实上
+\begin{align*}
+J_1 &\le \left|\int_{-\infty}^A f(x) dF(x)\right| + \left|\int_{-\infty}^A f(x) dF_n(x)\right| \\
+&\le M[F(A)-F(-\infty)] + M[F_n(A)-F_n(-\infty)] \\
+&\le M[F(A)-F(-\infty)] + M[|F_n(A)-F(A)|+|F(A)-F(-\infty)|+|F(-\infty)-F_n(-\infty)|]
+\end{align*}
+而假定有
+\[
+\lim_{n\to\infty} F_n(A) = F(A), \quad \lim_{n\to\infty} F_n(-\infty) = F(-\infty)
+\]
+故当 $A$ 绝对值充分大时, $J_1$ 也可以任意小。
+
+对 $J_3$ 作对应的处理, 则当 $B$ 充分大, 并注意到
+\[
+\lim_{n\to\infty} F_n(B) = F(B), \quad \lim_{n\to\infty} F_n(+\infty) = F(+\infty)
+\]
+$J_3$ 也可以任意小。再根据海莱第二定理, 只要 $n$ 充分大, 也可使 $J_2$ 任意小, 从而证得了定理。
+\end{proof}
+\subsection{连续性定理}\label{subsec:连续性定理}
+
+\begin{theorem}[正极限定理]\label{thm:positive_limit}
+设分布函数列 $\{F_n(x)\}$ 弱收敛于某一分布函数 $F(x)$, 则相应的特征函数列 $\{f_n(t)\}$ 收敛于特征函数 $f(t)$, 且在 $t$ 的任一有限区间内收敛是一致的。
+\end{theorem}
+
+\begin{proof}
+函数 $e^{itx}$ 在 $-\infty < x < \infty$ 上有界连续, 而
+\[
+f_n(t) = \int_{-\infty}^\infty e^{itx} dF_n(x)
+\]
+\[
+f(t) = \int_{-\infty}^\infty e^{itx} dF(x)
+\]
+因此由拓广的海莱第二定理即知当 $n \to \infty$ 时, 有
+\[
+f_n(t) \to f(t)
+\]
+至于在 $t$ 的每一有限区间内收敛的一致性, 由拓广的海莱第二定理的证明就可看出。
+\end{proof}
+
+\begin{theorem}[逆极限定理]\label{thm:inverse_limit}
+设特征函数列 $\{f_n(t)\}$ 收敛于某一函数 $f(t)$, 且 $f(t)$ 在 $t=0$ 连续, 则相应的分布函数列 $\{F_n(x)\}$ 弱收敛于某一分布函数 $F(x)$, 而且 $f(t)$ 是 $F(x)$ 的特征函数。
+\end{theorem}
+
+\begin{proof}
+感觉记不住，不写了。
+\end{proof}
+
+\subsection{随机变量的收敛性}\label{subsec:随机变量的收敛性}
+\begin{definition}[依分布收敛]\label{def:convergence_in_distribution}
+设随机变量 $\xi_n(\omega)$、$\xi(\omega)$ 的分布函数分别为 $F_n(x)$ 及 $F(x)$, 如果 $F_n(x) \xlongrightarrow{W} F(x)$, 则称$\{\xi_n(\omega)\}$ \textbf{依分布收敛} 于 $\xi(\omega)$, 并记为 $\xi_n(\omega) \xrightarrow{\mathscr{L}} \xi(\omega)$.
+\end{definition}
+
+\begin{definition}[依概率收敛]\label{def:convergence_in_probability}
+如果
+\begin{equation} \label{eq:5.2.19}
+\lim_{n\to\infty} P\left\{ |\xi_n(\omega)-\xi(\omega)| \ge \varepsilon \right\} = 0
+\end{equation}
+对任意的 $\varepsilon > 0$ 成立, 则称 $\{\xi_n(\omega)\}$ \textbf{依概率收敛}于 $\xi(\omega)$, 并记为 $\xi_n(\omega) \xrightarrow{P} \xi(\omega)$.
+\end{definition}
+
+\begin{remark}
+    这样一来, 伯努利大数定律可以重新叙述如下:
+设 $\mu_n$ 是 $n$ 次独立试验中事件 $A$ 出现的次数, 而 $p$ 是事件 $A$ 在每次试验中出现的概率, 则频率 $\frac{\mu_n}{n}$ 依概率收敛于概率 $p$.
+\end{remark}
+
+\begin{theorem}[依概率收敛推出依分布收敛]\label{thm:prob_to_dist}
+\[\xi_n \xrightarrow{P} \xi \implies \xi_n \xrightarrow{\mathscr{L}} \xi\]
+\end{theorem}
+
+\begin{proof}
+因为, 对 $x'<x$ 有
+\begin{align*}
+\{\xi < x'\} &= \{\xi_n < x', \xi < x'\} \cup \{\xi_n \ge x', \xi < x'\} \\
+&\subset \{\xi_n < x'\} \cup \{|\xi_n \ge x, \xi < x'\}
+\end{align*}
+所以我们有
+\[
+F(x') \le F_n(x') + P\{|\xi_n \ge x, \xi < x'|\}
+\]
+如果 $\{\xi_n\}$ 依概率收敛于 $\xi$, 则
+\[
+P\{|\xi_n \ge x, \xi < x'|\} \le P\{|\xi_n - \xi| \ge x - x'\} \to 0
+\]
+因而有
+\[
+F(x') \le \varliminf_{n\to\infty} F_n(x)
+\]
+
+同理可证, 对 $x''>x$, 成立
+\[
+\varlimsup_{n\to\infty} F_n(x) \le F(x'')
+\]
+所以对 $x'<x<x''$, 有
+\[
+F(x') \le \varliminf_{n\to\infty} F_n(x) \le \varlimsup_{n\to\infty} F_n(x) \le F(x'')
+\]
+如果 $x$ 是 $F(x)$ 的连续点, 则令 $x',x''$ 趋于 $x$ 可得
+\[
+F(x) = \lim_{n\to\infty} F_n(x)
+\]
+定理证毕。
+\end{proof}
+\begin{remark}
+    一般情况下，反之不成立，除非加条件。
+\end{remark}
+
+\begin{theorem}\label{thm:const_conv}
+设 $C$ 是常数, 则 $\xi_n \xrightarrow{P} C \iff \xi_n \xrightarrow{\mathscr{L}} C$.
+\end{theorem}
+
+\begin{proof}
+只需证明由依分布收敛于常数可推出依概率收敛于常数。事实上, 对任意的 $\varepsilon>0$,
+\begin{align*}
+P\{|\xi_n -C| \ge \varepsilon\} &= P\{\xi_n \ge C+\varepsilon\} + P\{\xi_n \le C-\varepsilon\} \\
+&= 1-F_n(C+\varepsilon) + F_n(C-\varepsilon+0) \\
+&\to 1-1+0=0 \quad (n \to \infty)
+\end{align*}
+\end{proof}
+
+\begin{definition}[$r$ 阶收敛]\label{def:r_order_convergence}
+设对随机变量 $\xi_n$ 及 $\xi$ 有 $\E|\xi_n|^r < \infty$, $\E|\xi|^r < \infty$, 其中 $r>0$ 为常数, 如果
+\begin{equation} \label{eq:5.2.21}
+\lim_{n\to\infty} \E|\xi_n - \xi|^r = 0
+\end{equation}
+则称 $\{\xi_n\}$ $r$ \textbf{阶收敛} (convergence in r-order mean) 于 $\xi$, 并记为 $\xi_n \xrightarrow{r} \xi$.
+\end{definition}
+
+\begin{theorem}[$r$阶收敛推依概率收敛]\label{thm:r_order_to_prob}
+\[\xi_n \xrightarrow{r} \xi \implies \xi_n \xrightarrow{P} \xi\]
+\end{theorem}
+
+\begin{proof}
+先证对于任意 $\varepsilon>0$, 成立
+\begin{equation} \label{eq:5.2.22}
+P\{|\xi_n - \xi| \ge \varepsilon\} \le \frac{\E|\xi_n - \xi|^r}{\varepsilon^r}
+\end{equation}
+事实上, 若以 $F(x)$ 记 $\xi_n - \xi$ 的分布函数, 则仿切比雪夫不等式的证明可得
+\begin{align*}
+P\{|\xi_n - \xi| \ge \varepsilon\} &= \int_{|x|\ge\varepsilon} dF(x) \\
+&\le \int_{|x|\ge\varepsilon} \frac{|x|^r}{\varepsilon^r} dF(x) \le \frac{1}{\varepsilon^r}\int_{-\infty}^\infty |x|^r dF(x) \\
+&= \frac{\E|\xi_n - \xi|^r}{\varepsilon^r}
+\end{align*}
+不等式 \eqref{eq:5.2.22} 是切比雪夫不等式的推广, 通常称作马尔可夫不等式, 当 $r=2$ 时就是切比雪夫不等式。
+\end{proof}
+
+\begin{example}
+    反之不成立。取 $\Omega=(0,1]$, $\mathcal{F}$ 为 $(0,1]$ 中博雷尔点集全体所构成的 $\sigma$ 域, $P$ 为勒贝格测度。 定义 $\xi(\omega)\equiv0$ 及
+\begin{equation} \label{eq:5.2.23}
+\xi_n(\omega) = \begin{cases}
+n^{1/r}, & 0 < \omega \le \frac{1}{n} \\
+0, & \frac{1}{n} < \omega \le 1
+\end{cases}
+\end{equation}
+显然对一切 $\omega \in \Omega$, $\xi_n(\omega)\to\xi(\omega)$, 又对于任意的 $\varepsilon>0$,
+\[
+P\{|\xi_n(\omega)-\xi(\omega)|\ge\varepsilon\} \le \frac{1}{n}
+\]
+因此 $\xi_n \xrightarrow{P} \xi$, 但是
+\[
+\E|\xi_n - \xi|^r = (n^{1/r})^r \cdot \frac{1}{n} = 1
+\]
+
+\end{example}
+
+
+\section{独立同分布场合的极限定理}\label{sec:独立同分布场合的极限定理}
+\subsection{辛钦大数定律}\label{subsec:辛钦大数定律}
+与 \ref{sec:伯努利试验场合的极限定理} 中由切比雪夫大数定律建立的极限定理不同的是，在独立同分布场合下不需要假定方差的存在性。
+\begin{theorem}[\textbf{辛钦大数定律}] \label{thm:khinchine_lln}
+ 设 $\xi_1, \xi_2, \ldots, \xi_n, \ldots$ 是相互独立的随机变量序列, 它们服从相同的分布, 且具有有限的数学期望
+\[
+a = E\xi_n
+\]
+则对任意的 $\varepsilon>0$, 有
+\begin{equation} \label{eq:khinchine_lln_formula}
+\lim_{n\to\infty} P\left\{ \left|\frac{1}{n}\sum_{i=1}^n \xi_i - a \right| < \varepsilon \right\} = 1
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+由于 $\xi_1, \xi_2, \ldots, \xi_n$ 具有相同分布, 故有同一特征函数, 设为 $f(t)$, 因为数学期望存在, 故 $f(t)$ 可展开成
+\begin{equation} \label{eq:char_func_expansion}
+f(t) = f(0) + f'(0)t + o(t) = 1 + iat + o(t)
+\end{equation}
+而 $\frac{1}{n}\sum_{i=1}^n \xi_i$ 的特征函数为
+\begin{equation} \label{eq:sum_char_func}
+E\left[e^{it\frac{1}{n}\sum_{i=1}^n \xi_i}\right] = \left[E\left(e^{it\frac{\xi_i}{n}}\right)\right]^n = \left[f\left(\frac{t}{n}\right)\right]^n = \left[1 + ia\frac{t}{n} + o\left(\frac{t}{n}\right)\right]^n
+\end{equation}
+对于固定的 $t$,
+\begin{equation} \label{eq:char_func_limit}
+\left[f\left(\frac{t}{n}\right)\right]^n \to e^{iat} \quad (n \to \infty)
+\end{equation}
+极限函数 $e^{iat}$ 是连续函数, 它是退化分布 $I_a(x)$ 所对应的特征函数, 由逆极限定理知 $\frac{1}{n}\sum_{i=1}^n \xi_i$ 的分布函数弱收敛于 $I_a(x)$, 再由定理 \ref{thm:const_conv} 知 $\frac{1}{n}\sum_{i=1}^n \xi_i$ 依概率收敛于常数 $a$, 从而证明了定理。
+\end{proof}
+
+\begin{remark}
+    定理 \ref{thm:khinchine_lln} 保证了矩估计的相合性；蒙特卡洛方法也由它保证。
+\end{remark}
+
+\subsection{中心极限定理}\label{subsec:中心极限定理}
+若 $\xi_1, \xi_2, \ldots, \xi_n, \ldots$ 是一串相互独立同分布的随机变量序列, 且
+\begin{equation} \label{eq:expectation_variance}
+E\xi_k=\mu, \quad D\xi_k=\sigma^2
+\end{equation}
+我们来讨论标准化随机变量和
+\begin{equation} \label{eq:standardized_sum}
+\zeta_n = \frac{1}{\sigma\sqrt{n}}\sum_{k=1}^n (\xi_k - \mu)
+\end{equation}
+的极限分布。
+
+\begin{theorem}[\textbf{林德伯格-莱维中心极限定理}] \label{thm:lindeberg_levy_clt}
+对于标准化和 \eqref{eq:standardized_sum}, 若 $0<\sigma^2<\infty$, 则
+\begin{equation} \label{eq:clt_limit}
+\lim_{n\to\infty} P\left\{\zeta_n < x\right\} = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^x e^{-t^2/2} dt
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+记 $\xi_k-\mu$ 的特征函数为 $g(t)$, 则 $\zeta_n$ 的特征函数为
+\[
+\left[g\left(\frac{t}{\sigma\sqrt{n}}\right)\right]^n
+\]
+由于 $E\xi_k=\mu, D\xi_k=\sigma^2$ 故 $g'(0)=0, g''(0)=-\sigma^2$. 因此
+\begin{equation} \label{eq:g_t_expansion}
+g(t) = 1 - \frac{1}{2}\sigma^2 t^2 + o(t^2)
+\end{equation}
+所以
+\begin{equation} \label{eq:char_func_zeta_n_limit}
+\left[g\left(\frac{t}{\sigma\sqrt{n}}\right)\right]^n = \left[1 - \frac{1}{2n}t^2 + o\left(\frac{t^2}{n}\right)\right]^n \to e^{-t^2/2}
+\end{equation}
+由于 $e^{-t^2/2}$ 是连续函数, 它对应的分布函数为 $N(0,1)$, 因此由逆极限定理知
+\[
+P\left\{\zeta_n < x\right\} \to \frac{1}{\sqrt{2\pi}}\int_{-\infty}^x e^{-t^2/2} dt
+\]
+定理证毕。
+\end{proof}
+\section{强大数定律}\label{sec:强大数定律}
+这里当时没学，现在学完实变函数应该会好很多。
+\subsection{以概率1收敛}\label{subsec:以概率1收敛}
+设 $A_1, A_2, \ldots, A_n, \ldots$ 是一列事件, 则 $\bigcup_{k=n}^\infty A_k$ 表示事件序列 $A_n, A_{n+1}, \ldots$ 中至少发生一个, 而 $\bigcap_{k=n}^\infty A_k$ 则表示 $A_n, A_{n+1}, \ldots$ 同时发生.
+\begin{definition}[上下限事件]\label{def:上下限事件}
+记
+\begin{equation} \label{eq:limsup_def}
+\varlimsup_{n\to\infty} A_n = \bigcap_{k=1}^\infty \bigcup_{n=k}^\infty A_n
+\end{equation}
+\begin{equation} \label{eq:liminf_def}
+\varliminf_{n\to\infty} A_n = \bigcup_{k=1}^\infty \bigcap_{n=k}^\infty A_n
+\end{equation}
+称 $\varlimsup_{n\to\infty} A_n$ 为事件序列 $\{A_n\}$ 的\textbf{上限事件}; 类似地称 $\varliminf_{n\to\infty} A_n$ 为事件序列 $\{A_n\}$ 的\textbf{下限事件}
+\end{definition}
+\begin{remark}
+    上限事件表示 $A_n$ 发生无穷多次, 因为 $\omega \in \bigcup_{n=k}^\infty A_n$ 当且仅当 $\omega$ 属于无穷多个 $A_n$。下限事件表示 $A_n$ 至多只有有限个不发生, 因为 $\omega \in \bigcap_{n=k}^\infty A_n$ 当且仅当存在一个 $N$, 使 $\omega \in \bigcap_{n=N}^\infty A_n$, 因此若 $\omega$ 发生, 则 $A_N, A_{N+1}, \ldots$ 同时发生, 这时至多只有前面 $N-1$ 个事件 $A_1, A_2, \ldots, A_{N-1}$ 可能不发生 (也可能有些发生).
+
+显然
+\begin{equation} \label{eq:liminf_subset_limsup}
+\varlimsup_{n\to\infty} A_n \supset \varliminf_{n\to\infty} A_n
+\end{equation}
+特别当 $\varlimsup_{n\to\infty} A_n = \varliminf_{n\to\infty} A_n$ 时, 记 $\lim_{n\to\infty} A_n = \varliminf_{n\to\infty} A_n = \varlimsup_{n\to\infty} A_n$, 并称它为事件序列 $\{A_n\}$ 的\textbf{极限事件}.
+\end{remark}
+
+\begin{lemma}[\textbf{Borel-Cantelli引理}] \label{lem:borel_cantelli}
+(i) 若随机事件序列 $\{A_n\}$ 满足
+\begin{equation} \label{eq:sum_prob_an_finite}
+\sum_{n=1}^\infty P(A_n) < \infty
+\end{equation}
+则
+\begin{equation} \label{eq:borel_cantelli_i_conclusion}
+P\left\{ \varlimsup_{n\to\infty} A_n \right\}=0, \quad P\left\{ \varliminf_{n\to\infty} \overline{A_n} \right\}=1
+\end{equation}
+(ii) 若 $\{A_n\}$ 是相互独立的随机事件序列, 则
+\begin{equation} \label{eq:sum_prob_an_infinite}
+\sum_{n=1}^\infty P(A_n) = \infty
+\end{equation}
+成立的充要条件为
+\begin{equation} \label{eq:borel_cantelli_ii_conclusion}
+P\left\{ \varlimsup_{n\to\infty} A_n \right\} = 1 \quad \text{或} \quad P\left\{ \varliminf_{n\to\infty} \overline{A_n} \right\} = 0
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+(i) 由于
+\begin{align*}
+P\left\{ \varlimsup_{n\to\infty} A_n \right\} &= P\left\{ \bigcap_{k=1}^\infty \bigcup_{n=k}^\infty A_n \right\} \\
+&\le P\left\{ \bigcup_{n=k}^\infty A_n \right\} \le \sum_{n=k}^\infty P(A_n) \to 0 \quad (k \to \infty)
+\end{align*}
+由De-Morgan定律知
+\[
+P\left\{ \varliminf_{n\to\infty} \overline{A_n} \right\} = 1
+\]
+(ii) 先证必要性。注意到 $\{\overline{A_n}\}$ 的独立性, 有
+\begin{align} \label{eq:borel_cantelli_ii_proof}
+P\left\{ \varliminf_{n\to\infty} \overline{A_n} \right\} &= P\left\{ \bigcup_{k=1}^\infty \bigcap_{n=k}^\infty \overline{A_n} \right\} \le \sum_{k=1}^\infty P\left\{ \bigcap_{n=k}^\infty \overline{A_n} \right\} \notag \\
+&= \sum_{k=1}^\infty \prod_{n=k}^\infty P(\overline{A_n}) = \sum_{k=1}^\infty \prod_{n=k}^\infty [1 - P(A_n)]
+\end{align}
+由于
+\[
+0 \le 1-x \le \exp\{-x\}
+\]
+可得
+\[
+\prod_{n=k}^N [1 - P(A_n)] \le \exp\left\{-\sum_{n=k}^N P(A_n)\right\}
+\]
+则从
+\[
+\sum_{n=1}^\infty P(A_n) = \infty
+\]
+故当 $N \to \infty$ 时,
+\[
+\lim_{N\to\infty} \prod_{n=k}^N [1 - P(A_n)] = 0
+\]
+所以
+\[
+P\left\{ \varliminf_{n\to\infty} \overline{A_n} \right\} = 0
+\]
+再证充分性。若 $P\{ \varlimsup_{n\to\infty} A_n \} = 1$. 假定 $\sum_{n=1}^\infty P(A_n) < \infty$, 则由 (i)
+得到 $P\{ \varlimsup_{n\to\infty} A_n \} = 0$, 产生矛盾. 因 $P(A_n) \ge 0$, 故只可能是
+$\sum_{n=1}^\infty P(A_n) = \infty$, 引理证毕。
+\end{proof}
+
+\begin{definition}[以概率 1 收敛]\label{def:convergence_almost_surely}
+如果
+\begin{equation} \label{eq:5.2.24}
+P\left\{ \lim_{n\to\infty} \xi_n(\omega) = \xi(\omega) \right\} = 1
+\end{equation}
+则称 $\{\xi_n(\omega)\}$ \textbf{以概率 1 收敛} (convergence in probability 1) 于 $\xi(\omega)$, 又称 $\{\xi_n(\omega)\}$ \textbf{几乎处处收敛}于 $\xi(\omega)$, 记为 $\xi_n(\omega) \xrightarrow{\text{a.s.}} \xi(\omega)$.
+\end{definition}
+\begin{remark}
+注意到
+\begin{equation} \label{eq:almost_sure_convergence_set}
+\left\{ \omega: \lim_{n\to\infty} \xi_n(\omega) = \xi(\omega) \right\}= \left\{ \omega: \bigcap_{m=1}^\infty \bigcup_{k=1}^\infty \bigcap_{n=k}^\infty \left( \left|\xi_n(\omega)-\xi(\omega)\right| < \frac{1}{m} \right) \right\}
+\end{equation}
+这个式子可以这样理解: 因为 $\omega \in \left\{ \lim_{n\to\infty} \xi_n(\omega) = \xi(\omega) \right\}$ 的充要条件是: 对任一正整数 $m$, 存在一个正整数 $N$, 使当 $n>N$ 时均有 $|\xi_n(\omega)-\xi(\omega)| < \frac{1}{m}$; 即对任一正整数 $m$, $\omega$ 属于 $\left( \left|\xi_n(\omega)-\xi(\omega)\right| < \frac{1}{m} \right)$ 的下限事件, 这正是式 \eqref{eq:almost_sure_convergence_set} 的右边。
+\end{remark}
+
+\begin{theorem}[以概率1收敛推出依概率收敛]\label{thm:以概率1收敛推出依概率收敛}
+    \[ \xi_n(\omega) \xrightarrow{\text{a.s.}} \xi(\omega) \implies \xi_n(\omega) \xrightarrow{\text{P}} \xi(\omega) \]
+\end{theorem}
+\begin{proof}
+我们先说明 $\{\xi_n(\omega)\}$ 以概率 1 收敛于 $\xi(\omega)$ 的定义也可以表达为: 对任意的 $\varepsilon>0$, 成立
+\begin{equation} \label{eq:almost_sure_alt_def}
+P\left\{ \bigcap_{k=1}^\infty \bigcup_{n=k}^\infty (|\xi_n(\omega)-\xi(\omega)|\ge\varepsilon) \right\}=0
+\end{equation}
+对 $\varepsilon>0$, 总有
+$$ \left\{ \bigcap_{k=1}^\infty \bigcup_{n=k}^\infty (|\xi_n(\omega)-\xi(\omega)|\ge\varepsilon) \right\}  \subset \left\{ \bigcup_{m=1}^\infty \bigcap_{k=1}^\infty \bigcup_{n=k}^\infty \left(|\xi_n(\omega)-\xi(\omega)|\ge\frac{1}{m}\right) \right\} $$
+因此由 \eqref{eq:almost_sure_convergence_set} 可以推得 \eqref{eq:almost_sure_alt_def}. 反之, 利用
+$$ P\left\{ \bigcup_{m=1}^{\infty}\bigcap_{k=1}^\infty \bigcup_{n=k}^\infty \left(|\xi_n(\omega)-\xi(\omega)|\ge\frac{1}{m}\right) \right\}  \le \sum_{m=1}^\infty P\left\{ \bigcap_{k=1}^{\infty}\bigcup_{n=k}^\infty \left(|\xi_n(\omega)-\xi(\omega)|\ge\frac{1}{m}\right) \right\} $$
+可由 \eqref{eq:almost_sure_alt_def} 推出 \eqref{eq:almost_sure_convergence_set}, 这就说明了两种表达法的等价性。
+利用概率的连续性可知, \eqref{eq:almost_sure_alt_def} 等价于
+\begin{equation} \label{eq:almost_sure_limit_union_intersection}
+\lim_{k\to\infty} P\left\{ \bigcup_{n=k}^\infty (|\xi_n(\omega)-\xi(\omega)|\ge\varepsilon) \right\}=0
+\end{equation}
+根据De-Morgan定理又知 \eqref{eq:almost_sure_alt_def} 等价于
+\begin{equation} \label{eq:almost_sure_limit_intersection_union}
+\lim_{k\to\infty} P\left\{ \bigcap_{n=k}^\infty (|\xi_n(\omega)-\xi(\omega)|<\varepsilon) \right\}=1
+\end{equation}
+由于
+$$ \{|\xi_n(\omega)-\xi(\omega)|\ge\varepsilon\} \subset  \{\bigcup_{n=k}^\infty|\xi_n(\omega)-\xi(\omega)|\ge\varepsilon\} $$
+因此若 \eqref{eq:almost_sure_limit_union_intersection} 成立, 则
+\begin{equation} \label{eq:limit_prob_single_term}
+\lim_{k\to\infty} P\left\{ |\xi_k(\omega)-\xi(\omega)| \ge \varepsilon \right\} = 0
+\end{equation}
+\end{proof}
+
+\begin{example} \label{ex:prob_conv_not_as_conv}
+取 $\Omega=(0,1]$, $\mathcal{F}$ 为 $(0,1]$ 中博雷尔点集全体所构成的 $\sigma$ 域, $P$ 为勒贝格测度. 令
+\begin{equation} \label{eq:eta_ki_def}
+\eta_{ki}(\omega) = \begin{cases}
+1, & \omega \in \left(\frac{i-1}{k}, \frac{i}{k}\right] \quad i=1,2,\ldots,k \\
+0, & \omega \notin \left(\frac{i-1}{k}, \frac{i}{k}\right]
+\end{cases} \quad k=1,2,\ldots
+\end{equation}
+定义
+\[
+\xi_1(\omega) = \eta_{11}(\omega), \xi_2(\omega) = \eta_{21}(\omega), \xi_3(\omega) = \eta_{22}(\omega)
+\]
+\[
+\xi_4(\omega) = \eta_{31}(\omega), \xi_5(\omega) = \eta_{32}(\omega), \ldots
+\]
+一般 $\xi_n(\omega) = \eta_{ki}(\omega)$, 其中 $n=i+\frac{k(k-1)}{2}$, 这样定义的 $\{\xi_n(\omega)\}$ 是一列随机变量。但对于任何一个 $\omega \in (0,1]$, $\xi_n(\omega)$ 必有无限个 $k,i$ 使其取值 $0$, 也有无限个 $k,i$ 使其取值 $1$, 因此 $\xi_n(\omega)$ 不是以概率 1 收敛于 $0$。但是另一方面, 对任意的 $\varepsilon>0$,
+\[
+P\left\{ |\eta_{ki}(\omega)|\ge\varepsilon \right\} \le \frac{1}{k}
+\]
+当 $n\to\infty$ 时, 由 $n=i+\frac{k(k-1)}{2}$, $i \le k$ 知 $k\to\infty$, 因此
+\[
+\lim_{n\to\infty} P\left\{ |\xi_n(\omega)|\ge\varepsilon \right\} = \lim_{n\to\infty} P\left\{ |\eta_{ki}(\omega)|\ge\varepsilon \right\} = 0
+\]
+所以 $|\xi_n(\omega)|$ 依概率收敛于 $0$.
+\end{example}
+\begin{remark}
+    不难验证, $\{\xi_n(\omega)\}$ 是 $r$ 阶收敛于 $0$ 的, 因此例 \ref{ex:prob_conv_not_as_conv} 也提供了 $r$ 阶收敛推不出以概率 1 收敛之例.
+\end{remark}
+\subsection{Borel强大数定律}\label{subsec:Borel强大数定律}
+\begin{theorem}[\textbf{Borel大数定律}] \label{thm:borel_lln}
+设 $\mu_n$ 是事件 $A$ 在 $n$ 次独立试验中的出现次数, 在每次试验中事件 $A$ 出现的概率均为 $p$, 那么当 $n\to\infty$ 时,
+\begin{equation} \label{eq:borel_lln_formula}
+P\left\{ \frac{\mu_n}{n}\to p \right\}=1
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+为使 \eqref{eq:borel_lln_formula} 成立, 由 \eqref{eq:almost_sure_alt_def}知, 只须对任意的 $\varepsilon>0$, 成立
+\begin{equation} \label{eq:borel_lln_proof_condition}
+P\left\{ \bigcap_{k=1}^\infty \bigcup_{n=k}^\infty \left(\left|\frac{\mu_n}{n}-p\right|\ge\varepsilon\right) \right\}=0
+\end{equation}
+若记 $A_n=\left\{\left|\frac{\mu_n}{n}-p\right|\ge\varepsilon\right\}$, 则上式可写成 $P\{\varlimsup_{n\to\infty} A_n\}=0$. 根据引理 \ref{lem:borel_cantelli} , 为证明 \eqref{eq:borel_lln_proof_condition} 只要能证明级数
+\begin{equation} \label{eq:borel_lln_sum_condition}
+\sum_{n=1}^\infty P\left\{ \left|\frac{\mu_n}{n}-p\right| \ge \varepsilon \right\}
+\end{equation}
+对任何 $\varepsilon>0$ 都收敛。
+
+利用马尔可夫不等式。由于
+\begin{equation} \label{eq:markov_inequality_mu_n}
+P\left\{ \left|\frac{\mu_n}{n}-p\right| \ge \varepsilon \right\} \le \frac{1}{\varepsilon^4}E\left|\frac{\mu_n}{n}-p\right|^4
+\end{equation}
+将 $\mu_n$ 表示成独立伯努利 $0-1$ 变量 $\xi_1, \xi_2, \ldots, \xi_n$ 之和, 这样
+\[
+\frac{\mu_n}{n} - p = \frac{1}{n}\sum_{i=1}^n (\xi_i - p)
+\]
+所以
+\[
+E\left(\frac{\mu_n}{n}-p\right)^4 = \frac{1}{n^4}\sum_{i=1}^n \sum_{j=1}^n \sum_{k=1}^n \sum_{l=1}^n E(\xi_i - p)(\xi_j - p)(\xi_k - p)(\xi_l - p)
+\]
+注意到各 $\xi_i$ 的独立性及 $E(\xi_i - p)=0$, 因此上面的和式中只有 $E(\xi_i-p)^4$ 及 $E(\xi_i-p)^2(\xi_j-p)^2$ 的项才不等于 $0$. 显然
+\begin{equation} \label{eq:moment_xi_i_4}
+E(\xi_i-p)^4 = pq(p^3 + q^3)
+\end{equation}
+\begin{equation} \label{eq:moment_xi_i_xi_j_2_2}
+E(\xi_i-p)^2(\xi_j-p)^2 = p^2q^2 \quad (i\ne j)
+\end{equation}
+\eqref{eq:moment_xi_i_4} 形式的项有 $n$ 项, \eqref{eq:moment_xi_i_xi_j_2_2} 形式的项有 $\binom{4}{2}\binom{n}{2} = 3n(n-1)$ 项, 因此
+\begin{equation} \label{eq:fourth_moment_simplified}
+E\left(\frac{\mu_n}{n}-p\right)^4 = \frac{1}{n^4}[n(p^3+q^3)pq + 3n(n-1)p^2q^2] \le \frac{C}{n^2}
+\end{equation}
+
+于是
+\begin{equation} \label{eq:prob_bound_with_n2}
+P\left\{ \left|\frac{\mu_n}{n}-p\right| \ge \varepsilon \right\} \le \frac{1}{\varepsilon^4} \frac{C}{n^2}
+\end{equation}
+它可以保证 \eqref{eq:borel_lln_sum_condition} 收敛, 从而证明了定理。
+\end{proof}
+\subsection{Kolmogorov强大数定律}\label{subsec:Kolmogorov强大数定律}
+\begin{theorem}[\textbf{Kolmogorov强大数定律}] \label{thm:kolmogorov_slln}
+设 $\{\xi_i\}, i = 1,2,\ldots$ 是独立随机变量序列, 且 $\sum_{n=1}^\infty \frac{D\xi_n}{n^2} < \infty$, 则成立
+\begin{equation} \label{eq:kolmogorov_slln_formula}
+P\left\{ \lim_{n\to\infty} \frac{1}{n}\sum_{i=1}^n (\xi_i - E\xi_i) = 0 \right\} = 1
+\end{equation}
+\end{theorem}
+\begin{theorem}[i.i.d.下的Kolmogorov] \label{thm:kolmogorov_slln_iid}
+设 $\xi_1, \xi_2, \ldots$ 是相互独立相同分布的随机变量序列, 则
+\begin{equation} \label{eq:kolmogorov_slln_iid_formula}
+\frac{1}{n}(\xi_1 + \xi_2 + \cdots + \xi_n) \xrightarrow{\text{a.s.}} a
+\end{equation}
+成立的充要条件是 $E\xi_i$ 存在且等于 $a$.
+\end{theorem}

@@ -1,0 +1,526 @@
+\chapter{参数估计}\label{chap:参数估计}
+\section{点估计}\label{sec:点估计}
+\begin{definition}[点估计]\label{def:point_estimation}
+设 $\mathbf{X} = (X_1, \dots, X_n)$ 为从某个总体中抽取的样本，$\hat{g}(\mathbf{X}) = \hat{g}(X_1, \dots, X_n)$ 是样本的函数，用 $\hat{g}(\mathbf{X})$ 作为 $g(\theta)$ 的估计，称为点估计 (point estimation)。
+\end{definition}
+
+\subsection{矩估计和最大似然估计}\label{subsec:矩估计和最大似然估计}
+在 \ref{subsec:方差，相关系数和矩} 节中提到过矩的相关概念，这里我们将运用定义 \ref{def:sample_moments} 。
+
+\begin{definition}[矩估计量与矩法]\label{def:moment_estimate}
+设有总体分布族 $\{f(x, \theta), \theta \in \Theta\}$, $\theta$ 是参数空间，$g(\theta)$ 是定义在
+$\Theta$ 上参数 $\theta$ 的函数，它可以表示为总体分布的某些矩的函数，即
+\begin{equation}
+g(\theta) = G(\alpha_1, \dots, \alpha_k; \mu_2, \dots, \mu_s).\label{eq:g_theta}
+\end{equation}
+设 $\mathbf{X} = (X_1, \dots, X_n)$ 是从上述分布族中抽取的简单样本，将式 (\ref{eq:g_theta}) 中的 $\alpha_i$ 和
+$\mu_j$ 分别用它们 “自然” 的矩估计量 $a_{ni}$ 和 $m_{nj}$ 代替，得
+\begin{equation}
+\hat{g}(\mathbf{X}) = G(a_{n1}, \dots, a_{nk}; m_{n2}, \dots, m_{ns}).\label{eq:hat_g_X}
+\end{equation}
+则 $\hat{g}(\mathbf{X})$ 作为 $g(\theta)$ 的估计量，称为 $g(\theta)$ 的矩估计量 (moment estimate)。这种求矩
+估计量的方法称为矩法 (moment method of estimation)。
+\end{definition}
+\begin{remark}
+    这里就是用样本矩估计总体矩,重点是找到各阶矩与参数之间的关系。矩估计不唯一。
+\end{remark}
+
+极大似然估计是在参数分布族场合下常用的参数估计方法。
+
+\begin{definition}[似然函数与对数似然函数]\label{def:likelihood_function}
+设 $f(\mathbf{x}, \theta) = f(x_1, \dots, x_n, \theta)$ 为样本 $\mathbf{X} = (X_1, \dots, X_n)$ 的概率
+函数。当 $\mathbf{x}$ 固定时，把 $f(\mathbf{x}, \theta)$ 看成 $\theta$ 的函数，称为似然函数 (likelihood function)，
+记为
+\begin{equation}
+L(\theta, \mathbf{x}) = f(\mathbf{x}, \theta), \quad \theta \in \Theta, \mathbf{x} \in \mathcal{X}. \label{eq:likelihood_L}
+\end{equation}
+其中 $\Theta$ 为参数空间，$\mathcal{X}$ 为样本空间。称 $\log L(\theta, \mathbf{x})$ 为对数似然函数，记为 $l(\theta, \mathbf{x})$。
+\end{definition}
+
+\begin{remark}
+    似然函数和概率函数是同一表达式 \eqref{eq:likelihood_L}，但表示两种不同含意。
+当把 $\theta$ 固定，将其看成定义在样本空间 $\mathcal{X}$ 上的函数时，称为概率函数；当把 $\mathbf{x}$ 固
+定，将其看成定义在参数空间 $\Theta$ 上的函数时，称为似然函数。这是两个不同的概念。
+\end{remark}
+
+\begin{definition}[极大似然估计]\label{def:MLE}
+设 $\mathbf{X} = (X_1, \dots, X_n)$ 是从参数分布族 $\mathcal{F} = \{f(\mathbf{x}, \theta), \theta \in \Theta\}$ 中
+抽取的简单随机样本，$L(\theta, \mathbf{x})$ 是似然函数，若存在统计量 $\hat{\theta}^* = \hat{\theta}^*(\mathbf{X})$，满足条件
+\begin{equation}
+L(\hat{\theta}^*, \mathbf{x}) = \sup_{\theta \in \Theta} L(\theta, \mathbf{x}), \quad \mathbf{x} \in \mathcal{X}, \label{eq:MLE_L}
+\end{equation}
+或等价地使得
+\begin{equation}
+l(\hat{\theta}^*, \mathbf{x}) = \sup_{\theta \in \Theta} l(\theta, \mathbf{x}), \quad \mathbf{x} \in \mathcal{X}, \label{eq:MLE_l}
+\end{equation}
+则称 $\hat{\theta}^*(\mathbf{X})$ 为 $\theta$ 的极大似然估计 (maximum likelihood estimation, MLE)。若待估
+函数是 $g(\theta)$，则定义 $g(\hat{\theta}^*(\mathbf{X}))$ 为 $g(\theta)$ 的 MLE。
+\end{definition}
+
+\begin{remark}
+    求极大似然估计，实际上是寻找极值.
+
+通常 $\mathbf{X} = (X_1, \dots, X_n)$ 为独立同分布随机样本，每个 $X_i \sim f(x_i, \theta)$，则 $\mathbf{X} = (X_1, \dots, X_n)$ 的联合概率密度函数为 $\prod_{i=1}^n f(x_i, \theta)$。
+
+似然函数为
+$$L(\mathbf{x}, \theta) = \prod_{i=1}^n f(x_i, \theta)$$
+对数似然函数为
+$$\ln L(\mathbf{x}, \theta) = \sum_{i=1}^n \ln f(x_i, \theta)$$
+因此，极大似然估计 $\hat{\theta}$ 的求解通常通过最大化对数似然函数得到：
+$$\hat{\theta} = \operatorname{arg\,sup}_{\theta \in \Theta} \ln L(\mathbf{x}, \theta)$$
+
+一般地，对 $\frac{\partial \ln L(\theta, \mathbf{x})}{\partial \theta}$ 求驻点，若Hessian矩阵 $H$ 在驻点处负定（$H < 0$），则可判断该驻点为极大值点 $\hat{\theta}$。
+\end{remark}
+
+\subsection{点估计的优良性准则}\label{subsec:点估计的优良性准则}
+\begin{definition}[无偏估计与渐近无偏估计]\label{def:unbiased_estimation}
+设 $\mathbf{X} = (X_1, \dots, X_n)$ 为从总体 $\{f(\mathbf{x}, \theta), \theta \in \Theta\}$ 中抽取的样本，
+$g(\theta)$ 是定义于参数空间 $\Theta$ 上的已知函数。$\hat{g}(\mathbf{X}) = \hat{g}(X_1, \dots, X_n)$ 是 $g(\theta)$ 的一个估
+计量，如果
+\begin{equation}
+E_\theta(\hat{g}(\mathbf{X})) = g(\theta), \quad \theta \in \Theta, \label{eq:unbiased}
+\end{equation}
+则称 $\hat{g}(\mathbf{X})$ 为 $g(\theta)$ 的一个\textbf{无偏估计} (unbiased estimation)。记 $\hat{g}(\mathbf{X}) = \hat{g}_n(\mathbf{X})$，若
+$E_\theta(\hat{g}_n(\mathbf{X})) \neq g(\theta)$, 但
+\begin{equation}
+\lim_{n\to\infty} E_\theta(\hat{g}_n(\mathbf{X})) = g(\theta), \quad \theta \in \Theta, \label{eq:asymptotically_unbiased}
+\end{equation}
+则称 $\hat{g}_n(\mathbf{X})$ 为 $g(\theta)$ 的\textbf{渐近无偏估计} (asymptotically unbiased estimation)。
+\end{definition}
+
+\begin{definition}[有效性]\label{def:efficient_estimator}
+设 $\hat{g}_1(\mathbf{X}) = \hat{g}_1(X_1, \dots, X_n)$ 和 $\hat{g}_2(\mathbf{X}) = \hat{g}_2(X_1, \dots, X_n)$ 为 $g(\theta)$
+的两个无偏估计量，若
+\begin{equation}
+D_\theta(\hat{g}_1(\mathbf{X})) \leq D_\theta(\hat{g}_2(\mathbf{X})), \quad \text{一切 } \theta \in \Theta, \label{eq:efficiency_condition}
+\end{equation}
+且至少存在一个 $\theta \in \Theta$，使得严格不等号成立，则称估计量 $\hat{g}_1(\mathbf{X})$ 比 $\hat{g}_2(\mathbf{X})$ 有效。
+\end{definition}
+
+\begin{definition}[相合估计]\label{def:consistent_estimation}
+设对每个自然数 $n$, $\hat{g}_n(\mathbf{X}) = \hat{g}_n(X_1, \dots, X_n)$ 是 $g(\theta)$ 的一个估计
+量。若 $\hat{g}_n(\mathbf{X})$ 依概率收敛到 $g(\theta)$，即对任何 $\theta \in \Theta$ 及 $\varepsilon > 0$ 有
+\begin{equation}
+\lim_{n\to\infty} P_\theta(|\hat{g}_n(\mathbf{X}) - g(\theta)| \geq \varepsilon) = 0, \label{eq:weakly_consistent}
+\end{equation}
+则称 $\hat{g}_n(\mathbf{X})$ 为 $g(\theta)$ 的\textbf{弱相合估计} (weakly consistent estimation)。若对任何 $\theta \in \Theta$ 有
+\begin{equation}
+P_\theta\left( \lim_{n\to\infty} \hat{g}_n(\mathbf{X}) = g(\theta) \right) = 1, \label{eq:strongly_consistent}
+\end{equation}
+则称 $\hat{g}_n(\mathbf{X})$ 为 $g(\theta)$ 的\textbf{强相合估计} (strongly consistent estimation)。若 $r > 0$ 和对
+任何 $\theta \in \Theta$，有
+\begin{equation}
+\lim_{n\to\infty} E_\theta|\hat{g}_n(\mathbf{X}) - g(\theta)|^r = 0, \label{eq:r_consistent}
+\end{equation}
+则称 $\hat{g}_n(\mathbf{X})$ 为 $g(\theta)$ 的 $r$ \textbf{阶矩相合估计} (consistent estimation in $r$'th mean)。当
+$r=2$ 时称为\textbf{均方相合估计} (consistent estimation in quadratic mean)。
+\end{definition}
+\begin{remark}
+    分别对于依概率收敛 \ref{def:convergence_in_probability}，以概率1收敛 \ref{def:convergence_almost_surely}和r阶收敛 \ref{def:r_order_convergence}。
+\end{remark}
+\subsection{一致最小方差无偏估计}\label{subsec:一致最小方差无偏估计}
+\begin{definition}[均方误差]\label{def:MSE}
+设 $\hat{g}(\mathbf{X})$ 为 $g(\theta)$ 的估计量，则称 $E_\theta(\hat{g}(\mathbf{X}) - g(\theta))^2$ 为 $\hat{g}(\mathbf{X})$ 的均
+方误差 (mean square error, MSE)。
+\end{definition}
+\begin{align*}
+E_\theta[\hat{g}(\mathbf{X}) - g(\theta)]^2 &= E_\theta[\hat{g}(\mathbf{X}) - E_\theta \hat{g}(\mathbf{X}) + E_\theta \hat{g}(\mathbf{X}) - g(\theta)]^2 \\
+&= D_\theta(\hat{g}(\mathbf{X})) + [E_\theta \hat{g}(\mathbf{X}) - g(\theta)]^2 \\
+&\quad + 2E_\theta[(\hat{g}(\mathbf{X}) - E_\theta \hat{g}(\mathbf{X}))(E_\theta \hat{g}(\mathbf{X}) - g(\theta))]
+\end{align*}
+第三项 $2E_\theta[(\hat{g}(\mathbf{X}) - E_\theta \hat{g}(\mathbf{X}))(E_\theta \hat{g}(\mathbf{X}) - g(\theta))]$ 展开后为 $2(E_\theta \hat{g}(\mathbf{X}) - g(\theta)) E_\theta(\hat{g}(\mathbf{X}) - E_\theta \hat{g}(\mathbf{X})) = 2(E_\theta \hat{g}(\mathbf{X}) - g(\theta)) (E_\theta \hat{g}(\mathbf{X}) - E_\theta \hat{g}(\mathbf{X})) = 0$。
+
+故
+$$E_\theta[\hat{g}(\mathbf{X}) - g(\theta)]^2 = D_\theta(\hat{g}(\mathbf{X})) + [E_\theta \hat{g}(\mathbf{X}) - g(\theta)]^2.$$
+在 $E_\theta \hat{g}(\mathbf{X}) = g(\theta)$, $\theta \in \Theta$ 条件下考虑 MSE 最小会简化我们的讨论。
+
+\begin{definition}[一致最小方差无偏估计 (UMVUE)]\label{def:UMVUE}
+设 $\mathcal{F} = \{f(\mathbf{x}, \theta), \theta \in \Theta\}$ 是一个参数分布族，其中 $\Theta$ 为参数空
+间，$g(\theta)$ 为定义在 $\Theta$ 上的可估函数。设 $\hat{g}^*(\mathbf{X}) = \hat{g}^*(X_1, \dots, X_n)$ 为 $g(\theta)$ 的一个无
+偏估计，若对 $g(\theta)$ 的任一无偏估计 $\hat{g}(\mathbf{X}) = \hat{g}(X_1, \dots, X_n)$，都有
+\begin{equation}
+D_\theta(\hat{g}^*(\mathbf{X})) \leq D_\theta(\hat{g}(\mathbf{X})), \quad \text{一切 } \theta \in \Theta, \label{eq:UMVUE_condition}
+\end{equation}
+则称 $\hat{g}^*(\mathbf{X})$ 是 $g(\theta)$ 的一致最小方差无偏估计 (uniformly minimum variance unbiased
+estimation, UMVUE)。
+\end{definition}
+
+\begin{lemma}[改进无偏估计的方法]\label{lem:3.4.1_RaoBlackwell}
+    设 $T=T(\mathbf{X})$ 是一个充分统计量，而 $\hat{g}(\mathbf{X})$ 是 $g(\theta)$ 的一个无偏估计，则
+$$h(T) = E_\theta(\hat{g}(\mathbf{X})|T)$$
+是 $g(\theta)$ 的无偏估计，并且
+\begin{equation}
+D_\theta(h(T)) \leq D_\theta(\hat{g}(\mathbf{X})), \quad \text{一切 } \theta \in \Theta. \label{eq:Rao_Blackwell_inequality}
+\end{equation}
+其中等号当且仅当 $P_\theta(\hat{g}(\mathbf{X}) = h(T)) = 1$, 即 $\hat{g}(\mathbf{X}) = h(T)$, a.s. $P_\theta$ 成立。
+\end{lemma}
+\begin{proof}
+    因 $T(\mathbf{X})$ 为充分统计量，按定义，给定 $T$ 时 $\mathbf{X}$ 的条件分布与 $\theta$ 无关。因此给定 $T$ 时，$\hat{g}(\mathbf{X})$ 的条件期望 $E_\theta(\hat{g}(\mathbf{X})|T)$ 与 $\theta$ 无关。所以 $h(T)$ 是统计量，可作为 $g(\theta)$ 的估计量，且有
+\begin{equation}
+E_\theta(h(T)) = E_\theta[E_\theta(\hat{g}(\mathbf{X})|T)] = E_\theta(\hat{g}(\mathbf{X})) = g(\theta), \quad \text{一切 } \theta \in \Theta. \label{eq:h_T_unbiased}
+\end{equation}
+因此 $h(T)$ 是 $g(\theta)$ 的无偏估计。为证式 (\ref{eq:Rao_Blackwell_inequality})，易知
+\begin{align*}
+D_\theta(\hat{g}(\mathbf{X})) &= E_\theta\{[\hat{g}(\mathbf{X}) - h(T)] + [h(T) - g(\theta)]\}^2 \\
+&= E_\theta[\hat{g}(\mathbf{X}) - h(T)]^2 + E_\theta[h(T) - g(\theta)]^2 \\
+&\quad + 2E_\theta\{[\hat{g}(\mathbf{X}) - h(T)][h(T) - g(\theta)]\}
+\end{align*}
+由于 $E_\theta[\hat{g}(\mathbf{X})|T] - h(T) = 0$, 可知
+\begin{align*}
+E_\theta\{[h(T) - g(\theta)] [\hat{g}(\mathbf{X}) - h(T)]\} &= E_\theta\{ E_\theta[(h(T) - g(\theta)) (\hat{g}(\mathbf{X}) - h(T))|T] \} \\
+&= E_\theta\{ (h(T) - g(\theta)) [E_\theta(\hat{g}(\mathbf{X})|T) - E_\theta(h(T)|T)] \} \\
+&= E_\theta\{ (h(T) - g(\theta)) [h(T) - h(T)] \} \\
+&= E_\theta\{ (h(T) - g(\theta)) \cdot 0 \} = 0.
+\end{align*}
+故有
+\begin{align*}
+D_\theta(\hat{g}(\mathbf{X})) &= E_\theta[\hat{g}(\mathbf{X}) - h(T)]^2 + D_\theta(h(T)) \\
+&\ge D_\theta(h(T)), \quad \text{一切 } \theta \in \Theta,
+\end{align*}
+且等号成立的充要条件是
+$$E_\theta[\hat{g}(\mathbf{X}) - h(T)]^2 = 0,$$
+此即 $\hat{g}(\mathbf{X}) = h(T)$, a.s. $P_\theta$ 成立。引理证毕。
+\end{proof}
+\begin{remark}
+    这里其实用到了定义 \ref{def:回归} 的性质，本质上是随机变量在Hilbert空间
+    \begin{equation}\label{eq:Hilbert Space}
+        L(x) = \{\varphi(x): \varphi(x)\text{ is measurable}, \E\varphi(x) = 0, \E\varphi^{2}(x)<\infty\}
+    \end{equation}
+    上的投影，使得
+    \begin{equation}
+        \E(Y - \varphi(x))^{2} = \text{min!}
+    \end{equation}
+    这里的$\varphi(x) = \E( Y | X)$，为条件期望。
+\end{remark}
+\begin{remark}
+    一般求UMVUE的方法有\textbf{充分完全统计量法}和\textbf{零无偏估计法}。
+\end{remark}
+
+\begin{theorem}[Lehmann-Scheff 定理]\label{thm:Lehmann_Scheff}
+    设 $\mathbf{X} \sim \{f(\mathbf{x}, \theta), \theta \in \Theta\}$ 为参数空间。
+令 $X_1, \dots, X_n$ 为从总体 $\mathbf{X}$ 中抽取的简单样本，$g(\theta)$ 为定义于参数空间 $\Theta$ 上的可估函数。设 $T(\mathbf{X})$ 为一个充分完全统计量，若 $\hat{g}(T(\mathbf{X}))$ 为 $g(\theta)$ 的一个无偏估计，则 $\hat{g}(T(\mathbf{X}))$ 是 $g(\theta)$ 的唯一的 UMVUE。
+\end{theorem}
+\begin{proof}
+    先证唯一性。设 $\hat{g}_1(T(\mathbf{X}))$ 为 $g(\theta)$ 的任一无偏估计，令 $\delta(T(\mathbf{X})) = \hat{g}(T(\mathbf{X})) - \hat{g}_1(T(\mathbf{X}))$，则 $E_\theta \delta(T(\mathbf{X})) = E_\theta \hat{g}(T(\mathbf{X})) - E_\theta \hat{g}_1(T(\mathbf{X})) = 0$, $\theta \in \Theta$。由 $T(\mathbf{X})$ 为完全统计量，可知 $\delta(T(\mathbf{X})) = 0$, a.s. $P_\theta$ 成立，即 $\hat{g}(T(\mathbf{X})) = \hat{g}_1(T(\mathbf{X}))$, a.s. $P_\theta$ 成立，故唯一性成立。
+
+再证一致最小方差性。设 $\varphi(\mathbf{X})$ 为 $g(\theta)$ 的任一无偏估计。令 $h(T(\mathbf{X})) = E_\theta(\varphi(\mathbf{X})|T)$，由 $T(\mathbf{X})$ 为充分统计量，故知 $h(T(\mathbf{X}))$ 与 $\theta$ 无关，是统计量。由引理 \ref{lem:3.4.1_RaoBlackwell} 可知
+$$E_\theta(h(T(\mathbf{X}))) = g(\theta), \quad \text{一切 } \theta \in \Theta,$$
+$$D_\theta(h(T(\mathbf{X}))) \leq D_\theta(\varphi(\mathbf{X})), \quad \text{一切 } \theta \in \Theta.$$
+由唯一性得 $\hat{g}(T(\mathbf{X})) = h(T(\mathbf{X}))$, a.e. $P_\theta$ 成立，由上式可知
+$$D_\theta(\hat{g}(T(\mathbf{X}))) = D_\theta(h(T(\mathbf{X}))) \leq D_\theta(\varphi(\mathbf{X})), \quad \text{一切 } \theta \in \Theta,$$
+所以 $\hat{g}(T(\mathbf{X}))$ 为 $g(\theta)$ 的 UMVUE，且唯一。
+\end{proof}
+\begin{remark}
+    可以总结找UMVUE的步骤：
+    \begin{enumerate}[(1)]
+        \item 找充分完全统计量 $T$
+        \item 找 $T$ 的函数 $\hat{g}(T)$, s.t. $E_\theta \hat{g}(T) = g(\theta)$.
+        或找 $\varphi(\mathbf{X})$, s.t. $E_\theta \varphi(\mathbf{X}) = g(\theta)$, $h(T) = E_\theta(\varphi(\mathbf{X})|T)$ 为 UMVUE。
+    \end{enumerate}
+\end{remark}
+
+\begin{corollary}\label{cor:3.4.2}
+    设样本 $\mathbf{X} = (X_1, \dots, X_n)$ 的分布为指数族
+$$f(\mathbf{x}, \theta) = C(\theta) \exp\left\{\sum_{j=1}^k \theta_j T_j(\mathbf{x})\right\} h(\mathbf{x}), \quad \theta = (\theta_1, \dots, \theta_k) \in \Theta^*.$$
+令 $T(\mathbf{X}) = (T_1(\mathbf{X}), \dots, T_k(\mathbf{X}))$。若自然参数空间 $\Theta^*$ 作为 $R_k$ 的子集有内点，且
+$h(T(\mathbf{X}))$ 为 $g(\theta)$ 的无偏估计，则 $h(T(\mathbf{X}))$ 为 $g(\theta)$ 的唯一的 UMVUE。
+\end{corollary}
+
+\begin{theorem}[零无偏估计法]\label{thm:3.4.1}
+    设 $\hat{g}(\mathbf{X})$ 是 $g(\theta)$ 的一个无偏估计，$D_\theta(\hat{g}(\mathbf{X})) < \infty$, 对任何 $\theta \in \Theta$。
+若对任何满足条件 “$E_\theta l(\mathbf{X})=0$, 对一切 $\theta \in \Theta$” 的统计量 $l(\mathbf{X})$, 必有
+\begin{equation}
+\operatorname{Cov}_\theta(\hat{g}(\mathbf{X}), l(\mathbf{X})) = E_\theta[\hat{g}(\mathbf{X}) \cdot l(\mathbf{X})] = 0, \quad \text{一切 } \theta \in \Theta, \label{eq:covariance_condition}
+\end{equation}
+则 $\hat{g}(\mathbf{X})$ 是 $g(\theta)$ 的 UMVUE。
+\end{theorem}
+
+
+\begin{remark}
+    从形式上看，条件 “$E_\theta l(\mathbf{X})=0, \theta \in \Theta$” 可解释为 “$l(\mathbf{X})$ 是零的无
+偏估计”，由此得到求 UMVUE 的方法之一的名称 “零无偏估计法”。
+\end{remark}
+
+\subsection{Cramer-Rao不等式}\label{subsec:C-R inequality}
+\begin{definition}[C-R 正则分布族]\label{def:CR_regular_family}
+若单参数概率函数族 $\mathcal{F}=\{f(x, \theta), \theta \in \Theta\}$ 满足下列条件：
+\begin{enumerate}
+    \item 参数空间 $\Theta$ 是直线上的某个开区间；
+    \item 对任何 $x \in \mathcal{X}$ 及 $\theta \in \Theta$, $f(x, \theta)>0$，即分布族具有共同支撑；
+    \item 对任何 $x \in \mathcal{X}$ 及 $\theta \in \Theta$, $\frac{\partial f(x, \theta)}{\partial \theta}$ 存在；
+    \item 概率函数 $f(x, \theta)$ 的积分与微分运算可交换，即
+    $$\frac{\partial}{\partial \theta}\int f(x, \theta)dx = \int \frac{\partial}{\partial \theta}f(x, \theta)dx,$$
+    若 $f(x, \theta)$ 为离散随机变量的概率分布，上述条件改为无穷级数和微分运算可交换；
+    \item 下列数学期望存在，且
+    $$0 < I(\theta) = E_\theta\left[\frac{\partial \log f(\mathbf{X}, \theta)}{\partial \theta}\right]^2 < \infty,$$
+\end{enumerate}
+则称该分布族为 C-R 正则分布族。其中 1.-5. 称为 C-R 正则条件。$I(\theta)$ 称为该分布的 Fisher 信息量(或称为 Fisher 信息函数)。
+\end{definition}
+
+\begin{theorem}[C-R不等式]\label{thm:Cramer_Rao_inequality}
+    设 $\mathcal{F}=\{f(\mathbf{x}, \theta), \theta \in \Theta\}$ 是 C-R 正则分布族，$g(\theta)$ 是定义于参数
+空间 $\Theta$ 上的可微函数。设 $\mathbf{X}=(X_1, \dots, X_n)$ 是由总体 $f(\mathbf{x}, \theta) \in \mathcal{F}$ 中抽取的简单
+随机样本，$\hat{g}(\mathbf{X})$ 是 $g(\theta)$ 的任一无偏估计，且满足下列条件：
+\begin{enumerate}
+    \item 积分 
+    $$\int \dots \int \hat{g}(\mathbf{x})f(\mathbf{x}, \theta)d\mathbf{x}$$
+    可在积分号下对 $\theta$ 求导数，此处 $d\mathbf{x} = dx_1 \dots dx_n$, 则有
+\end{enumerate}
+\begin{equation}
+D_\theta[\hat{g}(\mathbf{X})] \ge \frac{(g'(\theta))^2}{nI(\theta)}, \quad \text{一切 } \theta \in \Theta. \label{eq:Cramer_Rao_bound_general}
+\end{equation}
+\end{theorem}
+\begin{remark}
+    特别当 $g(\theta) = \theta$ 时，式 (\ref{eq:Cramer_Rao_bound_general}) 变为
+\begin{equation}
+D_\theta[\hat{g}(\mathbf{X})] \ge \frac{1}{nI(\theta)}, \quad \text{一切 } \theta \in \Theta. \label{eq:Cramer_Rao_bound_theta}
+\end{equation}
+当 $f(\mathbf{x}, \theta)$ 为离散 r.v. $\mathbf{X}$ 的概率分布时，式 (\ref{eq:Cramer_Rao_bound_general}) 变为
+\begin{equation}
+D_\theta[\hat{g}(\mathbf{X})] \ge \frac{[g'(\theta)]^2}{n \sum\limits_{i} \left\{ \left[\frac{\partial \log f(X_i, \theta)}{\partial \theta}\right]^2 f(x_i, \theta) \right\}}. \label{eq:Cramer_Rao_bound_discrete}
+\end{equation}
+\end{remark}
+
+\begin{remark}
+    若$\hat{g}(\mathbf{X})$达到 C-R 下界，则验证了该估计是UMVUE. 然而若达不到 C-R 下界，并不能说明 $g(\theta)$的UMVUE不存在。
+\end{remark}
+
+\begin{definition}[无偏估计的效率]\label{def:efficiency}
+设 $\hat{g}(\mathbf{X})$ 为 $g(\theta)$ 的无偏估计，比值
+\begin{equation}
+e_{\hat{g}}(\theta) = \frac{(g'(\theta))^2 / (nI(\theta))}{D_\theta[\hat{g}(\mathbf{X})]} \label{eq:efficiency_ratio}
+\end{equation}
+称为无偏估计 $\hat{g}(\mathbf{X})$ 的\textbf{效率} (efficiency)。显然 $0 < e_g(\theta) \le 1$，当 $e_g(\theta) = 1$ 时，
+称 $\hat{g}(\mathbf{X})$ 是 $g(\theta)$ 的\textbf{有效估计} (effective estimation)。若 $\hat{g}(\mathbf{X})$ 不是 $g(\theta)$ 的有效估
+计，但 $\lim_{n\to\infty} e_g(\theta) = 1$，则称 $\hat{g}(\mathbf{X})$ 是 $g(\theta)$ 的\textbf{渐近有效估计} (asymptotically effective
+estimation)。
+\end{definition}
+
+\section{区间估计}\label{sec:区间估计}
+\subsection{基本概念}\label{subsec:基本概念}
+\begin{definition}[区间估计]\label{def:interval_estimation}
+设有一个参数分布族 $\mathcal{F}=\{f(\mathbf{x}, \theta), \theta \in \Theta\}$, $g(\theta)$ 是定义在参数
+空间 $\Theta$ 上的一个已知函数，$\mathbf{X} = (X_1, \dots, X_n)$ 是从分布族某总体 $f(\mathbf{x}, \theta)$ 中抽取
+的样本。令 $\hat{g}_1(\mathbf{X})$ 和 $\hat{g}_2(\mathbf{X})$ 为定义在样本空间 $\mathcal{X}$ 上，取值在 $\Theta$ 上的两个统计量，
+且 $\hat{g}_1(\mathbf{X}) \leq \hat{g}_2(\mathbf{X})$，则称随机区间 $[\hat{g}_1(\mathbf{X}), \hat{g}_2(\mathbf{X})]$ 为 $g(\theta)$ 的一个区间估计 (interval
+estimation)。
+\end{definition}
+
+\begin{definition}[置信水平与置信系数]\label{def:confidence_level_coefficient}
+设随机区间 $[\hat{\theta}_1, \hat{\theta}_2]$ 为参数 $\theta$ 的一个区间估计，则 $[\hat{\theta}_1, \hat{\theta}_2]$ 包含 $\theta$
+的概率 $P_\theta(\hat{\theta}_1 \le \theta \le \hat{\theta}_2)$ 称为此区间估计的\textbf{置信水平} (confidence level)。置信水平在
+参数空间 $\Theta$ 上的下确界
+$$\inf_{\theta \in \Theta} P_\theta(\hat{\theta}_1 \le \theta \le \hat{\theta}_2)$$
+称为该区间估计的\textbf{置信系数} (confidence coefficient)。
+\end{definition}
+\begin{remark}
+    精度和置信度相互制约，根据Neyman的提议，在保证置信系数达到指定要求的前提下尽可能提高精度。
+\end{remark}
+
+\begin{definition}[置信区间]\label{def:confidence_interval}
+设 $[\hat{\theta}_1(\mathbf{X}), \hat{\theta}_2(\mathbf{X})]$ 是参数 $\theta$ 的一个区间估计，若对于给定的 $0 <
+\alpha < 1$, 有
+\begin{equation}
+P_\theta(\hat{\theta}_1(\mathbf{X}) \le \theta \le \hat{\theta}_2(\mathbf{X})) \ge 1-\alpha, \quad \theta \in \Theta, \label{eq:confidence_interval_condition}
+\end{equation}
+则称 $[\hat{\theta}_1(\mathbf{X}), \hat{\theta}_2(\mathbf{X})]$ 是 $\theta$ 的\textbf{置信水平} (confidence level) 为 $1-\alpha$ 的\textbf{置信区间}
+(confidence interval)。而 $\inf_{\theta \in \Theta} P_\theta(\hat{\theta}_1(\mathbf{X}) \le \theta \le \hat{\theta}_2(\mathbf{X}))$ 称为 $[\hat{\theta}_1(\mathbf{X}), \hat{\theta}_2(\mathbf{X})]$ 的置信系
+数。
+\end{definition}
+
+\begin{definition}[单侧置信上限与置信下限]\label{def:one_sided_confidence_limit}
+设 $\hat{\theta}_U(\mathbf{X})$ 和 $\hat{\theta}_L(\mathbf{X})$ 是定义在样本空间 $\mathcal{X}$ 上，在参数空间 $\Theta$ 上
+取值的两个统计量。若对给定 $0 < \alpha < 1$, 有
+\begin{align}
+P_\theta(\theta \le \hat{\theta}_U(\mathbf{X})) &\ge 1-\alpha, \quad \text{一切 } \theta \in \Theta, \label{eq:upper_confidence_limit} \\
+P_\theta(\hat{\theta}_L(\mathbf{X}) \le \theta) &\ge 1-\alpha, \quad \text{一切 } \theta \in \Theta, \label{eq:lower_confidence_limit}
+\end{align}
+则分别称 $\hat{\theta}_U(\mathbf{X})$ 和 $\hat{\theta}_L(\mathbf{X})$ 是 $\theta$ 的\textbf{置信水平为 $1-\alpha$ 的 (单侧) 置信上限} (upper
+confidence limit ) 和\textbf{置信下限} (lower confidence limit)。上式左端概率在参数空间 $\Theta$
+上的下确界分别称为置信上、下限的置信系数。
+
+显然，对置信上限 $\hat{\theta}_U$ 而言，若 $E(\hat{\theta}_U)$ 越小，其精确度越高；对置信下限 $\hat{\theta}_L$ 而言，
+若 $E(\hat{\theta}_L)$ 越大，则置信下限的精度越高。
+\end{definition}
+
+\subsection{枢轴变量法——正态总体}\label{subsec:枢轴变量法——正态总体}
+\begin{proposition}[构造置信区间的一般步骤]\label{prop:构造置信区间的一般步骤}
+构造置信区间的步骤如下：
+\begin{enumerate}
+    \item 找待估参数 $\mu$ 的一个良好点估计。
+    \item 构造一个 $T(\mathbf{X})$ 和 $\mu$ 的函数 $\varphi(T, \mu)$, 使其满足
+    \begin{enumerate}
+        \item[(i)] 其表达式与待估参数 $\mu$ 有关，
+        \item[(ii)] 其分布与待估参数 $\mu$ 无关。
+    \end{enumerate}
+    则称随机变量 $\varphi(T, \mu)$ 为枢轴变量。
+
+    \item 对给定的 $0 < \alpha < 1$，决定两个常数 $a$ 和 $b$，使得
+    \begin{equation}
+    P_\mu(a \le \varphi(T, \mu) \le b) = 1-\alpha. \label{eq:pivotal_quantity_prob}
+    \end{equation}
+\end{enumerate}
+解括号中的不等式得到 $\hat{\mu}_1(\mathbf{X}) \le \mu \le \hat{\mu}_2(\mathbf{X})$，则有
+\begin{equation}
+P_\mu(\hat{\mu}_1(\mathbf{X}) \le \mu \le \hat{\mu}_2(\mathbf{X})) = 1-\alpha. \label{eq:final_confidence_interval}
+\end{equation}
+这表明 $[\hat{\mu}_1(\mathbf{X}), \hat{\mu}_2(\mathbf{X})]$ 是 $\mu$ 的置信水平为 $1-\alpha$ 的置信区间。
+\end{proposition}
+
+\begin{proposition}[单个总体参数的置信区间]\label{prop:单个总体参数的置信区间}
+    \begin{enumerate}
+    \item $\sigma^2$ 已知，$\mu$ 的置信系数为$1-\alpha$的置信区间为
+    \begin{equation}
+        [\bar{X} - \frac{\sigma}{\sqrt{n}}u_{\alpha/2}, \bar{X} + \frac{\sigma}{\sqrt{n}}u_{\alpha/2}]
+    \end{equation}
+    \item $\sigma^2$ 未知，$\mu$ 的置信系数为$1-\alpha$的置信区间为
+    \begin{equation}
+        [\bar{X} - \frac{S}{\sqrt{n}}t_{n-1}(\alpha/2), \bar{X} + \frac{S}{\sqrt{n}}t_{n-1}(\alpha/2)]
+    \end{equation}
+    \item $\mu$ 已知，$\sigma^2$ 的置信系数为$1-\alpha$的置信区间为
+    \begin{equation}
+        [\frac{nS_\mu^2}{\chi_n^2(\alpha/2)},\frac{nS_\mu^2}{\chi_n^2(1-\alpha/2)}]
+    \end{equation}
+    \item $\mu$ 未知，$\sigma^2$ 的置信系数为$1-\alpha$的置信区间为
+    \begin{equation}
+        [\frac{(n-1)S^2}{\chi_{n-1}^2(\alpha/2)},\frac{(n-1)S^2}{\chi_{n-1}^2(1-\alpha/2)}]
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[均值差$b-a$的置信区间]\label{prop:均值差$b-a$的置信区间}
+    \begin{enumerate}
+    \item $m=n$ 时
+    令 $Z_i = Y_i - X_i, i = 1,2, \dots, n$. 
+    $b-a$ 的置信水平 $1-\alpha$ 的置信区间为 
+    \begin{equation}
+        [\bar{Z} - \frac{S_Z}{\sqrt{n}} t_{n-1}(\alpha/2), \bar{Z} + \frac{S_Z}{\sqrt{n}} t_{n-1}(\alpha/2)]
+    \end{equation}
+
+    \item $\sigma_1^2$ 和 $\sigma_2^2$ 已知
+    $b-a$ 的置信水平 $1-\alpha$ 的置信区间为
+    \begin{equation}
+        [\bar{X}-\bar{Y} - \sqrt{\sigma_1^2/n + \sigma_2^2/m} u_{\alpha/2}, \bar{X}-\bar{Y} + \sqrt{\sigma_1^2/n + \sigma_2^2/m} u_{\alpha/2}]
+    \end{equation}
+
+    \item $\sigma_1^2 = \sigma_2^2 = \sigma^2$ 未知，令 $S_{\omega}^2 = \frac{nS_1^2 + mS_2^2}{n+m-2}$, 
+    $b-a$ 的置信水平 $1-\alpha$ 的置信区间为
+    \begin{equation}
+        [\bar{Y}-\bar{X} - S_{\omega}\sqrt{1/n+1/m} t_{n+m-2}(\alpha/2), \bar{Y}-\bar{X} + S_{\omega}\sqrt{1/n+1/m} t_{n+m-2}(\alpha/2)]
+    \end{equation}
+
+    \item $\sigma_1^2 \ne \sigma_2^2$ 未知 (Behrens-Fisher 问题)
+    \begin{enumerate}
+        \item $m,n$ 均大时，
+    由引理 \ref{lem:slutsky}知
+    $\frac{(\bar{Y}-\bar{X})-(b-a)}{\sqrt{S_1^2/m + S_2^2/n}} \xrightarrow{\mathscr{L}} N(0,1)$.
+    $b-a$ 的置信水平 $1-\alpha$ 的置信区间为
+    \begin{equation}
+        [\bar{X}-\bar{Y} - \sqrt{S_1^2/m + S_2^2/n} u_{\alpha/2}, \bar{X}-\bar{Y} + \sqrt{S_1^2/m + S_2^2/n} u_{\alpha/2}]
+    \end{equation}
+        \item 一般情况下的估计记不住，不写了。
+    \end{enumerate}
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[方差比$\sigma_1^2/\sigma_2^2$的置信区间]\label{prop:方差比的置信区间}
+    \begin{enumerate}
+    \item $a, b$ 已知，$\frac{\sigma_1^2}{\sigma_2^2}$ 的置信水平 $1-\alpha$ 的置信区间为
+    \begin{equation}
+        [\frac{S_a^2}{S_b^2}\frac{1}{F_{m,n}(\alpha/2)}, \frac{S_a^2}{S_b^2}\frac{1}{F_{m,n}(1-\alpha/2)}]
+    \end{equation}
+
+    \item $a, b$ 未知，$\frac{\sigma_1^2}{\sigma_2^2}$ 的置信水平 $1-\alpha$ 的置信区间为
+    \begin{equation}
+        [\frac{S_1^2}{S_2^2}\frac{1}{F_{m-1,n-1}(\alpha/2)}, \frac{S_1^2}{S_2^2}\frac{1}{F_{n-1,m-1}(1-\alpha/2)}]
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+\begin{remark}
+    为查表方便，经常用命题 \ref{prop:f_distribution_properties} 的(3).
+\end{remark}
+
+\subsection{枢轴变量法——非正态总体}\label{subsec:枢轴变量法——非正态总体}
+某些特殊的小样本情况下可以得到精确的枢轴变量分布。
+\begin{proposition}[指数分布参数的置信区间]\label{prop:指数分布参数的置信区间}
+设 $X_1, \dots, X_n$ 为从指数分布 $\operatorname{Exp}(\lambda)$ 中抽取的简单随机样本，其密度函数为
+$f(x, \lambda) = \lambda e^{-\lambda x}I_{(0, \infty)}(x), \lambda > 0$, $\lambda$ 的置信系数为 $1-\alpha$ 的置信区间为
+\begin{equation}
+\left[\frac{\chi_{2n}^2(1-\alpha/2)}{2n\bar{X}}, \frac{\chi_{2n}^2(\alpha/2)}{2n\bar{X}}\right]. \label{eq:exp_lambda_ci}
+\end{equation}
+\end{proposition}
+\begin{proof}
+    因为 $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$ 是 $1/\lambda$ 的一个无偏估计 (且是 UMVUE)，设想 $\lambda$ 的置信区
+间可通过 $\bar{X}$ 表示。枢轴变量可取为 $T = 2n\lambda\bar{X}$，由推论 \ref{cor:sum_of_exponentials_to_chi_squared} 可知
+\begin{equation}
+2n\lambda\bar{X} = 2\lambda \sum_{i=1}^n X_i \sim \chi_{2n}^2.\label{eq:exp_pivotal}
+\end{equation}
+确定 $a, b$ 使得
+$$P(a \le 2n\lambda\bar{X} \le b) = 1-\alpha.$$
+使上式成立的 $a, b$ 有很多对，其中存在一对，使置信区间的长度最短，但那对 $a, b$
+表达式复杂，不易求得，应用上也不方便。通常采用下列方法，令
+$$P(2n\lambda\bar{X} < a) = \frac{\alpha}{2}, \quad P(2n\lambda\bar{X} > b) = \frac{\alpha}{2}.$$
+由式 (\ref{eq:exp_pivotal}) 可知，$a = \chi_{2n}^2(1-\alpha/2)$, $b = \chi_{2n}^2(\alpha/2)$，这样找到的 $a, b$ 虽不能使置信
+区间的精度最高，但表达式简单，可通过查 $\chi^2$ 分布的上侧 $\alpha$ 分位数表求得，应用
+上很方便。因此有
+$$P\left(\chi_{2n}^2(1-\alpha/2) \le 2n\lambda\bar{X} \le \chi_{2n}^2(\alpha/2)\right) = 1-\alpha.$$
+\end{proof}
+
+\begin{proposition}[均匀分布参数的置信区间]\label{prop:均匀分布参数的置信区间}   
+设 $\mathbf{X}=(X_1, \dots, X_n)$ 为自均匀分布总体 $U(0,\theta)$ 中抽取的简单随机样本，$\theta$
+的置信系数为 $1-\alpha$ 的置信区间为
+\begin{equation}
+[d_1 T, d_2 T] = \left[T, \frac{T}{\sqrt[n]{\alpha}}\right]. \label{eq:uniform_theta_ci}
+\end{equation}
+\end{proposition}
+\begin{proof}
+    设 $T(\mathbf{X}) = X_{(n)} = \max\{X_1, \dots, X_n\}$，$T(\mathbf{X})$ 为充分统计量，$(n+1)T/n$ 是 $\theta$ 的无偏估计 (也是 UMVUE 的)。由于 $Y_i = X_i/\theta \sim U(0,1), i=1,2,\dots,n$，故 $Y_{(n)} = T/\theta$ 的密度函数为
+$f(y) = ny^{n-1}I_{(0,1)}(y)$。取 $Z=1/Y_{(n)} = \theta/T$ 为枢轴变量，其表达式与 $\theta$ 有关，其
+密度函数为
+\begin{equation}
+g(z) \sim n z^{-(n+1)}I_{(1,\infty)}(z). \label{eq:uniform_pivotal_density}
+\end{equation}
+$g(z)$ 与 $\theta$ 无关。确定 $d_1, d_2$, $1 \le d_1 < d_2 \le \infty$ 使得
+\begin{align}
+P_\theta\left(d_1 \le \frac{\theta}{T} \le d_2\right) &= P(d_1 T \le \theta \le d_2 T) \nonumber \\
+&= \int_{d_1}^{d_2} n z^{-n-1}dz = -\frac{1}{n}z^{-n}\Big|_{d_1}^{d_2} \nonumber \\
+&= \frac{1}{d_1^n} - \frac{1}{d_2^n} = 1-\alpha. \label{eq:uniform_prob_integral}
+\end{align}
+于是 $[d_1 T, d_2 T]$ 为 $\theta$ 的置信系数为 $1-\alpha$ 的置信区间。由式 (\ref{eq:uniform_prob_integral}) 中被积函数 $g(z)$
+单调降序的性质，要使区间估计的精度最高，宜取 $d_1=1$，再解方程 $1-1/d_2^n = 1-\alpha$
+得到 $d_2 = 1/\sqrt[n]{\alpha}$。
+\end{proof}
+大样本情况下主要用到Slutsky引理 \ref{lem:slutsky}.
+\begin{proposition}[二项分布总体参数的置信区间]\label{prop:二项分布总体参数的置信区间}
+    设 $\mathbf{X} = (X_1, \dots, X_n)$ 为自两点分布 $b(1,p)$ 中抽取的简单随机样本，$p$ 的置信系数近似为 $1-\alpha$ 的置信区间为
+\begin{equation}
+\left[\hat{p} - u_{\alpha/2}\sqrt{\hat{p}(1-\hat{p})/n}, \hat{p} + u_{\alpha/2}\sqrt{\hat{p}(1-\hat{p})/n}\right]. \label{eq:binomial_p_ci}
+\end{equation}
+这里$\hat{p} = S_n/n \stackrel{P}{\longrightarrow} p$.
+\end{proposition}
+
+\begin{proposition}[Poisson 分布参数的置信区间]\label{prop:Poisson 分布参数的置信区间}
+    设 $\mathbf{X} = (X_1, \dots, X_n)$ 为抽自 Poisson 总体 $P(\lambda)$ 的简单随机样本，$\lambda$ 的置信系数近似为 $1-\alpha$ 的置信区间为
+\begin{equation}
+\left[\hat{\lambda} - u_{\alpha/2}\sqrt{\hat{\lambda}/n}, \hat{\lambda} + u_{\alpha/2}\sqrt{\hat{\lambda}/n}\right]. \label{eq:poisson_lambda_ci}
+\end{equation}
+\end{proposition}
+\begin{proof}
+    由 $\hat{\lambda} = \bar{X} \stackrel{P}{\longrightarrow} \lambda$ (当 $n \to \infty$ 时)，因此当
+$n \to \infty$ 时有
+$$\frac{\sqrt{n}(\hat{\lambda}-\lambda)}{\sqrt{\lambda}}, \quad \frac{\sqrt{\lambda}}{\sqrt{\hat{\lambda}}} \stackrel{P}{\longrightarrow} 1.$$
+故由引理 \ref{lem:slutsky} 可知
+\begin{equation}
+\frac{\sqrt{n}(\hat{\lambda}-\lambda)}{\sqrt{\hat{\lambda}}} = \frac{\sqrt{n}(\hat{\lambda}-\lambda)}{\sqrt{\lambda}} \cdot \frac{\sqrt{\lambda}}{\sqrt{\hat{\lambda}}} \stackrel{\mathscr{L}}{\longrightarrow} N(0,1). \label{eq:poisson_pivotal_quantity}
+\end{equation}
+令 $T = \sqrt{n}(\hat{\lambda}-\lambda)/\sqrt{\hat{\lambda}}$ 为枢轴变量，其极限分布与未知参数 $\lambda$ 无关。给定置信系
+数 $1-\alpha$，则有
+$$P\left(\left|\frac{\sqrt{n}(\hat{\lambda}-\lambda)}{\sqrt{\hat{\lambda}}}\right| \le u_{\alpha/2}\right) \approx 1-\alpha.$$
+\end{proof}
+
+
+
+
+
+
+
