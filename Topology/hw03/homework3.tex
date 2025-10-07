@@ -1,0 +1,243 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usetikzlibrary{patterns}
+
+\title{\textbf{Homework 3}}
+\author{萃英学院\qquad 2022级\qquad 王一鑫}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		
+		For given \( x = (x_1, \cdots, x_n) \in \mathbb{R}^n \), let
+        \[
+        C_s(x) = \{ y = (y_1, \cdots, y_n) : |x_i - y_i| < s/2, i = 1, \cdots, n \}
+        \]
+        be the open cube of side length \( s \) centered at \( x \). Show that the collection 
+        \[
+        \mathcal{B} = \{ C_s(x) : x \in \mathbb{R}^n \text{ and } s > 0 \}
+        \]
+        is a basis for the Euclidean topology on \( \mathbb{R}^n \).
+	
+	\end{problem}
+	
+	\begin{solution}
+
+		Recall the definition of the basis for the Euclidean topology on $\mathbb{R}^n$.
+		\begin{enumerate}[(i)]
+			\item Every element of \(\mathcal{B}\) is an open subset of the Euclidean topology.  
+			\item Every open subset of the Euclidean topology is the union of some collection of elements of \(\mathcal{B}\).
+		\end{enumerate}
+		  
+		First we will show (i).
+		
+		Let \(C_s(x) \in \mathcal{B}\). For any \(y \in C_s(x)\), we show there exists an open Euclidean ball \(B(y, \varepsilon) \subseteq C_s(x)\).  
+		
+		By definition of \(C_s(x)\), for each coordinate \(i(i=1,2,\cdots,n)\), \(|y_i - x_i| < \frac{s}{2}\).  
+		Then the distance from \(y\) to the boundary of \(C_s(x)\) in the \(i\)-th coordinate is \(d_i = \frac{s}{2} - |y_i - x_i| > 0\).  
+		
+		Let \(\varepsilon = \min_{1 \leq i \leq n} d_i\). For any \(z \in B(y, \varepsilon)\), by the Euclidean norm:  
+		  \[
+		  |z_i - y_i| \leq d(z,y) < \varepsilon \leq d_i \quad \forall i = 1,2,\cdots,n.
+		  \]  
+		  Thus,  
+		  \[
+		  |z_i - x_i| \leq |z_i - y_i| + |y_i - x_i| < d_i + |y_i - x_i| = \frac{s}{2}.
+		  \]  
+		  Hence, \(z \in C_s(x)\), so \(B(y, \varepsilon) \subseteq C_s(x)\). Therefore, \(C_s(x)\) is open in the Euclidean topology.  
+		
+		Now, it suffices to show (ii).
+		
+		Let \(U \subseteq \mathbb{R}^n\) be open in the Euclidean topology. For every \(x \in U\), there exists \(r > 0\) such that the open ball \(B(x, r) \subseteq U\). 
+		We construct a cube \(C_{s}(x) \subseteq B(x, r)\) as follows:  
+		
+		Choose \(s = \frac{2r}{\sqrt{n}}\). For any \(y \in C_{s}(x)\), the Euclidean distance satisfies:  
+		  \[
+		  d(y,x) \leq \sqrt{n} \cdot \max_{1 \leq i \leq n} |y_i - x_i| < \sqrt{n} \cdot \frac{s}{2} = \sqrt{n} \cdot \frac{r}{\sqrt{n}} = r.
+		  \]  
+		  Thus, \(C_{s}(x) \subseteq B(x, r) \subseteq U\).  
+		
+		Since every \(x \in U\) has such a cube \(C_{s}(x) \subseteq U\), the set \(U\) is the union of all such cubes:  
+		\[
+		U = \bigcup_{x \in U} C_{s_x}(x), \quad \text{where } s_x = \frac{2r_x}{\sqrt{n}} \text{ and } B(x, r_x) \subseteq U.
+		\]  
+		
+		The result follows.
+		\[
+		\boxed{\mathcal{B} \text{ is a basis for the Euclidean topology on } \mathbb{R}^n.}
+		\]  
+	\end{solution}
+	
+	\begin{problem}
+		
+		A map \( f: X \to Y \) is \textbf{open}, if for any open subset \( U \subset X \), 
+        the image \( f(U) \) is open in \( Y \). Let \( f: X \to Y \) be a continuous open map. 
+        Show that if \( X \) is second countable, then \( f(X) \) is also second countable.
+
+	
+	
+	\end{problem}
+	
+	\begin{solution}
+		
+	Since $X$ is second countable, let \( \mathcal{B} = \{B_n\}_{n \in \mathbb{N}} \) be a countable basis for \( X \).
+
+	Define \( \mathcal{C} = \{f(B_n) : B_n \in \mathcal{B}\} \).
+	Each \( f(B_n) \) is open in \( Y \) by the definition of open map \( f \). 
+	Under the subspace topology on \( f(X) \), every \( f(B_n) \) is also open in \( f(X) \).
+	Moreover, $\mathcal{C}$ is obviously countable.
+	This follows directly from the countability of \( \mathcal{B} \).
+
+	It suffices to show that \( \mathcal{C} \) forms a basis for \( f(X) \).
+	Let \( V \subseteq f(X) \) be open in \( f(X) \). Then \( V = W \cap f(X) \) for some open set \( W \subseteq Y \). 
+	For any \( y \in V \), there exists \( x \in X \) such that \( f(x) = y \). Since \( f \) is continuous, \( f^{-1}(W) \) is open in \( X \). 
+	By the basis criterion of \( \mathcal{B} \), there exists \( B \in \mathcal{B} \) such that:
+	\[
+	x \in B \subseteq f^{-1}(W).
+	\]
+	Applying \( f \), we get:
+	\[
+	y = f(x) \in f(B) \subseteq f(f^{-1}(W)) = W \cap f(X) = V.
+	\]
+	Thus, \( \mathcal{C} \) satisfies the basis criterion for \( f(X) \).
+
+	 
+	\( \mathcal{C} \) is a countable basis for \( f(X) \), so \( f(X) \) is second countable.
+
+		
+	\end{solution}
+	
+	\begin{problem}
+		
+		Let \( f,g : X \to Y \) be continuous. Assume that \( Y \) is Hausdorff.
+        Show that \( \{ x : f(x) = g(x) \} \) is closed in \( X \).
+
+	
+	
+	\end{problem}
+	
+	\begin{solution}
+		
+		
+	Denote $C = \{x \mid f(x) = g(x)\}$.
+
+	Suppose $C$ is not closed. Then there exists  $x_1 \notin C$ where $x_1$ is a limit point of $C$.
+    Thus $f(x_1) \neq g(x_1)$ in $Y$. 
+	Since $Y$ is Hausdorff, we can find disjoint open sets $U$ and $V$ containing $f(x_1)$ and $g(x_1)$ respectively.
+	Moreover $f^{-1}(U)$ and $g^{-1}(V)$ are open sets in $X$ since $f$ and $g$ are continuous and both sets contain the point $x_1$.
+
+	Now consider the set $A = f^{-1}(U) \cap g^{-1}(V)$. This set is open and must also contain the point $x_1$. 
+	Since $x_1$ is a limit point of $C$, the set $A$ must contain some point $z \in C$, and $f(z) = g(z)$ by definition.
+	Since $z \in A$, we have $f(z) \in U$ and $g(z) \in V$. This implies that 
+	$f(z) = g(z) \in U \cap V$, $U \cap V \neq \emptyset$. A contradiction since $U$ and $V$ were chosen to be disjoint.
+
+	So $C$ must contain all its limit points and thus $C$ is closed.
+		
+		
+	\end{solution}
+	
+	
+	
+	\begin{problem}
+		
+	Show that every manifold has a basis of coordinate balls.
+
+	\end{problem}
+	
+	\begin{solution}
+		
+		Let \( U \) be an open set in \( M \). Let \( x \in U \). 
+		By definition there exists some open neighborhood \( C \) of $x$.
+		and there is a homeomorphism \( \varphi \) to some open neighborhood of the origin of 
+		\( \mathbb{R}^n \). Let \( B \) denote the component of \( U \cap C \) which contains \( x \). 
+		Then \( \varphi |_B \) is a homeomorphism onto its image, 
+		which is again a connected open neighborhood of the origin of \( \mathbb{R}^n \). 
+		
+		By possibly postcomposing with a translation, we may WLOG assume that \( \varphi(x) = 0 \).
+		Now take a small open ball \( S \) centered at $0$ in \( \mathbb{R}^n \) 
+		such that \( S \subseteq \varphi(B) \). Its preimage \( \varphi^{-1}(S) \) is homeomorphic 
+		to \( \mathbb{R}^n \) via \( \varphi^{-1} \circ \psi \), where \( \psi \) is a homeomorphism 
+		between an \( \varepsilon \)-ball and all of \( \mathbb{R}^n \), so \( \varphi^{-1}(S) \) 
+		together with the restriction of \( \varphi_C \) is a coordinate chart. 
+		Finally we have \( x \in \varphi^{-1}(S) \subseteq U \).
+
+		Therefore, for every open set \( U \) of \( M \) and for every point \( x \in U \), 
+		we may find a coordinate chart \( S \) which has \( x \in S \subseteq U \), 
+		so coordinate neighborhoods form a basis for the topology of \( M \).
+
+
+	\end{solution}
+	
+	\begin{problem}
+		
+		Let \( X \) be a topological space satisfying the \( T_1 \)-axiom.
+        Then each one-point subset is closed in \( X \). The topological space \( X \) is said to be \textbf{regular} 
+        if each pair consisting of a point \( x \) and a closed set \( B \) disjoint from \( x \), 
+        there exist disjoint open sets containing \( x \) and \( B \), respectively. 
+        Prove that every manifold is regular and hence metrizable.
+	
+
+	\end{problem}
+	
+	\begin{solution}
+		
+		For any manifold, it's Hausdorff thus satisfying the $T_1$-axiom.
+
+		\textbf{Lemma.} $X$ is regular iff for any $x\in X$ and any open neighborhood $U$, there exists an open
+		neighborhood $V$ such that $\overline{V}\subseteq U$.
+
+		\textbf{Proof}. $\Rightarrow$ Suppose $X$ is a regular space, for $x\in X$, let $U$ be an open neighborhood of 
+		$x$, then $U^C$ is a closed set which does not contain $x$. Thus there exist disjoint open neighborhoods $U_1$ and
+		$V_1$ containing $x$ and $U^C$. Then $U_1\subseteq V_1^C$.
+
+		Therefore \[\overline{U_1} \subseteq \overline{V_1^C} = V_1^C \subseteq U\]
+		So $\overline{U}_1\subseteq U$.
+
+		$\Leftarrow$ Suppose $x\in X$ and $A$, which is a closed set and does not contain $x$.
+		Then $A^C$ is an open neighborhood of $x$. Since there is an open neighborhood $U$
+		such that $\overline{U}\subseteq A^C$, denote $V = \overline{U}^C$, then $A\subseteq V$.
+		Thus $V$ is an open neighborhood of $A$, and $U \cap V = \emptyset$.
+		
+		Let \( M \) be a manifold. We aim to show that \( M \) is regular, i.e., for every point \( x \in M \) and every open neighborhood \( U \) of \( x \), there exists an open set \( V \) such that \( x \in V \subseteq \overline{V} \subseteq U \). 
+
+
+    	Since \( M \) is locally Euclidean, there exists an open neighborhood \( W \subseteq M \) containing \( x \) and a homeomorphism \( \phi: W \to \phi(W) \subseteq \mathbb{R}^n \).
+
+    Define \( U' = U \cap W \). Then \( U' \) is an open neighborhood of \( x \) contained in \( W \). Under the homeomorphism \( \phi \), the image \( \phi(U') \subseteq \mathbb{R}^n \) is open.
+
+    Since \( \mathbb{R}^n \) is regular, there exists an open set \( V' \subseteq \mathbb{R}^n \) such that:
+    \[
+    \phi(x) \in V' \subseteq \overline{V'} \subseteq \phi(U').
+    \]
+
+
+    Let \( V = \phi^{-1}(V') \). Then \( V \) is an open set in \( M \) satisfying:
+    \[
+    x \in V \subseteq \phi^{-1}(\overline{V'}) \subseteq \phi^{-1}(\phi(U')) = U' \subseteq U.
+    \]
+
+
+    Since homeomorphisms preserve closures, we have \( \overline{V} = \phi^{-1}(\overline{V'}) \). Therefore:
+    \[
+    \overline{V} \subseteq U' \subseteq U.
+    \]
+
+
+	Hence, every manifold is regular. By Urysohn's metrization theorem it's metrizable.
+
+	\end{solution}
+\end{document}
+
+

@@ -1,0 +1,151 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usepackage{float}
+\usepackage{tikz-cd}
+\usepackage{subcaption} 
+
+
+
+\usetikzlibrary{patterns}
+
+\title{\textbf{Homework 9}}
+\author{萃英学院\qquad 2022级\qquad 王一鑫}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+	7-6
+	
+	For any path-connected space \( X \) and any base point \( p \in X \), show that the map sending a loop to its circle representative induces a bijection between the set of conjugacy classes of elements of \( \pi_1(X, p) \) and \( [S^1, X] \) (the set of free homotopy classes of continuous maps from \( S^1 \) to \( X \)).
+	
+	\end{problem}
+	
+	\begin{solution}
+		
+		Define a map
+		\[
+		\varphi : \pi_1(X, p)/\text{conj} \longrightarrow [S^1, X]
+		\]
+		by sending the conjugacy class of an element \( [g] \in \pi_1(X, p) \) (represented by a loop \( g: [0,1] \to X \) with \( g(0) = g(1) = p \)) to the free homotopy class \( [\tilde{g}] \) of the corresponding map \( \tilde{g}: S^1 \to X \), obtained by identifying the endpoints of the loop.
+		
+		We claim that \( \varphi \) is a bijection. We verify this by showing that \( \varphi \) is well-defined, injective, and surjective.
+		
+		\textbf{Well-definedness.} Suppose that \( [g] \) and \( [g'] \) are conjugate in \( \pi_1(X, p) \), i.e., there exists a loop \( h \in \pi_1(X, p) \) such that
+		\[
+		[g'] = [hgh^{-1}].
+		\]
+		Then the map \( \tilde{g'} \) is homotopic to \( \tilde{g} \), since pre- and post-composing with the path \( h \) and its inverse results in a loop freely homotopic to \( g \). Thus \( [\tilde{g}] = [\tilde{g'}] \), and \( \varphi \) is well-defined on conjugacy classes.
+		
+		\textbf{Injectivity.} Suppose \( \varphi([g]) = \varphi([g']) \), i.e., the maps \( \tilde{g} \) and \( \tilde{g'} \) are freely homotopic. This means there exists a homotopy
+		\[
+		H : S^1 \times [0,1] \to X
+		\]
+		such that \( H(s, 0) = \tilde{g}(s) \), \( H(s, 1) = \tilde{g'}(s) \). At each time \( t \), \( H(\cdot, t) \) is a loop in \( X \), so the endpoints of \( g \) and \( g' \) move continuously under the homotopy.
+		
+		Let \( h : [0,1] \to X \) be the path defined by \( h(t) = H(0, t) = H(1, t) \). Then \( h \) is a path from \( p \) to \( p \), and we have
+		\[
+		g' \simeq hgh^{-1}
+		\]
+		as loops based at \( p \), which implies that \( [g'] = [hgh^{-1}] \) in \( \pi_1(X, p) \), i.e., \( [g] \) and \( [g'] \) are conjugate. Thus \( \varphi \) is injective.
+		
+		\textbf{Surjectivity.} Let \( f: S^1 \to X \) be a continuous map. Since \( X \) is path-connected, there exists a point \( a \in X \) such that \( f(1) = a \). Choose a path \( \gamma: [0,1] \to X \) from \( p \) to \( a \), i.e., \( \gamma(0) = p \), \( \gamma(1) = a \).
+		
+		Define a new map \( g: S^1 \to X \) by
+		\[
+		g = \gamma^{-1} \cdot f \cdot \gamma,
+		\]
+		where the composition denotes the concatenation of the path \( \gamma^{-1} \) with \( f \) and then with \( \gamma \). Then \( g \) is a loop based at \( p \), and the map \( \tilde{g} \) is freely homotopic to \( f \). Hence \( \varphi([g]) = [f] \), and \( \varphi \) is surjective.
+		
+		\medskip
+		
+		Therefore, \( \varphi \) is a well-defined bijection between the set of conjugacy classes of \( \pi_1(X, p) \) and the set \( [S^1, X] \) of free homotopy classes of maps from \( S^1 \) to \( X \).
+		
+		
+	\end{solution}
+	
+	\begin{problem}
+	7-8
+	
+	Prove that a retract of a Hausdorff space is a closed subset.
+		
+	\end{problem}
+	
+	\begin{solution}
+		
+		Let \( A \subseteq X \) be a retract of the topological space \( X \), and suppose \( X \) is Hausdorff. 
+		
+		Let \( r: X \to A \) be a retraction, i.e., a continuous map such that \( r(a) = a \) for all \( a \in A \). Let \( x \in X \setminus A \), and set \( a = r(x) \in A \). Since \( X \) is Hausdorff and \( x \neq a \), there exist disjoint open neighborhoods \( U \) of \( x \) and \( V \) of \( a \). Then consider the open set \( r^{-1}(V \cap A) \cap U \subseteq X \). We claim this is an open neighborhood of \( x \) disjoint from \( A \).
+		
+		To see why it is disjoint from \( A \), suppose for contradiction that there exists \( y \in A \cap \left( r^{-1}(V \cap A) \cap U \right) \). Then:
+		\[
+		y \in r^{-1}(V \cap A) \cap U \quad \Rightarrow \quad y \in U \text{ and } r(y) \in V \cap A.
+		\]
+		However, since \( y \in A \) and \( r \) acts as the identity on \( A \), it follows that \( r(y) = y \). Therefore, \( y \in U \cap V \), contradicting the fact that \( U \cap V = \emptyset \).
+		
+		Hence, no such \( y \in A \) exists in the set \( r^{-1}(V \cap A) \cap U \), so this open neighborhood of \( x \) is entirely contained in \( X \setminus A \). Since such a neighborhood exists for every \( x \in X \setminus A \), the complement \( X \setminus A \) is open, and thus \( A \) is closed.
+		
+		
+	\end{solution}
+	
+	\begin{problem}
+	7-10
+	
+	Let \( X \) and \( Y \) be topological spaces. Show that if either \( X \) or \( Y \) is contractible, then every continuous map from \( X \) to \( Y \) is homotopic to a constant map.
+	
+		
+		
+	\end{problem}
+	
+	\begin{solution}
+		We consider two cases.
+		
+		\begin{enumerate}[(1)]
+			\item \textbf{Case 1: \( X \) is contractible.}
+			
+			By definition, there exists a point \( x_0 \in X \) and a continuous map \( H: X \times [0,1] \to X \) such that
+			\[
+			H(x,0) = x \quad \text{and} \quad H(x,1) = x_0 \quad \text{for all } x \in X.
+			\]
+			Let \( f: X \to Y \) be any continuous map. Define the homotopy \( F: X \times [0,1] \to Y \) by
+			\[
+			F(x,t) := f(H(x,t)).
+			\]
+			Then:
+			\[
+			F(x,0) = f(H(x,0)) = f(x), \quad F(x,1) = f(H(x,1)) = f(x_0) \quad \text{for all } x \in X.
+			\]
+			Hence, \( f \simeq c \), where \( c(x) := f(x_0) \) is the constant map. Thus, \( f \) is homotopic to a constant map.
+			\item \textbf{Case 2: \( Y \) is contractible.}
+			
+			Then there exists a point \( y_0 \in Y \) and a continuous map \( G: Y \times [0,1] \to Y \) such that
+			\[
+			G(y,0) = y \quad \text{and} \quad G(y,1) = y_0 \quad \text{for all } y \in Y.
+			\]
+			Let \( f: X \to Y \) be any continuous map. Define the homotopy \( F: X \times [0,1] \to Y \) by
+			\[
+			F(x,t) := G(f(x),t).
+			\]
+			Then:
+			\[
+			F(x,0) = G(f(x),0) = f(x), \quad F(x,1) = G(f(x),1) = y_0 \quad \text{for all } x \in X.
+			\]
+			Hence, \( f \simeq c \), where \( c(x) := y_0 \) is the constant map. Thus, \( f \) is homotopic to a constant map.
+		\end{enumerate}
+		
+	\end{solution}
+	
+\end{document}
+
+

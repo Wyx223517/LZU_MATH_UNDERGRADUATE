@@ -1,0 +1,248 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usetikzlibrary{patterns}
+
+\title{\textbf{Homework 4}}
+\author{萃英学院\qquad 2022级\qquad 王一鑫}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		
+		\begin{enumerate}[(a)]
+            \item Every subspace of a Hausdorff space is Hausdorff.
+            \item Every subspace of a second countable space is second countable.
+        \end{enumerate}
+	
+	\end{problem}
+	
+	\begin{solution}
+			
+		\begin{enumerate}[(a)]
+			\item Let $X$ be a Hausdorff space, and let $Y$ be a subspace of $X$. 
+			Let $x_1$ and $x_2$ be elements of $Y$ such that $x_1 \neq x_2$. 
+			Since $X$ is Hausdorff, there exist disjoint neighborhoods $U_1$ and $U_2$ in $X$ of $x_1$ and $x_2$, 
+			respectively. Hence a set containing $x_1$ in $Y$ is $V_1 = U_1 \cap Y$,
+			which is open in $Y$ by definition of the subspace topology on $Y$. 
+			Thus $V_1$ is a neighborhood of $x_1$ in $Y$. Similarly, 
+			a set containing $x_2$ in $Y$ is $V_2 = U_2 \cap Y$, which is open in $Y$ 
+			by the definition of the subspace topology on $Y$. Thus $V_2$ is 
+			a neighborhood of $x_2$ in $Y$. Now since $V_1 \subset U_1$ and $V_2 \subset U_2$, 
+			and $U_1$ and $U_2$ are disjoint, it follows that $V_1$ and $V_2$ are disjoint. 
+			Thus, $Y$ is Hausdorff.
+
+			\item Let $(X, \mathcal{T})$ be second countable, and let $(A, \mathcal{T}_A)$ be a subspace.
+			Since $(X,\mathcal{T})$ is second countable, let $\mathcal{B}$ be a countable basis for $\mathcal{T}$.
+			
+			Now consider $\mathcal{B}' = \{B \cap A \mid B \in \mathcal{B} \}$.
+			Then $\mathcal{B}'$ is a countable basis for $\mathcal{T}_A$. The subspace $(A, \mathcal{T}_A)$ is second countable.
+			
+
+			
+		\end{enumerate}
+
+	\end{solution}
+	
+	\begin{problem}
+		
+		Let \( X \) be a topological space, and let \( A \subset X \). 
+        Prove that if \( X \) is metrizable, then for any \( x \in \bar{A} \), 
+        there is a sequence of points of \( A \) converging to \( x \).
+	
+	
+	\end{problem}
+	
+	\begin{solution}
+		
+		\textbf{Step 1}: We show $X$ is first countable first.
+		Let $(X, \mathcal{T})$ be a metrizable topological space and let $x \in X$. Since the space is metrizable, there is a metric $d$ that induces $\mathcal{T}$.
+
+		We aim to show that
+		\[
+		B_x = \left\{ B_{1/n}(x) \mid n \in \mathbb{N} \right\}
+		\]
+		is a countable neighborhood basis of $x$.
+		
+		Note first that $B_x$ is countable because the natural numbers are countable. Moreover, $x$ is clearly a member of each set in $B_x$. And since $d$ induces $\mathcal{T}$, the sets in $B_x$ are open.
+		
+		Since $d$ induces $\mathcal{T}$, any open set $U$ with $x \in U$ is a union of open balls with the metric $d$. One of these open balls contains $x$, so we have $B_r(x) \subset U$ for some radius $r$. Pick some number $m$ such that $mr > 1$. Then
+		\[
+		B_{1/m}(x) \subset B_r(x) \subset U.
+		\]
+
+		\textbf{Step 2}:  For each $n$ we pick $x_n \in \left( \bigcap_{i=1}^{n} B_{1/i} \right) \cap A$.		
+		Now if $U$ is any open neighbourhood of $x$, some $B_{1/N} \subset U$ and then all $x_n$ for $n \geq N$ are in $U$. 
+		So $x_n \to x$, and we have the required sequence.
+
+	\end{solution}
+	
+	\begin{problem}
+		
+		Prove that a surjective topological embedding is a homeomorphism.
+
+	\end{problem}
+	
+	\begin{solution}
+		
+		Suppose $f : X \to Y$ is a surjective topological embedding, 
+		so $f : X \to f(X)$ is a homeomorphism, 
+		but $f(X) = Y$ since $f$ is surjective, so $f : X \to Y$ is a homeomorphism.	
+	
+	\end{solution}
+	
+	
+	
+	\begin{problem}
+		
+        Let $X$ be a topological space. The \textbf{diagonal} of $X \times X$ is the 
+        subset $\Delta =\{(x,x) : x\in X\}\subseteq X\times X$. Show that X is Hausdorff
+        if and only if $\Delta$ is closed in $X \times X$.
+
+	\end{problem}
+	
+	\begin{solution}
+		
+		$\Leftarrow$ Suppose first that $\Delta$ is closed in $X \times X$. 
+		To show that $X$ is Hausdorff, we must show that if $x$ and $y$ are any two points 
+		of $X$, then there are open sets $U$ and $V$ in $X$ such that $x \in U, y \in V$, 
+		and $U \cap V = \emptyset$. 
+		
+		For $p = (x, y) \in X \times X$. Since $x \neq y$, $p \notin \Delta$. 
+		This means that $p$ is in the open set $(X \times X) \setminus \Delta$. 
+		Thus, there must be an open set $W$ in the product topology such that 
+		$p \in W \subset (X \times X) \setminus \Delta$. 
+		Consider the basis in the product topology are sets of the form $U \times V$, 
+		where $U$ and $V$ are open in $X$, so let $p\in U \times V \subseteq W$ 
+		for such $U, V \subset X$. Since $x\neq y$, $x\in U$ and $y\in V$, we have two disjoint
+		neighborhoods $U$ and $V$. Thus $X$ is Hausdorff. 
+		
+
+		$\Rightarrow$ Now suppose that $X$ is Hausdorff. 
+		To show that $\Delta$ is closed in $X \times X$, we need only show that 
+		$(X \times X) \setminus \Delta$ is open. 
+		
+		Take any point 
+		$p \in (X \times X) \setminus \Delta$. Since $X$ is Hausdorff, for $x\neq y\in X$, there
+		are disjoint open neighborhoods $U$ and $V$ containing $x$ and $y$ respectively.
+		Let $W = U\times V$, then $W$ is an open neighborhood of $p$, and $W\subseteq (X \times X) \setminus \Delta$.
+		Thus $(X \times X) \setminus \Delta$ is open.
+
+
+	\end{solution}
+	
+	\begin{problem}
+		
+		Show that real projective space $\mathbb{P}^n$ is an $n$-manifold. [Hint: consider the subsets
+        $U_i \subseteq \mathbb{R}^{n+1}$ where $x_i = 1$.]
+	
+
+	\end{problem}
+	
+	\begin{solution}
+		
+		By definition, 
+	\[
+	\mathbb{RP}^n = \left( \mathbb{R}^{n+1} \setminus \{ 0 \} \right) / \sim,
+	\]
+	where \(x \sim y \Leftrightarrow \exists \lambda \in \mathbb{R} \setminus \{ 0 \} \) such that \(x = \lambda y\).
+
+	The topology on \(\mathbb{RP}^n\) is, by definition, the quotient topology induced by the canonical projection 
+	\[
+	\pi : \mathbb{R}^{n+1} \setminus \{ 0 \} \to \mathbb{RP}^n
+	\quad \text{where} \quad
+	(x_0, \dots, x_n) \mapsto [x_0, \dots, x_n]
+	\]
+	where \([x_0, \dots, x_n] \in \mathbb{RP}^n\) denotes the equivalence class of \((x_0, \dots, x_n) \in \mathbb{R}^{n+1} \setminus \{ 0 \}\). This makes \(\pi\) a quotient map.
+	
+	\textbf{Second Countablity}: Second countability simply follows from second countability of $\mathbb{R}^{n+1} \setminus \{ 0 \}$.
+	
+	\textbf{Locally Euclidean}:
+	To show that \(\mathbb{RP}^n\) is locally Euclidean, we need to exhibit a cover for \(\mathbb{RP}^n\) by coordinate charts. For each \(0 \leq i \leq n\), define 
+	\[
+	U_i \subset \mathbb{R}^{n+1} \setminus \{ 0 \} \quad \text{by} \quad U_i = \left\{ (x_0, \dots, x_n) \in \mathbb{R}^{n+1} \setminus \{ 0 \} : x_i = 1 \right\}.
+	\]
+	\(U_i\) is an open subset of \(\mathbb{R}^{n+1} \setminus \{ 0 \}\). 
+	Define \(V_i \subset \mathbb{RP}^n\) to be \(\pi(U_i)\). 
+	Then, \(V_i\) is an open subset of \(\mathbb{RP}^n\) and \(\pi_i = \pi|_{U_i}\) 
+	is also a quotient map. The sets \(V_i, 0 \leq i \leq n\), form an open cover of \(\mathbb{RP}^n\).
+
+	For each \(0 \leq i \leq n\), define the map 
+	\[
+	f_i : V_i \to \mathbb{R}^n
+	\quad \text{by} \quad
+	f_i[x_0, \dots, x_n] = \left( x_0, x_{i-1}, x_{i+1}, \dots, x_n \right).
+	\]
+
+	The map \(g_i = f_i \circ \pi_i : U_i \to \mathbb{R}^n\) is given by 
+	\[
+	g_i(x_0, \dots, x_n) = \left( x_0, x_{i-1}, \dots, x_n \right).
+	\]
+	Since \(g_i\) is continuous, by the characteristic property of quotient maps, \(f_i\) is also continuous.
+
+
+	By our definition of $f_i$ ,it is bijective. Moreover, for each \(0 \leq i \leq n\), 
+	consider the map 
+	\[
+		h_i : \mathbb{R}^n \to \mathbb{R}^{n+1} \setminus \{ 0 \} \quad \text{given by} \quad h_i(u_1, \dots, u_n) = (u_1, \dots, u_i, 1, u_{i+1}, \dots, u_n).
+	\]
+	Then, \(h_i\) is continuous and its image is contained in \(V_i\). 
+	Since \(\pi_i \circ h_i = \varphi_i^{-1}\). So, \(\varphi_i^{-1}\) is continuous.
+
+	Hence, \(\varphi_i\) is a homeomorphism for each \(0 \leq i \leq n\). Now we have shown
+	that \(\mathbb{RP}^n\) is locally Euclidean.
+
+	\textbf{Hausdorff}:
+
+	To show that \(\mathbb{RP}^n\) is Hausdorff, choose \(\bar{x}\) and \(\bar{y}\), two distinct points in \(\mathbb{RP}^n\).
+
+	If there exists \(0 \leq i \leq n\) such that both points lie in \(V_i\), then 
+	\(f_i(\bar{x})\) and \(f_i(\bar{y})\) are two distinct points in \(\mathbb{R}^n\). 
+	Since \(\mathbb{R}^n\) is Hausdorff, there exists a pair of disjoint open sets 
+	\(A\) and \(B\) with \(f_i(\bar{x}) \in A\) and \(f_i(\bar{y}) \in B\). 
+	Hence, \(f_i^{-1}(A)\) and \(f_i^{-1}(B)\) are disjoint open subsets of \(V_i\) 
+	(and hence of \(\mathbb{RP}^n\)) such that \(\bar{x} \in f_i^{-1}(A)\) and \(\bar{y} \in f_i^{-1}(B)\).
+
+	On the other hand, suppose there is no \(i, 0 \leq i < n\), 
+	such that \(\bar{x}\) and \(\bar{y}\) both lie in \(V_i\). 
+	Let \((x_0, \dots, x_n)\) and \((y_0, \dots, y_n)\) be representatives of \(\bar{x}\) and 
+	\(\bar{y}\), respectively. There exists \(i \neq j, 0 \leq i, j \leq n\), such that 
+	\[
+	x_i \neq 0, y_j \neq 0, \quad \text{and} \quad x_j = 0, y_i = 0.
+	\]
+	Fix the representatives so that \(x_i = 1 = y_j\). WLOG, let \(i < j\). 
+	Choose \(0 < \varepsilon < 1\). The sets 
+	
+	\begin{align*}
+		A &= \left\{ [a_0, \dots, a_{i-1}, 1, a_{i+1}, \dots, a_n] : |a_k - x_k| < \varepsilon, k \neq i \right\} \subset V_i\\ 
+		B &= \left\{ [b_0, \dots, b_{j-1}, 1, b_{j+1}, \dots, b_n] : |b_k - y_k| < \varepsilon, k \neq j \right\} \subset V_j
+	\end{align*}
+	are open sets containing \(\bar{x}\) and \(\bar{y}\), respectively. 
+	This is because \(f_i(A)\) is an open rectangle in \(\mathbb{R}^n\) 
+	centered on \(f_i(\bar{x})\) having side length \(2\varepsilon\), 
+	and similarly \(f_j(B)\) is an open rectangle in \(\mathbb{R}^n\) 
+	centered on \(f_j(\bar{y})\) having side length \(2\varepsilon\). 
+	They are disjoint because if 
+	\[
+	[a_0, \dots, a_{i-1}, 1, a_{i+1}, \dots, a_n] = [b_0, \dots, b_{j-1}, 1, b_{j+1}, \dots, b_n], 
+	\]
+	then we must have \(a_j \neq 0, b_i \neq 0\), and \(a_j b_i = 1\). But, \(|a_j| < 1\) and \(|b_i| < 1\), so this is not possible.
+
+	Hence, \(\mathbb{RP}^n\) is Hausdorff, and so \(\mathbb{RP}^n\) is an \(n\)-manifold.
+
+	\end{solution}
+
+\end{document}
+
+

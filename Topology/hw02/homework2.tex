@@ -1,0 +1,185 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usetikzlibrary{patterns}
+
+\title{\textbf{Homework 2}}
+\author{萃英学院\qquad 2022级\qquad 王一鑫}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		
+		
+	Suppose $f : X \to Y$ is a bijective continuous map. Show that the following are equivalent.
+	\begin{itemize}
+		\item[(a)] $f$ is a homeomorphism.
+		\item[(b)] $f$ is open.
+		\item[(c)] $f$ is closed.
+	\end{itemize}
+	\end{problem}
+	
+	\begin{solution}
+			We show the equivalence by proving (a) \(\implies\) (b), (b) \(\implies\) (c), and (c) \(\implies\) (a).
+		
+		\textbf{Step 1. (a) \(\implies\) (b) :}
+		If \( f \) is a homeomorphism, \( f^{-1} : Y\to X\) is continuous. For any open \( U \subseteq X \), since \( f^{-1} \) preserves openness,  \( f(U) = (f^{-1})^{-1}(U) \) is open in \( Y \) .
+		
+		\textbf{Step 2. (b) \(\implies\) (c):}
+		Assume \( f \) is open. For any closed $C\subseteq X$, then $X \setminus C$ is open. Then $f(X\setminus C) = Y \setminus f(C)$ is open, so $f(C)$ is closed.
+		
+		\textbf{Step 3. (c) \(\Rightarrow\) (a):}
+		Assume \( f \) is closed. For closed \( D \subseteq Y \), \( f^{-1}(D) \) is closed in \( X \) by continuity. As \( f \) is bijective and closed, \( D = f(C) \) for some closed $C\subseteq X$, so \( f^{-1} \) preserves closedness and is continuous. Thus, \( f \) is a homeomorphism.
+		
+		Hence, all conditions are equivalent.
+	\end{solution}
+	
+	\begin{problem}
+		
+		
+	Prove the following statements.
+	\begin{itemize}
+		\item[(a)] Every homeomorphism is a local homeomorphism.
+		\item[(b)] Every local homeomorphism is continuous and open.
+	\end{itemize}
+	
+	\end{problem}
+	
+	\begin{solution}
+		\begin{enumerate}[(a)]
+			\item Let \( f: X \to Y \) be a homeomorphism. By definition, \( f \) is bijective, continuous, and has a continuous inverse \( f^{-1} \). For every \( x \in X \), the entire space \( X \) is an open neighborhood of \( x \). The restriction \( f|_X: X \to Y \) is itself a homeomorphism because \( f \) is globally a homeomorphism. Thus, \( f \) satisfies the local homeomorphism condition at every point, making it a local homeomorphism.
+			
+			
+			\item Let \( f: X \to Y \) be a local homeomorphism.
+			
+			\textit{Continuity:} Let \( V \subseteq Y \) be open. For any \( x \in f^{-1}(V) \), there exists an open neighborhood \( U_x \subseteq X \) of \( x \) such that \( f|_{U_x}: U_x \to f(U_x) \) is a homeomorphism. Since \( f(U_x) \) is open in \( Y \), the set \( f(U_x) \cap V \) is open, and \( f|_{U_x}^{-1}(f(U_x) \cap V) \) is open in \( U_x \), hence in \( X \). Thus, \( f^{-1}(V) \) is a union of open sets \[ f^{-1}(V) = \bigcup_{x\in f^{-1}(V)} f|_{U_{x}}^{-1}(f(U_{x})\cap V)
+			 \] therefore open. This proves \( f \) is continuous.
+			
+			\textit{Openness:} Let \( U \subseteq X \) be open. For \( y \in f(U) \), choose \( x \in U \) with \( f(x) = y \). There exists an open neighborhood \( W_x \subseteq X \) of \( x \) such that \( f|_{W_x}: W_x \to f(W_x) \) is a homeomorphism onto an open set. Since \( U \cap W_x \) is open in \( W_x \), \( f(U \cap W_x) \) is open in \( Y \). Hence, \( f(U) = \bigcup_{x \in U} f(U \cap W_x) \) is open. This proves \( f \) is open.
+		\end{enumerate}
+		
+	\end{solution}
+	
+	\begin{problem}
+		
+		
+	Prove that any two spaces in the following are homeomorphic:
+	\begin{itemize}
+		\item[(a)] the subspace $\mathbb{R}^2 \setminus \{(0,0)\}$ of $\mathbb{R}^2$;
+		\item[(b)] the subspace $\{(x, y, z) \in \mathbb{R}^3 \mid x^2 + y^2 = 1\}$ of $\mathbb{R}^3$;
+		\item[(c)] the subspace $\{(x, y, z) \in \mathbb{R}^3 \mid x^2 + y^2 - z^2 = 1\}$ of $\mathbb{R}^3$.
+	\end{itemize}
+	
+	\end{problem}
+	
+	\begin{solution}
+		
+		
+		\textbf{Step 1. Homeomorphism between (a) and (b).}
+		
+		Define \( f: \mathbb{R}^2 \setminus \{(0,0)\} \to \text{Cylinder} \) by:
+		\[
+		f(x, y) = \left( \frac{x}{\sqrt{x^2 + y^2}}, \frac{y}{\sqrt{x^2 + y^2}}, \ln\sqrt{x^2 + y^2} \right).
+		\]
+		This maps the plane in (a) to the cylinder in (b). The inverse is:
+		\[
+		f^{-1}(a, b, z) = \left( e^z a, e^z b \right),
+		\]
+		which is continuous. Thus, \( f \) is a homeomorphism.
+		
+		\textbf{Step 2. Homeomorphism between (b) and (c).}
+		
+		Parametrize the cylinder as \( (\cos v, \sin v, z) \) and define \( g: \text{Cylinder} \to \text{Hyperboloid} \) by:
+		\[
+		g(\cos v, \sin v, z) = (\cosh z \cos v, \cosh z \sin v, \sinh z).
+		\]
+		This satisfies \( x^2 + y^2 - z^2 = \cosh^2 z - \sinh^2 z = 1 \). The inverse is:
+		\[
+		g^{-1}(x, y, z) = \left( \frac{x}{\sqrt{x^2 + y^2}}, \frac{y}{\sqrt{x^2 + y^2}}, \sinh^{-1} z \right),
+		\]
+		which is continuous. Hence, \( g \) is a homeomorphism.
+		
+	\end{solution}
+	
+	
+	
+	\begin{problem}
+		
+	Suppose that $X$ is a topological space, and for every $p \in X$ there exists a continuous function $f : X \to \mathbb{R}$ such that $f^{-1}(0) = \{p\}$. Show that $X$ is Hausdorff.
+	
+
+	\end{problem}
+	
+	\begin{solution}
+		To prove \( X \) is Hausdorff, we show that for any two distinct points \( p, q \in X \), there exist disjoint open neighborhoods \( U \) and \( V \) containing \( p \) and \( q \), respectively.
+		
+		
+			By hypothesis, for each \( p \in X \), there is a continuous function \( f_p: X \to \mathbb{R} \) with \( f_p^{-1}(0) = \{p\} \). For distinct points \( p \) and \( q \), consider \( f_p \). Since \( q \neq p \), we have \( f_p(q) \neq 0 \). Let \( a = f_p(q) \), so \( a \neq 0 \).
+			
+			 
+			Choose two disjoint open intervals in \( \mathbb{R} \):
+			\[
+			I_1 = \left(-\frac{|a|}{2}, \frac{|a|}{2}\right), \quad I_2 = 
+			\begin{cases}
+				\left(\frac{a}{2}, \frac{3a}{2}\right) & \text{if } a > 0, \\
+				\left(\frac{3a}{2}, \frac{a}{2}\right) & \text{if } a < 0.
+			\end{cases}
+			\]
+			These intervals are disjoint because \( I_1 \) contains \( 0 \), while \( I_2 \) is centered at \( a \) with radius \( |a|/2 \).
+			
+		
+			Let \( U = f_p^{-1}(I_1) \) and \( V = f_p^{-1}(I_2) \). Since \( f_p \) is continuous, \( U \) and \( V \) are open in \( X \). Then \( p \in U \) because \( f_p(p) = 0 \in I_1 \).
+			\( q \in V \) because \( f_p(q) = a \in I_2 \).
+			\( U \cap V = \emptyset \), as \( I_1 \cap I_2 = \emptyset \).
+			
+		
+		Thus, \( X \) is Hausdorff by definition.
+	\end{solution}
+	
+	\begin{problem}
+		
+		
+	Let $X$ and $Y$ be topological spaces.
+	
+	\begin{itemize}
+		\item[(a)] Suppose $f : X \to Y$ is continuous and $p_n \to p$ in $X$. Show that $f(p_n) \to f(p)$ in $Y$.
+		\item[(b)] Prove that if $X$ is first countable, the converse is true: if $f : X \to Y$ is a map that $p_n \to p$ in $X$ implies $f(p_n) \to f(p)$ in $Y$, then $f$ is continuous.
+	\end{itemize}
+
+	\end{problem}
+	
+	\begin{solution}
+		
+		
+		\textbf{(a)}
+		Let \( f: X \to Y \) be continuous, and suppose \( p_n \to p \) in \( X \). We show \( f(p_n) \to f(p) \) in \( Y \).
+		
+		
+		Let \( V \) be any open neighborhood of \( f(p) \) in \( Y \). By continuity, there exists an open neighborhood \( U \) of \( p \) in \( X \) such that \( f(U) \subseteq V \).
+		 Since \( p_n \to p \), there exists \( N \in \mathbb{N} \) such that \( p_n \in U \) for all \( n \geq N \).
+		Therefore, \( f(p_n) \in f(U) \subseteq V \) for all \( n \geq N \), proving \( f(p_n) \to f(p) \).
+
+		
+		\textbf{(b)}
+		Assume \( X \) is first countable, and \( f: X \to Y \) satisfies that \( p_n \to p \implies f(p_n) \to f(p) \). We prove \( f \) is continuous.
+		
+		Suppose \( f \) is not continuous at some \( p \in X \). Then there exists an open neighborhood \( V \) of \( f(p) \) such that for every neighborhood \( U \) of \( p \), \( f(U) \nsubseteq V \).
+		 Let \( \{U_n\} \) be a countable nested neighborhood basis at \( p \). For each \( n \), choose \( p_n \in U_n \) with \( f(p_n) \notin V \).
+		The sequence \( \{p_n\} \) converges to \( p \), but \( f(p_n) \notin V \) for all \( n \), contradicting \( f(p_n) \to f(p) \).
+		 Hence, \( f \) must be continuous. 
+
+	\end{solution}
+\end{document}
+
+

@@ -1,0 +1,123 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usetikzlibrary{patterns}
+
+\title{\textbf{Homework 1}}
+\author{萃英学院\qquad 2022级\qquad 王一鑫}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		
+		
+	Let \( X \) be an infinite set.
+	\begin{enumerate}
+		\item[(a)] Show that
+		\[
+		\mathcal{T}_1 = \{ U \subseteq X : U = \emptyset \text{ or } X \setminus U \text{ is finite} \}
+		\]
+		is a topology on \( X \), called the \textbf{finite complement topology}.
+		
+		\item[(b)] Show that
+		\[
+		\mathcal{T}_2 = \{ U \subseteq X : U = \emptyset \text{ or } X \setminus U \text{ is countable} \}
+		\]
+		is a topology on \( X \), called the \textbf{countable complement topology}.
+		
+		\item[(c)] Let \( p \in X \) be an arbitrary point in \( X \). Show that
+		\[
+		\mathcal{T}_3 = \{ U \subseteq X : U = \emptyset \text{ or } p \in U \}
+		\]
+		is a topology on \( X \), called the \textbf{particular point topology}.
+	\end{enumerate}
+		
+	\end{problem}
+	
+	\begin{solution}
+		
+	\end{solution}
+	
+	\begin{problem}
+		
+		
+		Let \( (M, d) \) be a metric space, and let \( c \) be a positive real number. We define a new metric \( d' \) on \( M \) by
+		\[
+		d'(x, y) = c \cdot d(x, y).
+		\]
+		Prove that \( d \) and \( d' \) generate the same topology on \( M \).
+	\end{problem}
+	
+	\begin{solution}
+	
+	\end{solution}
+	
+	\begin{problem}
+		
+		
+		Let \( X \) be a topological space and \( B \) be a subset of \( X \). Prove the following set equalities.
+		
+		\begin{enumerate}
+			\item[(a)] 
+			\[
+			\overline{X \setminus B} = X \setminus \text{Int}(B).
+			\]
+			
+			\item[(b)] 
+			\[
+			\text{Int}(X \setminus B) = X \setminus \overline{B}.
+			\]
+		\end{enumerate}
+	\end{problem}
+	
+	\begin{solution}
+		
+	\end{solution}
+	
+	
+	
+	\begin{problem}
+		
+		
+		Show that a subset of a topological space is closed if and only if it contains all of its limit points.
+	\end{problem}
+	
+	\begin{solution}
+	
+	\end{solution}
+	
+	\begin{problem}
+		
+		
+		Suppose \( X \) and \( Y \) are topological spaces, and \( f : X \to Y \) is any map.
+		
+		\begin{enumerate}
+			\item[(a)] \( f \) is continuous if and only if 
+			\[
+			f(\overline{A}) \subseteq \overline{f(A)} \quad \text{for all } A \subseteq X.
+			\]
+			
+			\item[(b)] \( f \) is continuous if and only if 
+			\[
+			f^{-1}(\text{Int}(B)) \subseteq \text{Int}(f^{-1}(B)) \quad \text{for all } B \subseteq Y.
+			\]
+		\end{enumerate}
+	\end{problem}
+	
+	\begin{solution}
+		
+	\end{solution}
+\end{document}
+
+

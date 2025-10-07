@@ -1,0 +1,186 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{patterns}
+
+
+\title{\textbf{Homework 6}}
+\author{萃英学院\qquad 2022级\qquad 王一鑫}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%a
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+        \textbf{Exercise 4.4.} 
+        
+        Prove that a topological space $X$ is disconnected if and only there exists a nonconstant 
+        continuous function from $X$ to the discrete space $\{0, 1\}$.
+
+	
+	\end{problem}
+	
+	\begin{solution}
+			
+		$\Rightarrow$ If $X$ is disconnected then there exist non-empty open sets $U, V \subset X$ such that $U \cap V = \emptyset$ 
+        and $X = U \cup V$. Let $f$ be equal to 0 on $U$ and 1 on $V$. Such $f$ is what we need.
+
+        $\Leftarrow$ Suppose we have such a map $f$ and let $U$ the preimage of 0 and $V$ the preimage of 1. 
+        Since $\{0, 1\}$ has the discrete topology the singletons are open hence $U, V$ are open sets in $X$. 
+        Then $U \cap V = f^{-1}(\{0\} \cap \{1\}) = \emptyset$. 
+        Moreover $X = f^{-1}(\{0, 1\}) = U \cup V$. Therefore $X$ is disconnected.
+    
+	\end{solution}
+	
+	\begin{problem}
+		4-1. 
+
+        Show that for $n > 1$, $\mathbb{R}^n$ is not homeomorphic to any open subset of $\mathbb{R}$.
+        [Hint: if $U \subseteq \mathbb{R}$ is open and $x \in U$, then $U \setminus \{x\}$ is not connected.]
+
+	
+	\end{problem}
+	
+	\begin{solution}
+
+        Suppose for contradiction that there exists a homeomorphism \( f: \mathbb{R}^n \to U \), where \( n > 1 \) and \( U \subseteq \mathbb{R} \) is an open subset. 
+
+        Choose any point \( x \in \mathbb{R}^n \). Since homeomorphisms preserve topological properties
+        \( \mathbb{R}^n \setminus \{x\} \) is connected and \( U \setminus \{f(x)\} \) must then also be connected. 
+
+        However for any open \( U \subseteq \mathbb{R} \) and any \( f(x) \in U \), 
+        the space \( U \setminus \{f(x)\} \) is not connected. This creates a contradiction.
+
+	\end{solution}
+	
+	\begin{problem}
+		4-4. 
+        
+        Show that the following topological spaces are not manifolds:
+
+        (a) the union of the x-axis and the y-axis in $\mathbb{R}^2$
+
+        (b) the conical surface $C \subseteq \mathbb{R}^3$ defined by
+
+        \[
+        C = \{(x, y, z) : z^2 = x^2 + y^2\}
+        \]
+
+
+
+	\end{problem}
+	
+	\begin{solution}
+        \begin{enumerate}[(a)]
+            \item Suppose $X$ were a $n$-manifold($n\geq 2$). Then there would be a nbhd $U$ of the origin in $X$ that is 
+            homeomorphic to $\mathbb{R}^n$. Then we also have that $U$ with the origin removed is homeomorphic 
+            to $\mathbb{R}^n$ with one point removed. But this can't be since $U$ without the origin is not 
+            connected, whereas $\mathbb{R}^n$ with one point removed is connected.
+
+            Suppose it were a $1$-manifold and $V$ is a nbhd of the origin which is homeomorphic to $\mathbb{R}$. 
+            Then removing the origin gives us $4$ components in $V$ and $2$ components in $\mathbb{R}$. So $U$ is also not $1$-manifold.
+            \item Similar to (a).
+
+        \end{enumerate}
+
+	
+	\end{solution}
+	
+	
+	
+	\begin{problem}
+		4-5. 
+        
+        Let $M = \mathbb{S}^1 \times \mathbb{R}$, and let $A = \mathbb{S}^1 \times \{0\}$. 
+        Show that the space $M/A$ 
+        obtained by collapsing $A$ to a point is homeomorphic to the space $C$ of Problem 4-4(b), 
+        and thus is Hausdorff and second countable but not locally Euclidean.
+
+
+	\end{problem}
+	
+	\begin{solution}
+        Let
+        \[
+        \begin{tikzcd}
+        M \arrow[rd, "f \circ g"] \arrow[d, "g"'] & \\
+        M/A \arrow[r, "f"] & C
+        \end{tikzcd}
+        \]
+        Then $f$ is continuous since $g$ and $f\circ g$ are continuous.
+
+        For $\forall(\alpha, \beta, \gamma) \in C$, we have:
+        \[
+        f\left(\left[ \frac{\alpha}{\sqrt{\alpha^2 + \beta^2}} , \frac{\beta}{\sqrt{\alpha^2 + \beta^2}} ,
+        \gamma \right] \right) = (\alpha, \beta, \gamma)
+        \]
+        Thus $f$ is surjective. Now for $[x], [y] \in M / A$,
+        If $f([x]) = f([y]) = (\alpha, \beta, \gamma)$,
+        \begin{itemize}
+            \item $\gamma = 0$, then $C_x = C_y = 0 \Rightarrow [x] = [y]$.
+            \item $\gamma \neq 0$, then $[x] = [(\frac{\alpha}{\gamma}), (\frac{\beta}{\gamma}), \gamma] = [y]\Rightarrow f\text{is injective}$. 
+        \end{itemize} 
+        Therefore $f$ is homeomorphic.
+
+        Since $M$ is Hausdorff and second countable, then $M / A$ is Hausdorff and second countable.
+
+        According to problem 4-4, $C$ is not a manifold, and $M / A$ is homeomorphic to $C$, 
+        then $M / A$ is not locally Euclidean.
+
+
+	\end{solution}
+	
+	\begin{problem}
+		4-11. 
+        
+        Let $X$ be a topological space, and let $CX$ be the cone on $X$ (see Example 3.53).
+
+        (a) Show that $CX$ is path-connected.
+
+        (b) Show that $CX$ is locally connected if and only if $X$ is, and locally path-connected if and only if $X$ is.
+
+		
+
+	\end{problem}
+	
+	\begin{solution}
+		
+    \textbf{(a)} Let \( CX = (X \times I)\setminus (X \times \{0\})\) and let \( (x_1, y_1), (x_2, y_2) \in CX \), 
+    \( f_1, f_2 \in [0,1] \to CX \) such that
+    \[
+    f_{1}(y) = (x_1, y_1(1 - y)), \quad f_2(y) = (x_2, y_2y).
+    \]
+    then $f_1$ and $f_2$ are paths. Consider
+    \[f_3(y) = \begin{cases}
+        f_1(2y), & \text{if } y \in [0, \frac{1}{2}] \\
+        f_2(2y), & \text{if } y \in (\frac{1}{2}, 1)
+        \end{cases}\]
+    Since \( f_1(1) = (x_1, 0) = (x_2, 0) = f_2(1) \) in \( CX \), it is continuous in \( CX \). 
+    Moreover $f_3$ connectes \( (x_1, y_1), (x_2, y_2) \in CX \), so \( CX \) is path-connected.
+
+    \textbf{(b)} $\Rightarrow$ Suppose \( CX \) is locally (path-) connected. Then for each \( p \in CX \), 
+    there exists a neighborhood \( U_p \) of \( p \), which is (path-) connected. 
+    Note that \( X \times \{1\} \cong X \), so \( CX \) is locally (path-) connected.
+    Then we can put a projection \( \varphi : CX \to X \), such that \( \varphi(U_p) \) is 
+    a (path-) connected neighborhood of \( \varphi(p) \), so \( \alpha \) is (locally path-) connected.
+
+
+    $\Leftarrow$ Suppose \( X \) is locally (path-) connected. For each \( q \in X \), 
+    there exists a neighborhood \( V_q \) of \( q \) which is (path-) connected. $\Rightarrow (V_q \times I)\setminus (V_q \times \{0\})$
+    is path-connected. Hence, \( CX \) is locally (path-) connected.
+
+	\end{solution}
+
+\end{document}
+
+

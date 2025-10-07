@@ -1,0 +1,315 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usetikzlibrary{patterns}
+
+\title{\textbf{Homework 5}}
+\author{萃英学院\qquad 2022级\qquad 王一鑫}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		Let \( A \subseteq \mathbb{R} \) be the set of integers, and let \( X \) be the quotient space 
+		\( \mathbb{R}/A \) obtained by collapsing \( A \) to a point as in Example 3.52. 
+		(We are not using the notation \( \mathbb{R}/\mathbb{Z} \) for this space because that has a different meaning, described in Example 3.92.)
+
+		\begin{enumerate}[(a)]
+            
+            \item Show that \( X \) is homeomorphic to a wedge sum of countably infinitely many circles. [Hint: express both spaces as quotients of a disjoint union of intervals.]
+
+            \item Show that the equivalence class \( A \) does not have a countable neighborhood-basis in \( X \), so \( X \) is not first or second countable.
+        \end{enumerate}
+	
+	\end{problem}
+	
+	\begin{solution}
+			
+		\begin{enumerate}[(a)]
+			\item The wedge sum of countably infinitely many circles is the space
+			\( B = \bigvee_{n\in A} S^1_n = \coprod_{n\in A} S^1_n / P \), 
+			where $P$ is the set of distinguished points.
+			Since \( S^1 \) is the quotient space 
+			\( I / (0 \sim 1) \), we can express \( B \) as \( B = \coprod_{n\in A} I_n / \sim \), 
+			where \( \sim \) is the relation \( p_i \sim p_j \) for all \( i, j \) and \( 0_i \sim 1_i \) 
+			for all \( i \). With this one defines the quotient map \( q : \coprod_{n\in A} I_n \to B \) 
+			by sending elements to their equivalence classes.
+
+			Let \( \mathbb{R} = \coprod_{n\in A} I_n / (1_n \sim 0_{n+1}) \). 
+			Then we find a quotient map \( r : \prod_{n\in A} I_n \to \mathbb{R} / A \) 
+			that makes the same identifications as \( q \) to prove that the two spaces are 
+			homeomorphic by the uniqueness of the quotient space.
+
+			\item Let $X = \mathbb{R}\setminus A$ be the quotient space obtained by 
+			collapsing the set of integers $A\subseteq\mathbb{R}$ to a single point. 
+			
+			The space $X$ is homeomorphic to a wedge sum of countably infinitely many circles 
+			$\bigvee_{n\in A} S^1_n$, where each circle corresponds to the interval 
+			$[n,n+1]$ with its endpoints identified to the common basepoint $A$.
+
+			In the quotient topology, a neighborhood of \( A \) in \( X \) 
+			corresponds to an open set in \( \mathbb{R} \) containing all integers 
+			\( n \in \mathbb{Z} \), with each \( n \) surrounded by an open interval 
+			\( (n - \varepsilon_n, n + \varepsilon_n) \) for some \( \varepsilon_n > 0 \). 
+			These intervals are "collapsed" to form loops around \( A \) in \( X \).
+			
+			Suppose for contradiction that \( \{U_k\}_{k \in \mathbb{N}} \) is a countable neighborhood basis at \( A \).
+			For each \( U_k \), there exists a corresponding open set in \( \mathbb{R} \) containing all integers 
+			\( n \in \mathbb{Z} \), with intervals \( \left(n - \varepsilon_n^{(k)}, n + \varepsilon_n^{(k)}\right) \) 
+			for some \( \varepsilon_n^{(k)} > 0 \).
+
+			For each integer \( n \in \mathbb{Z} \), define \( \varepsilon = \frac{1}{2} \varepsilon_n^{(n)} \). 
+			Construct an open set \( V \subseteq \mathbb{R} \) by taking:
+			\[
+			V = \bigcup_{n \in \mathbb{Z}} (n - \varepsilon, n + \varepsilon) .
+			\]
+			This \( V \) maps to a neighborhood \( U \) of \( A \) in \( X \).
+
+			By construction, \( U \) does not contain any \( U_k \), contradicting the assumption that \( \{U_k\} \) is a neighborhood basis.
+
+		\end{enumerate}
+
+	\end{solution}
+	
+	\begin{problem}
+		
+		Let \( G \) be a topological group and let \( H \subseteq G \) be a subgroup. 
+        Show that its closure \( \overline{H} \) is also a subgroup.
+	
+	
+	\end{problem}
+	
+	\begin{solution}
+
+	By hypothesis, let the product with inversion
+	\[
+	f : G \times G \to G \quad \text{defined by} \quad f(x, y) = xy^{-1}
+	\]
+	is continuous.
+
+	Therefore, \( f^{-1}(\overline{H}) \) is closed. Now, notice that \( H \times H \subseteq f^{-1}(\overline{H}) \). So, taking closures,
+	\[
+	\overline{H \times H} \subseteq f^{-1}(\overline{H}).
+	\]
+
+	Now, we just have to show that \( \overline{H} \times \overline{H} \subseteq \overline{H \times H }\), to conclude that
+	\[
+	f(\overline{H} \times \overline{H}) \subseteq \overline{H}.
+	\]
+	In fact, For any topological spaces \( X, Y \) and subsets \( A \subseteq X \), \( B \subseteq Y \):
+	\[
+	\overline{A} \times \overline{B} \subseteq \overline{A \times B}
+	\]Let \((x, y) \in \overline{A} \times \overline{B}\),
+	\( W \) be any open neighborhood of \((x, y)\) in \( X \times Y \). 
+	By the definition of product topology, there exists a basic open set 
+	\( U_0 \times V_0 \subseteq W \) where
+	\( U_0 \) is open in \( X \) containing \( x \) and
+	\( V_0 \) is open in \( Y \) containing \( y \)
+
+	From the closure properties:
+	\begin{align*}
+		U_0 \cap A &\neq \emptyset \quad (\text{since } x \in \overline{A}) \\
+		V_0 \cap B &\neq \emptyset \quad (\text{since } y \in \overline{B})
+	\end{align*}
+
+	Therefore:
+	\[
+	(U_0 \times V_0) \cap (A \times B) = (U_0 \cap A) \times (V_0 \cap B) \neq \emptyset
+	\]
+	This implies \( W \cap (A \times B) \neq \emptyset \). Since \( W \) was an arbitrary neighborhood of \((x, y)\), it follows that \((x, y) \in \overline{A \times B}\).
+
+	Take $A = B = H$, we obtain the result.
+
+
+	\end{solution}
+	
+	\begin{problem}
+		
+		Suppose \( \Gamma \) is a normal subgroup of the topological group \( G \). Show that the quotient group \( G / \Gamma \) is a topological group with the quotient topology. 
+        [Hint: it might be helpful to use Problems 3-5 and 3-22.]
+
+
+	\end{problem}
+	
+	\begin{solution}
+	Since $G$ is a topological group, then the usual inversion and 
+	group multiplication operations on \( G \),
+	\[
+	i : G \to G \quad \text{given by} \quad i(g) = g^{-1}
+	\]
+	and
+	\[
+	m : G \times G \to G \quad \text{given by} \quad m(g, h) = gh,
+	\]
+	are continuous. We know from elementary abstract algebra that since
+	\( \Gamma \) is normal, the quotient group \( G/\Gamma \) is itself a group 
+	under the operations
+	\[
+	\bar{i} : G/\Gamma \to G/\Gamma \quad \text{given by} \quad \bar{i}(g\Gamma) = g^{-1}\Gamma
+	\]
+	and
+	\[
+	\bar{m} : G/\Gamma \times G/\Gamma \to G/\Gamma \quad \text{given by} \quad \bar{m}(g\Gamma, h\Gamma) = (gh)\Gamma.
+	\]
+	To show that \( G/\Gamma \) is a topological group, 
+	it remains to show that these operations are continuous 
+	with respect to the quotient topology on \( G/\Gamma \). 
+	Now, let \( \pi : G \to G/\Gamma \) be the standard 
+	projection map \( \pi(g) = g\Gamma \) for \( g \in G \).
+	
+	First, the \textbf{inversion map}. Let
+	\[
+	\psi = \pi \circ i : G \to G/\Gamma \quad \text{be given by} \quad \psi(g) = g^{-1}\Gamma
+	\]
+	which is clearly continuous as the composition of two continuous maps. 
+	Then it's easy to see that \( \psi \) is constant on the fibers of \( \pi \):
+	\[
+	\pi(x) = \pi(y) \quad \Longleftrightarrow \quad x\Gamma = y\Gamma \quad \Longleftrightarrow \quad x = \gamma y \text{ for some } \gamma \in \Gamma
+	\]
+	hence
+	\[
+	\psi(x) = x^{-1} \Gamma = (\gamma y)^{-1} \Gamma = y^{-1} \gamma^{-1} \Gamma = y^{-1} \Gamma = \psi(y).
+	\]
+
+	Thus, \( \psi \) passes to the quotient to give rise to a (unique) 
+	continuous map \( \overline{\psi} : G/\Gamma \to G/\Gamma \) 
+	such that \( \overline{\psi} \circ \pi = \pi \circ i = \psi \); 
+	it is obvious that \( \bar{\psi} = \bar{i} \), the inversion map of the group \( G/\Gamma \), 
+	so inversion is continuous.
+
+	Next, the \textbf{multiplication map}. Let
+	\[
+	\varphi = \pi \circ m : G \times G \to G/\Gamma
+	\]
+	which is continuous as the composition of continuous maps. 
+	Define \( \pi \times \pi : G \times G \to G/\Gamma \times G/\Gamma \) 
+	as the product of "two copies" of the quotient map on \( G \).
+	
+	First we will show that the map 
+	\( p = \pi \times \pi : G \times G \to (G/\Gamma) \times (G/\Gamma) \) 
+	is a quotient map. It is obviously surjective and continuous, 
+	as the product of two surjective and continuous maps. 
+	The quotient map \( \pi : G \to G/\Gamma \) is open (from Problem 3-22(a))
+	and so \( p \) is open as the finite product of open maps 
+	(from Problem 3-5), and so \( p \) is a quotient map.
+
+	Then \( \varphi \) is constant on the fibers of \( \pi \times \pi \):
+	\[
+	\pi \times \pi (g, h) = \pi \times \pi (g', h') \quad \Longrightarrow \quad g = \gamma g', \, h = h' \gamma \text{ for some } \gamma, \gamma' \in \Gamma.
+	\]
+	Then
+	\[
+	\psi(g, h) = gh\Gamma = \gamma g' h' \gamma \Gamma = g'h'\Gamma = \psi(g', h')
+	\]
+	Since \( \Gamma \) is normal. Thus, \( \varphi \) passes to the quotient 
+	and induces a (unique) continuous map \( \overline{\varphi} : G/\Gamma \times G/\Gamma \to G/\Gamma \) 
+	such that \( \overline{\varphi} \circ (\pi \times \pi) = \pi \circ m = \varphi \). 
+	Then clearly \( \overline{\psi} = \overline{m} \), the multiplication map 
+	of the group \( G/\Gamma \), and so this multiplication is continuous.
+
+	Thus, \( G/\Gamma \) is a topological group since both inversion and the 
+	group multiplication operation are continuous (with respect to the quotient topology).
+	
+	\end{solution}
+	
+	
+	
+	\begin{problem}
+		
+        Consider the action of \( O(n) \) on \( \mathbb{R}^n \) 
+		by matrix multiplication as in Example 3.88(b). 
+		Prove that the quotient space is homeomorphic to \( [0, \infty) \). 
+		[Hint: consider the function \( f : \mathbb{R}^n \to [0, \infty) \) 
+		given by \( f(x) = |x| \).]
+
+
+	\end{problem}
+	
+	\begin{solution}
+	Recall that we have the action given as follows
+	\[
+	a : O(n) \times \mathbb{R}^n \to \mathbb{R}^n; \quad (M, x) \mapsto Mx
+	\]
+	But this map can be rewritten with
+	\[
+	a_M : \mathbb{R}^n \to \mathbb{R}^n; \quad x \mapsto Mx
+	\]
+	Then with this action we can define the orbits as follows:
+	\[
+	O(n) \cdot x = \{ a_M(x) : x \in \mathbb{R}^n \}
+	\]
+	on which we have the equivalence relation
+	\[
+	y R x \iff y \in a_M(x)
+	\]
+	Now we can define the quotient space as follows:
+	\[
+	Q := \mathbb{R}^n / O(n) = \{ [x] : x \in \mathbb{R}^n \}
+	\]
+
+	Now let us use the following function:
+	\[
+	\varphi : Q \to \mathbb{R}_{\geq 0}; \quad [x] \mapsto \|x\|
+	\]
+	I claim that this function is a homeomorphism. 
+	To do so let us check injectivity. 
+	Let \( [x], [y] \in Q \) s.t. \( \varphi([x]) = \varphi([y]) \iff \|x\| = \|y\| \). 
+	This is equivalent to say \( \|Mx\| = \|My\| \) since \( M \) is orthogonal, 
+	from where follows that \( [x] = [y] \). 
+	For surjectivity, let \( r \in [0, \infty) \). 
+	Then take \( R = [(r, 0_2, 0_3, \dots, 0_n)] \), then \( \varphi(R) = r \). 
+	This shows that \( \varphi \) is bijective. 
+	Furthermore, this function is clearly continuous since it is polynomial 
+	in each component. To finish this proof, I claim that the inverse of 
+	\( \varphi \) is given by
+	\[
+	\varphi^{-1} = \pi : \mathbb{R}_{\geq 0} \to Q; \quad x \mapsto [x]
+	\]
+	Indeed
+	\[
+	\varphi^{-1}(\varphi([x])) = \varphi^{-1}(\|x\|) = [x]
+	\]
+	and
+	\[
+	\varphi(\varphi^{-1}(x)) = \varphi([x]) = \|x\| = x
+	\]
+	But since we have endowed \( Q \) with the quotient topology 
+	we know that \( \pi \) is continuous. Thus we have shown that it is homeomorphic.
+
+		
+
+
+	\end{solution}
+	
+	\begin{problem}
+		
+		Suppose \( X \) is a connected topological space, and \( \sim \) is an equivalence relation on 
+        \( X \) such that every equivalence class is open. Show that there is exactly one equivalence class, namely \( X \) itself.
+
+	\end{problem}
+	
+	\begin{solution}
+		
+		For each \( x \in X \), let \( U_x = \{ y \in X \mid x \sim y \} \). Let \( x_0 \in X \) be given. If \( U_{x_0} = X \), we are done. Suppose otherwise. Let 
+	\[
+	V = \bigcup_{x \in U_{x_0}^c} U_x.
+	\]
+	Then \( U_{x_0} \cup V = X \) and \( U_{x_0} \cap V = \emptyset \). \( U_{x_0} \) is open since it is an equivalence class. \( V \) is open since it is a union of equivalence classes, each of which is open.
+
+	Therefore, \( X \) is disconnected. This is a contradiction, so \( U_{x_0} = X \).
+
+	\end{solution}
+
+\end{document}
+
+
