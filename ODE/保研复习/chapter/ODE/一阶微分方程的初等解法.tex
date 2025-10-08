@@ -1,0 +1,367 @@
+\chapter{一阶微分方程的初等解法}\label{chap:一阶微分方程的初等解法}
+\section{变量分离}\label{sec:变量分离}
+\begin{definition}[变量分离方程]\label{def:变量分离方程}
+    形如
+\begin{equation}
+\frac{dy}{dx} = f(x)\varphi(y) \label{eq:variable_separation_form}
+\end{equation}
+的方程，称为\textbf{变量分离方程}，这里 $f(x), \varphi(y)$ 分别是 $x,y$ 的连续函数。
+\end{definition}
+
+\begin{solution}
+    如果 $\varphi(y) \ne 0$, 我们可以将式 (\ref{eq:variable_separation_form}) 改写成
+$$\frac{dy}{\varphi(y)} = f(x) dx,$$
+这样变量就“分离”开了，然后两边积分，得
+\begin{equation}
+\int \frac{dy}{\varphi(y)} = \int f(x) dx + c. \label{eq:separated_variables_integrated}
+\end{equation}
+这里我们把积分常数 $c$ 明确写出来，把 $\int \frac{dy}{\varphi(y)}, \int f(x) dx$ 分别理解为 $\frac{1}{\varphi(y)}, f(x)$ 的原函
+数。常数 $c$ 的取值必须保证式 (\ref{eq:separated_variables_integrated}) 有意义。
+\end{solution}
+
+\begin{definition}[齐次微分方程]\label{def:齐次微分方程}
+    形如
+\begin{equation}
+\frac{dy}{dx} = g\left(\frac{y}{x}\right) \label{eq:homogeneous_DE}
+\end{equation}
+的方程称为\textbf{齐次微分方程}，这里 $g(u)$ 是 $u$ 的连续函数。
+
+\end{definition}
+\begin{solution}
+    作变量变换
+\begin{equation}
+u = \frac{y}{x}, \label{eq:homogeneous_substitution_u}
+\end{equation}
+即 $y=ux$，两边对 $x$ 求导数，得
+\begin{equation}
+\frac{dy}{dx} = x\frac{du}{dx} + u. \label{eq:homogeneous_dy_dx}
+\end{equation}
+将式 (\ref{eq:homogeneous_substitution_u})，式 (\ref{eq:homogeneous_dy_dx}) 代入式 (\ref{eq:homogeneous_DE})，并整理得
+\begin{equation}
+\frac{du}{dx} = \frac{g(u)-u}{x}. \label{eq:homogeneous_transformed_DE}
+\end{equation}
+方程 (\ref{eq:homogeneous_transformed_DE}) 是一个变量分离的微分方程，可按照式 \eqref{eq:separated_variables_integrated} 的方法求解，然后将 $u=\frac{y}{x}$ 代
+回，便得式 (\ref{eq:homogeneous_DE}) 的解。
+\end{solution}
+
+\begin{definition}[可化为变量分离方程的类型二]\label{def:case2}
+    形如
+\begin{equation}
+\frac{dy}{dx} = f(ax+by+c) \quad (a \ne 0, b \ne 0), \label{eq:linear_argument_DE}
+\end{equation}
+这里 $f(u)$ 是 $u$ 的连续函数。
+
+\end{definition}
+\begin{solution}
+    作变量变换
+\begin{equation}
+u=ax+by+c, \label{eq:linear_argument_substitution_u}
+\end{equation}
+两边对 $x$ 求导数，得
+\begin{equation}
+\frac{du}{dx} = a+b\frac{dy}{dx}. \label{eq:linear_argument_du_dx}
+\end{equation}
+代入方程 (\ref{eq:linear_argument_DE})，得
+\begin{equation}
+\frac{du}{dx} = a+bf(u). \label{eq:linear_argument_transformed_DE}
+\end{equation}
+方程 (\ref{eq:linear_argument_transformed_DE}) 是一个变量分离的微分方程，可按照式 \eqref{eq:separated_variables_integrated} 的方法求解，然后将 $u=ax+by+c$
+代回，便得式 (\ref{eq:linear_argument_DE}) 的解。
+\end{solution}
+
+\begin{definition}[可化为变量分离方程的类型二]\label{def:case3}
+  形如  \begin{equation}
+\frac{dy}{dx} = f\left(\frac{a_1x+b_1y+c_1}{a_2x+b_2y+c_2}\right) \label{eq:general_linear_fraction_DE}
+\end{equation}
+的方程也可以经变量变换化为变量分离方程，这里 $a_1,b_1,c_1,a_2,b_2,c_2$ 均为常数。当这
+些常数取某些特殊值时，式 (\ref{eq:general_linear_fraction_DE}) 可为式 (\ref{eq:homogeneous_DE}) 或式 (\ref{eq:linear_argument_DE}) 的情形。
+\end{definition}
+\begin{solution}
+    当 $c_1=c_2=0$ 时，$\frac{dy}{dx} = f\left(\frac{a_1x+b_1y}{a_2x+b_2y}\right) = g\left(\frac{y}{x}\right)$，即为齐次微分方程 (\ref{eq:homogeneous_DE})。因此这里主要
+讨论 $c_1,c_2$ 不全为零时的情形。这时方程 (\ref{eq:general_linear_fraction_DE}) 右端分子分母都是 $x,y$ 的一次多项式，
+因此
+\begin{equation}
+\begin{cases} a_1x+b_1y+c_1=0, \\ a_2x+b_2y+c_2=0 \end{cases} \label{eq:system_linear_equations}
+\end{equation}
+表示 $Oxy$ 平面上的两条相交直线。针对方程组的系数行列式 $\begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix}$，分两种情况进
+行讨论。
+
+\begin{enumerate}
+    \item $\begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix} \ne 0$ 的情形，此时 $\frac{a_1}{a_2} \ne \frac{b_1}{b_2}$
+这时方程组 (\ref{eq:system_linear_equations}) 有唯一解（即 $Oxy$ 平面上两条直线的交点为 $(\alpha, \beta)$）。若令
+\begin{equation}
+\begin{cases} X = x-\alpha, \\ Y = y-\beta, \end{cases} \label{eq:translation_variables}
+\end{equation}
+则式 (\ref{eq:system_linear_equations}) 化为
+\begin{equation}
+\begin{cases} a_1X+b_1Y=0, \\ a_2X+b_2Y=0. \end{cases} \label{eq:translated_system}
+\end{equation}
+从而式 (\ref{eq:general_linear_fraction_DE}) 化为
+\begin{equation}
+\frac{dY}{dX} = f\left(\frac{a_1X+b_1Y}{a_2X+b_2Y}\right) = g\left(\frac{Y}{X}\right), \label{eq:transformed_homogeneous_DE_new_vars}
+\end{equation}
+这是一个齐次微分方程，求解代回原变量即可得原方程 (\ref{eq:general_linear_fraction_DE}) 的解。
+    \item $\begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix} = 0$ 的情形
+要使此行列式等于 0，不外乎三种情形。
+\begin{enumerate}
+    \item[(i)] $a_1=0, b_1=0$ 时，式 (\ref{eq:general_linear_fraction_DE}) 变为 $\frac{dy}{dx}=f\left(\frac{c_1}{a_2x+b_2y+c_2}\right)$；而 $a_2=0, b_2=0$ 时，式 (\ref{eq:general_linear_fraction_DE}) 变为 $\frac{dy}{dx}=f\left(\frac{a_1x+b_1y+c_1}{c_2}\right)$. 这时式 (\ref{eq:general_linear_fraction_DE}) 为式 (\ref{eq:linear_argument_DE}) 的情形。
+    \item[(ii)] $b_1=0, b_2=0$ 时，式 (\ref{eq:general_linear_fraction_DE}) 变为 $\frac{dy}{dx}=f\left(\frac{a_1x+c_1}{a_2x+c_2}\right)$；而 $a_1=0, a_2=0$ 时，式 (\ref{eq:general_linear_fraction_DE}) 变为 $\frac{dy}{dx}=f\left(\frac{b_1y+c_1}{b_2y+c_2}\right)$. 这时式 (\ref{eq:general_linear_fraction_DE}) 可化为变量分离方程 (\ref{eq:variable_separation_form})。
+    \item[(iii)] $\frac{a_1}{a_2} = \frac{b_1}{b_2} = k$ 时，令 $u=a_2x+b_2y$，此时 $\frac{du}{dx}=a_2+b_2\frac{dy}{dx}$，$f\left(\frac{k(a_2x+b_2y)+c_1}{a_2x+b_2y+c_2}\right) = f\left(\frac{ku+c_1}{u+c_2}\right)=g(u)$。方程 (\ref{eq:general_linear_fraction_DE}) 化为
+    $$\frac{du}{dx} = a_2+b_2g(u),$$
+    属于变量分离方程 (\ref{eq:variable_separation_form})。
+\end{enumerate}
+
+\end{enumerate}
+\end{solution}
+
+\section{常数变易法}\label{sec:常数变易法}
+
+\begin{definition}[一阶线性微分方程]
+\begin{equation}
+\frac{dy}{dx} = P(x)y+Q(x), \label{eq:first_order_linear_DE_general}
+\end{equation}
+其中 $P(x), Q(x)$ 在考虑的区间上是 $x$ 的连续函数。若 $Q(x)=0$，式 (\ref{eq:first_order_linear_DE_general}) 变为
+\begin{equation}
+\frac{dy}{dx} = P(x)y, \label{eq:first_order_linear_DE_homogeneous}
+\end{equation}
+式 (\ref{eq:first_order_linear_DE_homogeneous}) 称为\textbf{一阶齐次线性微分方程}。若 $Q(x) \ne 0$，式 (\ref{eq:first_order_linear_DE_general}) 称为\textbf{一阶非齐次线性微分方
+程}。
+\end{definition}
+
+\begin{example}
+    求方程
+\begin{equation}
+    \frac{dy}{dx} = P(x)y \label{eq:example_DE}
+\end{equation}
+的通解。
+\end{example}
+\begin{solution}
+    $y \ne 0$ 时, 变量分离为
+$$\frac{dy}{y} = P(x) dx,$$
+两边积分得
+$$\ln |y| = \int P(x) dx + \tilde{c},$$
+即得通解
+$$|y| = e^{\int P(x) dx + \tilde{c}},$$
+即
+\begin{equation}
+y = \pm e^{\tilde{c}} \cdot e^{\int P(x) dx} = c e^{\int P(x) dx}, \label{eq:example_solution}
+\end{equation}
+这里 $c = \pm e^{\tilde{c}}$。
+显然，$y=0$ 也是式 (\ref{eq:example_DE}) 的解。如果式 (\ref{eq:example_solution}) 中允许 $c=0$，则解 $y=0$ 也就包含在式 (\ref{eq:example_solution}) 式
+中了。因此，方程的通解为式 (\ref{eq:example_solution})，其中 $c$ 为任意常数。
+\end{solution}
+
+\begin{definition}[常数变易法]\label{def:常数变易法}
+    将齐次微分方程中常数 $c$ 变为待定函数 $c(x)$ 的方法，称为\textbf{常数变易法}。常
+数变易法实际上也是一种变量变换的方法。
+\end{definition}
+\begin{example}
+    讨论非齐次线性微分方程 (\ref{eq:first_order_linear_DE_general}) 通解的求法。
+\end{example}
+\begin{solution}
+    (\ref{eq:first_order_linear_DE_homogeneous}) 是 (\ref{eq:first_order_linear_DE_general}) 的特殊情形，如果我们对 (\ref{eq:first_order_linear_DE_homogeneous}) 也形式求解，可以得到
+通解为
+\begin{equation}
+y = c(x)e^{\int P(x)dx} \label{eq:variation_of_parameters_ansatz}
+\end{equation}
+的形式。这是在式 (\ref{eq:example_solution}) 中，将常数 $c$ 变成 $x$ 的待定函数 $c(x)$ 所对应的形式。
+对式 (\ref{eq:variation_of_parameters_ansatz}) 求导数，得
+\begin{equation}
+\frac{dy}{dx} = \frac{dc(x)}{dx}e^{\int P(x)dx} + c(x)P(x)e^{\int P(x)dx}. \label{eq:dy_dx_derived}
+\end{equation}
+将式 (\ref{eq:variation_of_parameters_ansatz})，(\ref{eq:dy_dx_derived}) 代入式 (\ref{eq:first_order_linear_DE_general})，得到
+$$\frac{dc(x)}{dx}e^{\int P(x)dx} + c(x)P(x)e^{\int P(x)dx} = c(x)P(x)e^{\int P(x)dx} + Q(x),$$
+即
+$$\frac{dc(x)}{dx} = Q(x)e^{-\int P(x)dx},$$
+积分后得
+$$c(x) = \int Q(x)e^{-\int P(x)dx} dx + \tilde{C},$$
+这里 $\tilde{C}$ 是任意常数。将上式代入式 (\ref{eq:variation_of_parameters_ansatz})，得到方程 (\ref{eq:first_order_linear_DE_general}) 的通解为
+\begin{equation}
+y = e^{\int P(x)dx}\left(\int Q(x)e^{-\int P(x)dx} dx + \tilde{C}\right). \label{eq:first_order_linear_DE_solution}
+\end{equation}
+\end{solution}
+
+\begin{example}
+    形如
+\begin{equation}
+\frac{dy}{dx} = P(x)y+Q(x)y^n \quad (n \ne 0,1 \text{ 为实数}) \label{eq:Bernoulli_DE}
+\end{equation}
+的方程，称为\textbf{伯努利 (Bernoulli) 微分方程}，其中 $P(x),Q(x)$ 在考虑的区间上是 $x$ 的连
+续函数。
+\end{example}
+\begin{solution}
+    利用变量变换可将伯努利微分方程化为线性微分方程。事实上，当 $y \ne 0$ 时，用 $y^{-n}$
+乘式 (\ref{eq:Bernoulli_DE}) 两边，得到
+\begin{equation}
+y^{-n}\frac{dy}{dx} = P(x)y^{1-n}+Q(x), \label{eq:Bernoulli_multiplied}
+\end{equation}
+引入变量变换
+\begin{equation}
+z=y^{1-n}, \label{eq:Bernoulli_substitution_z}
+\end{equation}
+从而
+\begin{equation}
+\frac{dz}{dx} = (1-n)y^{-n}\frac{dy}{dx}. \label{eq:Bernoulli_dz_dx}
+\end{equation}
+将式 (\ref{eq:Bernoulli_substitution_z})，(\ref{eq:Bernoulli_dz_dx}) 代入式 (\ref{eq:Bernoulli_multiplied})，得到
+\begin{equation}
+\frac{dz}{dx} = (1-n)P(x)z+(1-n)Q(x), \label{eq:Bernoulli_transformed_linear_DE}
+\end{equation}
+这是线性微分方程，可按上面介绍的方法求其通解，然后代回原变量即可得到伯努利
+微分方程 (\ref{eq:Bernoulli_DE}) 的通解。此外，当 $n>0$ 时，方程还有解 $y=0$。
+\end{solution}
+
+\section{恰当微分方程与积分因子}\label{sec:恰当微分方程与积分因子}
+\begin{definition}[恰当微分方程]\label{def:恰当微分方程}
+\begin{equation}
+M(x,y)\,dx+N(x,y)\,dy=0, \label{eq:exact_DE_form}
+\end{equation}
+这里假设 $M(x,y), N(x,y)$ 在某矩形域内是 $x,y$ 的连续函数，且具有连续的一阶偏导
+数。
+如果方程 (\ref{eq:exact_DE_form}) 的左端恰好是某个二元函数 $u(x,y)$ 的全微分，即
+\begin{equation}
+M(x,y)\,dx+N(x,y)\,dy = du(x,y) = \frac{\partial u}{\partial x}dx+\frac{\partial u}{\partial y}dy, \label{eq:exact_DE_condition}
+\end{equation}
+则称 (\ref{eq:exact_DE_form}) 为\textbf{恰当微分方程}。
+\end{definition}
+\begin{remark}
+    容易验证恰当微分方程的通解为
+\begin{equation}
+u(x,y)=c, \label{eq:exact_DE_solution}
+\end{equation}
+这里 $c$ 是任意常数。
+\end{remark}
+
+\begin{theorem}[恰当微分方程的判定定理]\label{thm:exact_DE_criterion}
+二元函数 $M(x,y), N(x,y)$ 在某单连通域内是 $x,y$ 的连续函数，且具有连
+续的一阶偏导数，则方程
+$$M(x,y)\,dx+N(x,y)\,dy=0$$
+为恰当微分方程的充要条件是
+$$\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}.$$
+\end{theorem}
+
+\begin{proposition}[曲线积分的性质]\label{prop:path_independence}
+设二元函数 $M(x,y), N(x,y)$ 在某单连通域 $D$ 内是 $x,y$ 的连续函数，且具有
+连续的一阶偏导数，则对 $D$ 内任一按段光滑曲线 $L$, 曲线积分 $\int_L M(x,y)\,dx + N(x,y)\,dy$ 在
+区域 $D$ 内积分与路径无关的充要条件是 $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$.
+\end{proposition}
+
+\begin{example}
+    解方程 $(3x^2+6xy^2)dx+(6x^2y+4y^3)dy=0$.
+\end{example}
+\begin{solution}
+    这里 $M=3x^2+6xy^2, N=6x^2y+4y^3$, 有
+$$\frac{\partial M}{\partial y} = 12xy, \quad \frac{\partial N}{\partial x} = 12xy.$$
+故方程是恰当微分方程。
+\begin{enumerate}
+    \item 求 $u$ 使其满足
+\begin{align}
+\frac{\partial u}{\partial x} &= M=3x^2+6xy^2, \label{eq:partial_u_x_M} \\
+\frac{\partial u}{\partial y} &= N=6x^2y+4y^3. \label{eq:partial_u_y_N}
+\end{align}
+将式 (\ref{eq:partial_u_x_M}) 对 $x$ 积分，得
+\begin{equation}
+u=x^3+3x^2y^2+\varphi(y). \label{eq:u_integrated_x}
+\end{equation}
+将式 (\ref{eq:u_integrated_x}) 对 $y$ 求导数，并由式 (\ref{eq:partial_u_y_N}) 可得
+$$\frac{\partial u}{\partial y} = 6x^2y+\frac{d\varphi(y)}{dy} = 6x^2y+4y^3,$$
+于是
+$$\frac{d\varphi(y)}{dy} = 4y^3,$$
+解得
+$$\varphi(y)=y^4.$$
+将 $\varphi(y)$ 代入式 (\ref{eq:u_integrated_x})，得到
+$$u=x^3+3x^2y^2+y^4.$$
+因此，方程的通解为
+$$x^3+3x^2y^2+y^4=c,$$
+其中 $c$ 为任意常数。
+    \item 利用“曲线积分”的方法求解 $u(x,y)$.
+由于 $M=3x^2+6xy^2, N=6x^2y+4y^3$, $\frac{\partial M}{\partial y} = 12xy, \frac{\partial N}{\partial x} = 12xy$ 在整个二维实平面上都连
+续，因此我们可以利用从原点 $O(0,0)$ 到 $B(x,y)$ 的曲线积分来求解，即
+\begin{align*}
+u(x,y) &= \int_0^B M(x,y)\,dx +  N(x,y)\,dy \\
+&= \int_0^x 3t^2\,dt + \int_0^y (6x^2t+4t^3)\,dt \\
+&= x^3+3x^2y^2+y^4.
+\end{align*}
+即得方程的通解
+$$x^3+3x^2y^2+y^4=c,$$
+其中 $c$ 为任意常数。
+    \item 用“分项组合”方法求解 $u(x,y)$.
+将原方程重组：
+\begin{align*}
+(3x^2+6xy^2)dx+(6x^2y+4y^3)dy &= 3x^2dx+4y^3dy+6xy^2dx+6x^2ydy \\
+&= d(x^3)+d(y^4)+d(3x^2y^2) \\
+&= d(x^3+y^4+3x^2y^2) = 0.
+\end{align*}
+即得方程的通解
+$$x^3+3x^2y^2+y^4=c,$$
+其中 $c$ 为任意常数。
+\end{enumerate}
+
+\end{solution}
+
+\begin{definition}[积分因子]\label{def:积分因子}
+    如果存在连续可微函数 $\mu(x,y) \ne 0$, 使得
+\begin{equation}
+\mu(x,y)M(x,y)\,dx+\mu(x,y)N(x,y)\,dy=0 \label{eq:integrating_factor_DE}
+\end{equation}
+为一恰当微分方程，即存在函数 $u(x,y)$, 使得
+$$\mu(x,y)M(x,y)\,dx+\mu(x,y)N(x,y)\,dy=du(x,y)$$
+则称 $\mu(x,y)$ 为方程 (\ref{eq:exact_DE_form}) 的\textbf{积分因子}。
+这时 $u(x,y)=c$ 是式 (\ref{eq:integrating_factor_DE}) 的通解，因而也是式 (\ref{eq:exact_DE_form}) 的通解。
+\end{definition}
+\begin{remark}
+    一般地可以将带有积分因子的微分方程带入定理 \ref{thm:exact_DE_criterion} 得到积分因子存在的条件，进一步可以假设积分因子只与其中的一个变量有关求解。
+\end{remark}
+
+\section{一阶隐式微分方程}\label{sec:一阶隐式微分方程}
+\begin{example}
+    讨论形如
+\begin{equation}
+y=f(x,y') \label{eq:y_equals_f_xyprime}
+\end{equation}
+和
+\begin{equation}
+x=f(y,y') \label{eq:x_equals_f_yyprime}
+\end{equation}的方程，这里假设函数 $f(x,y')$ 有连续的偏导数。
+\end{example}
+\begin{solution}
+    引进参数 $p$，令 $y'=p$. 则方程 (\ref{eq:y_equals_f_xyprime}) 变为
+\begin{equation}
+y=f(x,p), \label{eq:y_equals_f_xp}
+\end{equation}
+将式 (\ref{eq:y_equals_f_xp}) 两边对 $x$ 求导数，并将 $y'=p$ 代入，得
+\begin{equation}
+p = \frac{\partial f}{\partial x} + \frac{\partial f}{\partial p}\frac{dp}{dx}. \label{eq:p_partial_f}
+\end{equation}
+式 (\ref{eq:p_partial_f}) 是关于 $x,p$ 的一阶微分方程，可按照 \ref{sec:变量分离}-\ref{sec:恰当微分方程与积分因子} 解之。
+
+方程 \eqref{eq:x_equals_f_yyprime} 可作类似变换求解。
+\end{solution}
+
+\begin{example}
+    讨论形如
+\begin{equation}
+F(x,y')=0 \label{eq:F_x_yprime_0}
+\end{equation}
+和
+\begin{equation}
+F(y,y')=0 \label{eq:F_y_yprime_0}
+\end{equation}的方程的解法。
+\end{example}
+\begin{solution}
+    令 $y'=p$, 方程化为 $F(x,p)=0$, 代表 $Oxp$ 平面上的一条曲线。如果把曲
+线表示成参数方程形式:
+\begin{equation}
+\begin{cases} x=\varphi(t), \\ p=\psi(t), \end{cases} \label{eq:param_xyprime_form}
+\end{equation}
+$t$ 为参数。代入 $y'=p$, 得
+$$dy=\psi(t)\varphi'(t)\,dt.$$
+两边积分，得
+$$y=\int \psi(t)\varphi'(t)\,dt + c.$$
+代入式 (\ref{eq:param_xyprime_form})，则得原方程的参数形式的通解为
+\begin{equation}
+\begin{cases} x=\varphi(t), \\ y=\int \psi(t)\varphi'(t)\,dt + c, \end{cases} \label{eq:param_solution_form}
+\end{equation}
+$c$ 为任意常数。
+方程 \eqref{eq:F_y_yprime_0} 可作类似变换求解。
+\end{solution}

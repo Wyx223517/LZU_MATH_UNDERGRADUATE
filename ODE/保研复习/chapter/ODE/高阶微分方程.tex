@@ -1,0 +1,344 @@
+\chapter{高阶微分方程}\label{chap:高阶微分方程}
+\section{线性微分方程的一般理论}\label{sec:线性微分方程的一般理论}
+\begin{definition}[n阶线性微分方程]\label{def:n阶线性微分方程}
+    $n$ 阶线性微分方程
+\begin{equation}
+\frac{d^n x}{dt^n} + a_1(t)\frac{d^{n-1} x}{dt^{n-1}} + \dots + a_{n-1}(t)\frac{dx}{dt} + a_n(t)x = f(t), \label{eq:nth_order_linear_DE_nonhomogeneous}
+\end{equation}
+其中 $a_i(t)(i=1,2,\dots,n)$ 及 $f(t)$ 都是 $a \le t \le b$ 上的连续函数。
+如果 $f(t)=0$，则方程 (\ref{eq:nth_order_linear_DE_nonhomogeneous}) 变为
+\begin{equation}
+\frac{d^n x}{dt^n} + a_1(t)\frac{d^{n-1} x}{dt^{n-1}} + \dots + a_{n-1}(t)\frac{dx}{dt} + a_n(t)x = 0, \label{eq:nth_order_linear_DE_homogeneous}
+\end{equation}
+我们称它为 $n$ 阶\textbf{齐次线性微分方程}，简称\textbf{齐次线性微分方程}，而称一般的方程 (\ref{eq:nth_order_linear_DE_nonhomogeneous}) 为 $n$ 阶\textbf{非齐次线性微分方程}，简称\textbf{非齐次线性微分方程}，并且通常把方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 叫做对应
+于方程 (\ref{eq:nth_order_linear_DE_nonhomogeneous}) 的\textbf{齐次线性微分方程}。
+\end{definition}
+
+\begin{theorem}[叠加原理]\label{thm:superposition_principle}
+如果 $x_1(t), x_2(t), \dots, x_k(t)$ 是方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 的 $k$ 个解，则它们的
+线性组合
+$$c_1x_1(t)+c_2x_2(t)+\dots+c_kx_k(t)$$
+也是 (\ref{eq:nth_order_linear_DE_homogeneous}) 的解，这里 $c_1,c_2,\dots,c_k$ 是任意常数。
+\end{theorem}
+
+\begin{definition}[朗斯基行列式]\label{def:Wronskian}
+由定义在 $a \le t \le b$ 上的 $k$ 个可微 $k-1$ 次函数 $x_1(t), x_2(t), \dots, x_k(t)$ 所作成的行
+列式
+$$W[x_1(t), x_2(t), \dots, x_k(t)] \equiv W(t) = \begin{vmatrix}
+x_1(t) & x_2(t) & \cdots & x_k(t) \\
+x_1'(t) & x_2'(t) & \cdots & x_k'(t) \\
+\vdots & \vdots & & \vdots \\
+x_1^{(k-1)}(t) & x_2^{(k-1)}(t) & \cdots & x_k^{(k-1)}(t)
+\end{vmatrix}$$
+称为这些函数的\textbf{朗斯基行列式}。
+\end{definition}
+
+\begin{theorem}[朗斯基行列式与线性相关性]\label{thm:Wronskian_linear_dependence}
+若函数 $x_1(t), x_2(t), \dots, x_n(t)$ 在 $a \le t \le b$ 上线性相关，则在 $[a,b]$ 上它们
+的朗斯基行列式 $W(t) \equiv 0$.
+\end{theorem}
+\begin{remark}
+    逆定理一般不真。
+\end{remark}
+
+\begin{theorem}[朗斯基行列式与线性无关性]\label{thm:Wronskian_linear_independence}
+如果方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 的解 $x_1(t), x_2(t), \dots, x_n(t)$ 在 $a \le t \le b$ 上线性无关，则
+$W[x_1(t), x_2(t), \dots, x_n(t)]$ 在这个区间的任何点上都不等于零，即 $W(t) \ne 0 (a \le t \le b)$.
+\end{theorem}
+
+\begin{theorem}[n阶齐次线性微分方程解的存在性]\label{thm:n_linearly_independent_solutions}
+    $n$ 阶齐次线性微分方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 一定存在 $n$ 个线性无关的解。
+\end{theorem}
+
+
+\begin{theorem}[n阶齐次线性微分方程通解结构]\label{thm:general_solution_structure}
+    如果 $x_1(t), x_2(t), \dots, x_n(t)$ 是方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 的 $n$ 个线性无关的
+解，则方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 的通解可表示为
+\begin{equation}
+x=c_1x_1(t)+c_2x_2(t)+\dots+c_nx_n(t), \label{eq:general_solution_form}
+\end{equation}
+其中 $c_1,c_2,\dots,c_n$ 是任意常数，且通解 (\ref{eq:general_solution_form}) 包括了方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 的所有解。
+\end{theorem}
+
+\begin{theorem}[n阶非齐次线性微分方程通解结构]\label{thm:general_solution_nonhomogeneous}
+设 $x_1(t), x_2(t), \dots, x_n(t)$ 为方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 的基本解组，而 $\bar{x}(t)$ 是方程 (\ref{eq:nth_order_linear_DE_nonhomogeneous}) 的
+某一解，则方程 (\ref{eq:nth_order_linear_DE_nonhomogeneous}) 的通解可表示为
+\begin{equation}
+x=c_1x_1(t)+c_2x_2(t)+\dots+c_nx_n(t)+\bar{x}(t), \label{eq:nonhomogeneous_general_solution}
+\end{equation}
+其中 $c_1,c_2,\dots,c_n$ 为任意常数，而且这个通解 (\ref{eq:nonhomogeneous_general_solution}) 包括了方程 (\ref{eq:nth_order_linear_DE_nonhomogeneous}) 的所有解。
+\end{theorem}
+\begin{remark}
+    这里可以和线性代数的线性方程组的解联系起来。特解的解法用到常数变易法。
+\end{remark}
+
+\begin{example}[常数变易法解非齐次线性微分方程]\label{ex:常数变易法解非齐次线性微分方程}
+    设 $x_1(t), x_2(t), \dots, x_n(t)$ 是方程 (\ref{eq:nth_order_linear_DE_homogeneous}) 的基本解组，因而
+\begin{equation}
+x=c_1x_1(t)+c_2x_2(t)+\dots+c_nx_n(t) \label{eq:homogeneous_solution_repeated}
+\end{equation}
+为 (\ref{eq:nth_order_linear_DE_homogeneous}) 的通解。把其中的任意常数 $c_i$ 看作 $t$ 的待定函数 $c_i(t) (i=1,2,\dots,n)$，这时
+(\ref{eq:homogeneous_solution_repeated}) 变为
+\begin{equation}
+x=c_1(t)x_1(t)+c_2(t)x_2(t)+\dots+c_n(t)x_n(t). \label{eq:nonhomogeneous_solution_ansatz}
+\end{equation}
+这里我们想得到一个和$c_i'(t)$有关的方程组，构造如下：
+将式 (\ref{eq:nonhomogeneous_solution_ansatz}) 对 $t$ 求导数得
+$$x'=c_1'(t)x_1(t)+c_2'(t)x_2(t)+\dots+c_n'(t)x_n(t) + c_1(t)x_1'(t)+c_2(t)x_2'(t)+\dots+c_n(t)x_n'(t).$$
+令
+\begin{equation}
+x_1(t)c_1'(t)+x_2(t)c_2'(t)+\dots+x_n(t)c_n'(t) = 0, \label{eq:condition_1}
+\end{equation}
+得到
+\begin{equation}
+x'=c_1(t)x_1'(t)+c_2(t)x_2'(t)+\dots+c_n(t)x_n'(t). \label{eq:x_prime_simplified}
+\end{equation}
+再将式 (\ref{eq:x_prime_simplified}) 对 $t$ 求导数，并像上面一样做法，令含有函数 $c_i'(t)$ 的部分等于零，我们
+又得到一个条件，以此类推，最后我们有含 $n$ 个未知函数 $c_i'(t) (i=1,2,\dots,n)$ 的 $n$ 个方程，
+它们组成一个线性代数方程组
+\begin{equation}
+\left\{
+\begin{aligned}
+&x_1(t)c_1'(t)+x_2(t)c_2'(t)+\dots+x_n(t)c_n'(t) = 0 \\
+&x_1'(t)c_1'(t)+x_2'(t)c_2'(t)+\dots+x_n'(t)c_n'(t) = 0 \\
+&\vdots \\
+&x_1^{(n-1)}(t)c_1'(t)+x_2^{(n-1)}(t)c_2'(t)+\dots+x_n^{(n-1)}(t)c_n'(t) = f(t)
+\end{aligned}
+\right. \label{eq:system_of_equations_for_c_prime}
+\end{equation}
+其系数行列式就是 $W[x_1(t), x_2(t), \dots,
+x_n(t)]$, 它不等于零，因而方程组的解唯一确定。
+
+\end{example}
+
+\begin{example}
+    求方程 $x''+x=\frac{1}{\cos t}$ 的通解，已知它对应的齐次线性微分方程的基本解组为
+$\cos t, \sin t$.
+\end{example}
+\begin{solution}
+    应用常数变易法，令
+$$x=c_1(t)\cos t+c_2(t)\sin t.$$
+将它代入方程，则可决定 $c_1'(t)$ 和 $c_2'(t)$ 的两个方程
+$$ \cos t c_1'(t) + \sin t c_2'(t) = 0 $$
+及
+$$ -\sin t c_1'(t) + \cos t c_2'(t) = \frac{1}{\cos t} $$
+解得
+$$c_1'(t) = -\frac{\sin t}{\cos t}, \quad c_2'(t) = 1.$$
+由此
+$$c_1(t) = \int -\frac{\sin t}{\cos t}\,dt = \ln |\cos t| + \gamma_1,$$
+$$c_2(t) = \int 1\,dt = t+\gamma_2.$$
+于是原方程的通解为
+$$x=\gamma_1\cos t+\gamma_2\sin t+\cos t \ln |\cos t| + t\sin t,$$
+其中 $\gamma_1, \gamma_2$ 为任意常数。
+\end{solution}
+
+\section{常系数微分方程的解法}\label{sec:常系数微分方程的解法}
+对于一般方程的通解是难以求得的，这里考虑常系数微分方程这一特殊情况。
+\begin{definition}[常系数齐次线性微分方程]\label{def:常系数齐次线性微分方程}
+    设齐次线性微分方程中所有系数都是常数，即方程有如下形状：
+\begin{equation}
+L[x] \equiv \frac{d^n x}{dt^n} + a_1\frac{d^{n-1} x}{dt^{n-1}} + \dots + a_{n-1}\frac{dx}{dt} + a_nx=0, \label{eq:homogeneous_linear_constant_coeffs}
+\end{equation}
+其中 $a_1, a_2, \dots, a_n$ 为常数。我们称式 (\ref{eq:homogeneous_linear_constant_coeffs}) 为 $n$ 阶常系数齐次线性微分方程。
+\end{definition}
+
+求基本解组的欧拉待定指数函数法，也称作特征值法如下：
+\begin{proposition}[特征值法]\label{prop:特征值法}
+    注意到
+$$L[e^{\lambda t}] = \frac{d^n e^{\lambda t}}{dt^n} + a_1\frac{d^{n-1} e^{\lambda t}}{dt^{n-1}} + \dots + a_{n-1}\frac{d e^{\lambda t}}{dt} + a_n e^{\lambda t}$$
+$$= (\lambda^n+a_1\lambda^{n-1}+\dots+a_{n-1}\lambda+a_n)e^{\lambda t} \equiv F(\lambda)e^{\lambda t},$$
+其中 $F(\lambda)=\lambda^n+a_1\lambda^{n-1}+\dots+a_{n-1}\lambda+a_n$ 是 $\lambda$ 的 $n$ 次多项式。易知，$x = e^{\lambda t}$ 为方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 的
+解的充要条件是 $\lambda$ 是代数方程
+\begin{equation}
+F(\lambda) = \lambda^n+a_1\lambda^{n-1}+\dots+a_{n-1}\lambda+a_n = 0 \label{eq:characteristic_equation}
+\end{equation}
+的根。因此，方程 (\ref{eq:characteristic_equation}) 将起着预示方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 的解的特性的作用，我们称它为方程
+(\ref{eq:homogeneous_linear_constant_coeffs}) 的\textbf{特征方程}；它的根就称为\textbf{特征值}。
+\end{proposition}
+
+\begin{proposition}[特征值是单根的情形]\label{prop:特征值是单根的情形}
+    设 $\lambda_1, \lambda_2, \dots, \lambda_n$ 是特征方程 (\ref{eq:characteristic_equation}) 的 $n$ 个彼此不相等的根，则对应的方程 (\ref{eq:homogeneous_linear_constant_coeffs})
+有如下 $n$ 个解：
+\begin{equation}
+e^{\lambda_1 t}, e^{\lambda_2 t}, \dots, e^{\lambda_n t}. \label{eq:solutions_distinct_roots}
+\end{equation}
+这 $n$ 个解在 $a \le t \le b$ 上线性无关，从而组成方程的基本解组。
+\end{proposition}
+
+\begin{proof}
+    事实上，这时
+$$W(t) = \begin{vmatrix}
+e^{\lambda_1 t} & e^{\lambda_2 t} & \cdots & e^{\lambda_n t} \\
+\lambda_1 e^{\lambda_1 t} & \lambda_2 e^{\lambda_2 t} & \cdots & \lambda_n e^{\lambda_n t} \\
+\vdots & \vdots & \ddots & \vdots \\
+\lambda_1^{n-1} e^{\lambda_1 t} & \lambda_2^{n-1} e^{\lambda_2 t} & \cdots & \lambda_n^{n-1} e^{\lambda_n t}
+\end{vmatrix}$$
+$$= e^{(\lambda_1+\lambda_2+\dots+\lambda_n)t} \begin{vmatrix}
+1 & 1 & \cdots & 1 \\
+\lambda_1 & \lambda_2 & \cdots & \lambda_n \\
+\vdots & \vdots & \ddots & \vdots \\
+\lambda_1^{n-1} & \lambda_2^{n-1} & \cdots & \lambda_n^{n-1}
+\end{vmatrix},$$
+从而 $W(t) \ne 0$，于是解组 (\ref{eq:solutions_distinct_roots}) 线性无
+关。
+
+\end{proof}
+如果 $\lambda_i (i=1,2,\dots,n)$ 均为实数，则 (\ref{eq:solutions_distinct_roots}) 是方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 的 $n$ 个线性无关的实值
+解，而方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 的通解可表示为
+$$x=c_1e^{\lambda_1 t}+c_2e^{\lambda_2 t}+\dots+c_ne^{\lambda_n t},$$
+其中 $c_1,c_2,\dots,c_n$ 为任意常数。
+
+如果特征方程有复根，则因方程的系数是实常数，复根将成对共轭出现。设 $\lambda_1 =
+\alpha+i\beta$ 是一特征值，则 $\lambda_2 = \alpha-i\beta$ 也是特征值，因而与这对共轭复根对应的方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 有
+两个复值解
+$$e^{(\alpha+i\beta)t} = e^{\alpha t}(\cos \beta t+i\sin \beta t),$$
+$$e^{(\alpha-i\beta)t} = e^{\alpha t}(\cos \beta t-i\sin \beta t).$$
+这样一来，对应该特征方程的一对共轭
+复根 $\lambda = \alpha \pm i\beta$, 我们可以求得方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 的两个实值解
+$$e^{\alpha t}\cos \beta t, \quad e^{\alpha t}\sin \beta t.$$
+
+\begin{proposition}[特征值有重根的情形]\label{prop:特征值有重根的情形}
+假设特征方程 (\ref{eq:characteristic_equation}) 的根 $\lambda_1, \lambda_2, \lambda_3, \dots, \lambda_m$ 的重数依次为 $k_1, k_2, k_3, \dots, k_m$, 且 $k_i \ge 1$
+(单根相当于 $k_j=1$)，而且 $k_1+k_2+\dots+k_m=n, \lambda_i \ne \lambda_j (i \ne j)$，则方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 对应地有解
+\begin{equation}
+\begin{cases}
+e^{\lambda_1 t}, te^{\lambda_1 t}, \dots, t^{k_1-1}e^{\lambda_1 t}, \\
+e^{\lambda_2 t}, te^{\lambda_2 t}, \dots, t^{k_2-1}e^{\lambda_2 t}, \\
+\quad \quad \quad \dots \dots \dots \dots \\
+e^{\lambda_m t}, te^{\lambda_m t}, \dots, t^{k_m-1}e^{\lambda_m t}.
+\end{cases} \label{eq:solutions_other_repeated_roots}
+\end{equation}
+全体 $n$ 个解构成方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 的基本解组。
+\end{proposition}
+\begin{remark}
+    对于特征方程有复重根的情况，譬如假设 $\lambda=\alpha \pm i\beta$ 是 $k$ 重特征值，则 $\bar{\lambda}=\alpha \mp i\beta$ 也是
+$k$ 重特征值，仿命题 \ref{prop:特征值是单根的情形} 一样处理，我们将得到方程 (\ref{eq:homogeneous_linear_constant_coeffs}) 的 $2k$ 个实值解：
+$$e^{\alpha t}\cos \beta t, te^{\alpha t}\cos \beta t, t^2e^{\alpha t}\cos \beta t, \dots, t^{k-1}e^{\alpha t}\cos \beta t,$$
+$$e^{\alpha t}\sin \beta t, te^{\alpha t}\sin \beta t, t^2e^{\alpha t}\sin \beta t, \dots, t^{k-1}e^{\alpha t}\sin \beta t.$$
+\end{remark}
+
+\begin{definition}[常系数非齐次线性微分方程]\label{def:常系数非齐次线性微分方程}
+    形如
+\begin{equation}
+L[x] \equiv \frac{d^n x}{dt^n} + a_1\frac{d^{n-1} x}{dt^{n-1}} + \dots + a_{n-1}\frac{dx}{dt} + a_nx=f(t) \label{eq:nonhomogeneous_linear_constant_coeffs}
+\end{equation}
+的方程称为常系数非齐次线性微分方程，这里 $a_1,a_2,\dots,a_n$ 是常数，而 $f(t)$ 为连续函数。
+\end{definition}
+
+\begin{proposition}[比较系数法的类型1]\label{prop:比较系数法的类型1}
+    设 $f(t) = (b_0 t^m + b_1 t^{m-1} + \dots + b_{m-1}t + b_m)e^{\lambda t}$, 其中 $\lambda$ 及 $b_i (i=0,1,\dots,m)$ 为实常数，那么
+方程 (\ref{eq:nonhomogeneous_linear_constant_coeffs}) 有形如
+\begin{equation}
+\tilde{x} = t^k (B_0 t^m + B_1 t^{m-1} + \dots + B_{m-1}t + B_m)e^{\lambda t} \label{eq:particular_solution_form}
+\end{equation}
+的特解，其中 $k$ 为特征方程 $F(\lambda)=0$ 的根 $\lambda$ 的重数 (单根相当于 $k=1$；当 $\lambda$ 不是特征值
+时，取 $k=0$)，而 $B_0, B_1, \dots, B_m$ 是待定常数，可以通过将 (\ref{eq:particular_solution_form}) 代入微分方程并比较 $t$ 的
+同次幂系数的方法确定。
+\end{proposition}
+
+\begin{example}
+    求 $\frac{d^3 x}{dt^3}+3\frac{d^2 x}{dt^2}+3\frac{dx}{dt}+x=e^{-t}(t-5)$ 的通解。
+\end{example}
+\begin{solution}
+    特征方程 $\lambda^3+3\lambda^2+3\lambda+1=(\lambda+1)^3=0$ 有三重根 $\lambda_{1,2,3}=-1$, 对应齐次方程的通
+解为
+$$x=(c_1+c_2t+c_3t^2)e^{-t},$$
+其中 $c_1,c_2,c_3$ 为任意常数，且方程有形式为 $\tilde{x} = t^3 (A+Bt) e^{-t}$ 的特解。将它代入方程得
+$$(6A+24Bt)e^{-t} = e^{-t}(t-5),$$
+比较系数求得 $A=-\frac{5}{6}, B=\frac{1}{24}$。从而 $\tilde{x} = \frac{1}{24}t^3(t-20)e^{-t}$. 故方程的通解为
+$$x=(c_1+c_2t+c_3t^2)e^{-t} + \frac{1}{24}t^3(t-20)e^{-t}.$$
+\end{solution}
+
+\begin{proposition}[比较系数法的类型2]\label{prop:比较系数法的类型2}
+    设 $f(t) = [A(t)\cos \beta t+B(t)\sin \beta t]e^{\alpha t}$, 其中 $\alpha, \beta$ 为常数，而 $A(t), B(t)$ 是带实系数
+的 $t$ 的多项式，其中一个的次数为 $m$，而另一个的次数不超过 $m$，那么我们有如下结论：
+方程 (\ref{eq:nonhomogeneous_linear_constant_coeffs}) 有形如
+\begin{equation}
+\tilde{x} = t^k [P(t)\cos \beta t+Q(t)\sin \beta t]e^{\alpha t} \label{eq:particular_solution_trig_form}
+\end{equation}
+的特解，这里 $k$ 为特征方程 $F(\lambda)=0$ 的根 $\alpha+i\beta$ 的重数，而 $P(t),Q(t)$ 均为待定的带实
+系数的次数不高于 $m$ 的多项式，可以通过比较系数的方法来确定。
+
+注意，正确写出特解形式是待定系数法的关键，在此类型的求解过程中应把 $P(t)$,
+$Q(t)$ 均假设为 $m$ 次完全多项式来实际演算。
+\end{proposition}
+
+\begin{example}
+    求方程 $\frac{d^2 x}{dt^2}+4\frac{dx}{dt}+4x=\cos 2t$ 的通解。
+\end{example}
+\begin{solution}
+    特征方程 $\lambda^2+4\lambda+4=0$ 有重根 $\lambda_1=\lambda_2=-2$, 因此对应齐次线性微分方程的
+通解为
+$$x=(c_1+c_2t)e^{-2t},$$
+其中 $c_1,c_2$ 为任意常数。现求非齐次线性微分方程的一个特解。因为 $\pm 2i$ 不是特征值，我
+们求形如 $\tilde{x}=A\cos 2t+B\sin 2t$ 的特解，将它代入原方程并简化得到
+$$8B\cos 2t-8A\sin 2t = \cos 2t,$$
+比较同类项系数得 $A=0, B=\frac{1}{8}$，从而 $\tilde{x} = \frac{1}{8}\sin 2t$. 因此，原方程的通解为
+$$x=(c_1+c_2t)e^{-2t} + \frac{1}{8}\sin 2t.$$
+\end{solution}
+
+\section{高阶微分方程的降阶与幂级数解法}\label{sec:高阶微分方程的降阶与幂级数解法}
+$n$ 阶微分方程一般可写为
+$$F(t,x,x',\dots,x^{(n)})=0.$$
+下面讨论三类特殊方程的降阶问题。
+
+\begin{example}[第一类可降阶的方程]\label{ex:第一类可降阶的方程}
+    方程不显含未知函数 $x$, 或更一般地，设方程不含 $x,x',\dots,x^{(k-1)}$，即方程形如
+\begin{equation}
+F(t,x^{(k)},x^{(k+1)},\dots,x^{(n)})=0 \quad (1 \le k \le n). \label{eq:ODE_missing_x_to_xk_minus_1}
+\end{equation}
+若令 $x^{(k)}=y$，则方程即降为关于 $y$ 的 $n-k$ 阶方程
+\begin{equation}
+F(t,y,y',\dots,y^{(n-k)})=0. \label{eq:ODE_reduced_order_y}
+\end{equation}
+如果能够求得方程 (\ref{eq:ODE_reduced_order_y}) 的通解
+$$y=\varphi(t,c_1,c_2,\dots,c_{n-k}),$$
+即
+$$x^{(k)}=\varphi(t,c_1,c_2,\dots,c_{n-k}),$$
+再经过 $k$ 次积分得到
+$$x=\psi(t,c_1,c_2,\dots,c_n),$$
+其中 $c_1,c_2,\dots,c_n$ 为任意常数。可以验证，这就是方程 (\ref{eq:ODE_missing_x_to_xk_minus_1}) 的通解。
+特别地，若二阶方程不显含 $x$ (相当于 $n=2,k=1$ 的情形)，则用变换 $x'=y$ 便把方
+程化为一阶方程。
+\end{example}
+
+\begin{example}[第二类可降阶的方程]\label{ex:第二类可降阶的方程}
+    不显含自变量 $t$ 的方程
+\begin{equation}
+F(x,x',\dots,x^{(n)})=0. \label{eq:ODE_missing_t}
+\end{equation}
+我们指出，若令 $x'=y$, 并以它为新未知函数，而视 $x$ 为新自变量，则方程就可降低一阶。
+
+事实上，在所作的假定下，$x'=y, x''=\frac{dy}{dt}=\frac{dy}{dx}\frac{dx}{dt}=y\frac{dy}{dx}, x'''=\frac{d}{dx}\left(y\frac{dy}{dx}\right)\frac{dy}{dx}+y^2\frac{d^2y}{dx^2}, \dots$，采用数
+学归纳法不难证明，$x^{(k)}$ 可用 $y, \frac{dy}{dx}, \dots, \frac{d^{k-1}y}{dx^{k-1}}$ 表示 ($k \le n$)。将这些表达式代入式 (\ref{eq:ODE_missing_t}) 就
+得到
+$$G\left(x,y,\frac{dy}{dx},\dots,\frac{d^{n-1}y}{dx^{n-1}}\right)=0,$$
+这是关于 $x,y$ 的 $n-1$ 阶方程，比原方程 (\ref{eq:ODE_missing_t}) 低一阶。
+\end{example}
+
+\begin{example}[二阶线性微分方程的幂级数解法]\label{ex:二阶线性微分方程的幂级数解法}
+    求方程 $y''-2xy'-4y=0$ 的满足初值条件 $y(0)=0$ 及 $y'(0)=1$ 的解。
+\end{example}
+
+\begin{solution}
+    设式 \begin{equation}
+y=a_0+a_1x+a_2x^2+\dots+a_nx^n+\dots \label{eq:power_series_solution_ansatz}
+\end{equation}为方程的解，利用初值条件，可以得到
+$$a_0=0, \quad a_1=1,$$
+因而
+\begin{align*}
+y&=x+a_2x^2+a_3x^3+\dots+a_nx^n+\dots, \\
+y'&=1+2a_2x+3a_3x^2+\dots+na_nx^{n-1}+\dots, \\
+y''&=2a_2+3 \cdot 2a_3x+\dots+n(n-1)a_nx^{n-2}+\dots.
+\end{align*}
+将 $y,y',y''$ 的表达式代入原方程，合并 $x$ 的同次幂的项，并令各项系数等于零，得到
+$$a_2=0, a_3=1, a_4=0,\dots, a_n=\frac{2}{n-1}a_{n-2}, \dots$$
+因而
+$$a_5=\frac{1}{2!}, a_6=0, a_7=\frac{1}{3!}, a_8=0, a_9=\frac{1}{4!}, \dots$$
+最后得
+$$a_{2k+1} = \frac{1}{k!}, \quad a_{2k}=0.$$
+对一切正整数 $k$ 成立。
+将 $a_i (i=0,1,2,\dots)$ 的值代回式 (\ref{eq:power_series_solution_ansatz}) 就得到
+$$y=x+x^3+\frac{x^5}{2!}+\dots+\frac{x^{2k+1}}{k!}+\dots = x\left(1+\frac{x^2}{1!}+\frac{x^4}{2!}+\dots+\frac{x^{2k}}{k!}+\dots\right) = xe^{x^2}.$$
+这就是方程的满足所给初值条件的解。
+\end{solution}

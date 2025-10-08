@@ -1,0 +1,329 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\title{基于Brouwer拓扑度及Lojasiewicz-Simon梯度法的纳什均衡点存在唯一性及稳定性的研究}
+\author{萃英学院\qquad 2022级\qquad 王一鑫}
+\usepackage{ctex}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{newtxtext}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumerate}%调用enumerate
+\usepackage{bm}%用于加粗希腊字母
+\tcbuselibrary{skins, breakable, theorems}
+	\newcommand{\sign}[1]{\mathrm{sgn}(#1)}%定义符号函数
+	\newcommand*{\dif}{\mathop{}\!\mathrm{d}}%微分算子
+	\theoremstyle{definition}
+	\newtcbtheorem[number within=section]{defn}%
+	{定义}{colback=Emerald!10,colframe=cyan!40!black,fonttitle=\bfseries}{defn}
+	
+	\newtcbtheorem[number within=section]{lemma}%
+	{引理}{colback=SeaGreen!10!CornflowerBlue!10,colframe=RoyalPurple!55!Aquamarine!100!,fonttitle=\bfseries}{lem}
+	
+	% 使用另一个计数器 use counter from=lemma
+	\newtcbtheorem[use counter from=lemma, number within=section]{thm}%
+	{定理}{colback=SeaGreen!10!CornflowerBlue!10,colframe=RoyalPurple!55!Aquamarine!100!,fonttitle=\bfseries}{thm}
+	\newtcbtheorem[use counter from=lemma, number within=section]{proposition}%
+	{命题}{colback=SeaGreen!10!CornflowerBlue!10,colframe=RoyalPurple!55!Aquamarine!100!,fonttitle=\bfseries}{prop}
+	\renewenvironment{proof}{\par\textbf{证明.}\;}{\qed\par}
+
+\begin{document}
+	\maketitle
+	\section{问题引入}
+	考虑如下系统
+	\begin{equation}\label{system}
+		\dot{y}_{i}=\sum_{k=1}^{N}m_{k}(y_{k}-y_{i})+\sigma(\theta_{i}-y_{i}^{p})y_{i}
+	\end{equation}
+	
+	该标量系统表示一个意见动态博弈模型，在给定一组不同的确信度值$\theta_{i}$的情况下，意见$y_{i}$变化以达到最佳一致。这样的一致性$y^{*}$可看作是具有$N$个玩家的非合作博弈中的纳什平衡，旨在最大化每名玩家的相应收益
+	\[ p_{i}(y)=\sigma(\dfrac{1}{2}\theta_{i}y_{i}^{2}-\dfrac{1}{p+2}y_{i}^{p+2})-\dfrac{M}{2}(\bar{y}-y_{i})^{2},\quad \bar{y}=\dfrac{1}{M}\sum_{j}m_{j}y_{j} \]
+	试证明：系统存在唯一的稳定纳什平衡点$y^{*}$，并且它是该系统的全局吸引子，即如下定理.\\
+	\begin{thm}{}{thm1}
+		对于任意正参数集$(\theta,m,\sigma)\in\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}$，系统\eqref{system}存在唯一的稳定纳什平衡点$y^{*}\in\mathbb{R}_{+}^{N}$.此外，对于任意正解$y(t)\in\mathbb{R}_{+}^{N}$，当$t\to\infty$时，它都会收敛到$y^{*}$.
+	\end{thm}
+	\section{纳什均衡(Nash equilibrium)} 
+	在本节中，介绍John Nash提出的非合作博弈中纳什均衡\cite{ref2}的相关概念.
+	
+	一场博弈由这几个要素构成：
+	\begin{itemize}
+		\item \textbf{玩家(Players)}：博弈的参与者
+		\item \textbf{策略(Strategy)}：博弈玩家各自的操作
+		\item \textbf{收益(Payoff)}：博弈玩家的收益，一般用矩阵来表示，在连续的时候也会写成函数。
+		\item \textbf{信息(Information)}：博弈玩家知道的信息
+		\item \textbf{理性(Rationality)}：博弈玩家是理性的，在竞争的情况下使自己的收益最大化
+	\end{itemize}
+	
+	\textbf{博弈论方法的本质——相互依存性}：每一方的收益不仅依赖于自己的策略，同时也依赖其他参与方的策略.
+	
+	\textbf{博弈论研究的目标——均衡}：博弈中的各个玩家通过改变自己的策略造成收益的变化。由于玩家是理性的，他们会调整策略使自己的收益最大。在这样的情况下，一个“稳定”的策略选择是值得研究的。各个玩家选择了各自的策略之后，没有动机去改变当前的策略，就形成了稳定的状态.
+	
+	下面我们给出上述内容的数学定义.
+	\begin{defn}{有限博弈}{}
+		一个由$n$人构成的博弈是一个由$n$个玩家组成的有限集，每个玩家都有一个相关的\textbf{纯策略集}.
+	\end{defn}
+	
+	我们以《史记·孙子吴起列传》中田忌赛马的故事为例理解概念。田忌和齐威王是这场有限博弈中的两名玩家，他们分别以特定顺序派出上、中、下等马为各自纯策略集。
+	
+	\begin{defn}{混合策略}{}
+		 纯策略集中元素的线性组合为混合策略，记第$i$名玩家的混合策略为$S_{i}$.若系数分别为$c_{1},c_{2},\cdots,c_{n}$，则有\[ \sum_{i=1}^{n}c_{i}=1\quad c_{i}\geq0,i=1,2,\cdots,n \]
+	\end{defn}
+	
+	假设田忌和齐威王进行多次比赛，他们分别以特定比例调整不同顺序策略使用，使得自己获得最大收益，这就是他们的混合策略。
+	\begin{defn}{收益函数}{}
+		函数$p_{i}$将第$i$名玩家在$n$人选定各自策略$S_{i}(i=1,2,\cdots,n)$下的收益情况映射到一个实数，表示该情况下的收益.称该函数为一组策略下的收益函数，即\[ p_{i}:\quad S_{1}\times S_{2}\times S_{3}\times \cdots \times S_{n}\rightarrow \mathbb{R} \]
+	\end{defn}
+	即有一个田忌和齐威王各自有相应的收益函数，用来计算他们在确定策略时各自的收益大小.
+	\begin{defn}{博弈}
+		设一个由$n$人组成的有限博弈，第$i$个人的策略为$S_{i}$，收益函数为$p_{i}$，则一场博弈可以表示为\[ G=\{S_{1},\cdots,S_{n},p_{1},\cdots,p_{n}\} \]
+	\end{defn}
+	
+	\begin{defn}{纳什均衡(Nash equilibrium)}{}
+		在博弈$G=\{S_{1},\cdots,S_{n},p_{1},\cdots,p_{n}\}$中，如果由各个博弈方的各一个策略组成的某个策略组合$\{S_{1}^{*},\cdots,S_{n}^{*}\}$中，任一博弈方$i$的策略$S_{i}^{*}$都是对其余博弈方策略的组合$\{S_{1}^{*},\cdots,S_{i-1}^{*},S_{i+1}^{*},\cdots,S_{n}^{*}\}$的最佳对策，即\[ \{S_{1}^{*},\cdots,S_{i-1}^{*},S_{i}^{*},S_{i+1}^{*},\cdots,S_{n}^{*}\}\geq p_{i}(S_{1}^{*},\cdots,S_{i-1}^{*},S_{ij}^{*},S_{i+1},\cdots,S_{n}^{*})\quad\forall S_{ij}\in S_{i} \]则称$\{S_{1}^{*},\cdots,S_{n}^{*}\}$为G的一个\textbf{纳什均衡}.
+	\end{defn}
+	
+	纳什均衡在现实中有很多例子，例如\textbf{田忌赛马}中，计算得出田忌和齐威王各以$\dfrac{1}{6}$的概率安排马出场的顺序为一个纳什均衡；\textbf{囚徒困境}中两人均选择揭发对方为一个纳什均衡；美苏冷战时期，罗素提出的\textbf{胆小鬼博弈}中，一方前进一方后退是一个纳什均衡.
+	
+	\section{定理证明}
+	有了以上铺垫，下面我们回到原问题。
+	
+	在一阶常微分方程系统\[ 		\dot{y}_{i}=\sum_{k=1}^{N}m_{k}(y_{k}-y_{i})+\sigma(\theta_{i}-y_{i}^{p})y_{i} \]
+	中，$y_{i}$代表意见，$\theta_{i}$代表信念，后者不会随着时间推移而改变，而意见在协调力量的推动下达成共识，长时间的变化有望导致意见达成一致，即系统的稳定状态
+	\begin{equation}\label{equality1}
+		\sum_{k=1}^{N}m_{k}(y_{k}-y_{i})+\sigma(\theta_{i}-y_{i}^{p})y_{i}=0 
+	\end{equation} 
+	
+	对于该式的解可被视作意见博弈下的纳什均衡，即每个个体都没有一个转向其他意见而获利的方案，可以用收益函数表示为\[ p_{i}(\textbf{y}^{*})=\mathop{max}\limits_{r^{p}\in[\min\theta_{k},\max\theta_{k}]}p_{i}(y_{1}^{*},\cdots,y_{i-1}^{*},r,y_{i+1}^{*},\cdots,y_{N}^{*})\qquad\forall i=1,\cdots.N \]
+	
+	我们先讨论一种最简单的情形，即所有信念达成共识时
+	\begin{equation}\label{equality2}
+		\theta_{1}=\theta_{2}=\cdots=\theta_{N}
+	\end{equation}  此时显然$y_{i}=\theta_{i}$是纳什均衡点。然而在一般情况下，纳什均衡点的存在性并非显然，下面我们将证明一般情况下的定理，即
+	\begin{thm}{}{thm1}
+		对于任意正参数集$(\theta,m,\sigma)\in\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}$，系统\ref{system}存在唯一的稳定纳什平衡点$y^{*}\in\mathbb{R}_{+}^{N}$.此外，对于任意正解$y(t)\in\mathbb{R}_{+}^{N}$，当$t\to\infty$时，它都会收敛到$y^{*}$.
+	\end{thm}
+	
+	这个定理的证明将分为以下两步
+	\begin{itemize}
+		\item 纳什均衡存在的唯一性与稳定性
+		\item 任意正解都会收敛到纳什均衡点
+	\end{itemize}
+	\subsection{纳什均衡的唯一性与稳定性}
+	我们只需求极值点的值，就可以对任何均衡点的位置进行粗略的先验估计.我们用$y_{+}$表示最大的$y_{i}$，$\theta_{+}$表示相应的有相同指数的$\theta_{i}$，于是有\[ y_{+}^{p}\leq\theta_{+} \]类似地，\[ y_{-}^{p}\geq\theta_{-} \]即对$\forall i=1,2,\cdots,N$，解都落在相应的区间\[ \min\theta_{k}\leq y_{i}^{p}\leq \max\theta_{k} \]
+	则对于信念达成共识的情况，我们得到唯一解$y_{i}=\theta^{1/p}$.\\
+	粗略的先验估计是不够的，我们期望得到更精确的结果，注意到
+	\begin{equation}\label{inequality1}
+		-\sum_{k=1}^{N}m_{k}y_{i}+\sigma(\theta_{i}-y_{i}^{p})y_{i}=-\sum_{k=1}^{N}m_{k}y_{k}\leq0 
+	\end{equation} 
+	即\[ (\sigma\theta_{i}-M)y_{i}\leq\sigma y_{i}^{p+1}\]这里$M\coloneqq\sum_{i=1}^{N}$，得到
+	\begin{equation}\label{inequality2}
+		y_{i}^{p}\geq\theta_{i}-\dfrac{M}{\sigma} 
+	\end{equation}
+	\\不失一般性，我们可以假设$\theta$是单调递增的，即\[ 0\textless\theta_{1}\leq\cdots\leq\theta_{N} \]我们有如下引理
+	\begin{lemma}{}{lemma2}
+		对于$\theta_{1}\leq y_{1}^{p}\leq\cdots\leq y_{N}^{p}\leq\theta_{N}$，以下估计对所有的$i$均成立\[ y_{i}^{p}\geq\theta_{i}+\dfrac{m_{\geq i}-M}{\sigma} \quad m_{\geq i}\coloneqq m_{i}+\cdots+m_{N}\]
+		$\theta_{i}=\theta_{j}\ (i\neq j)$ 当且仅当$y_{i}=y_{j}$
+	\end{lemma}
+	\begin{proof}
+		设$i\textgreater j$，分别有\[ \sum_{k=1}^{N}m_{k}(y_{k}-y_{i})+\sigma(\theta_{i}-y_{i}^{p})y_{i}=0 \]和\[ \sum_{k=1}^{N}m_{k}(y_{k}-y_{j})+\sigma(\theta_{j}-y_{j}^{p})y_{j}=0 \]两式相减，整理得
+		\begin{equation}\label{equality3}
+			(\sigma\theta_{j}-M)(y_{i}-y_{j})+\sigma(\theta_{i}-\theta_{j})=\sigma(y_{i}^{p+1}-y_{j}^{p+1})
+		\end{equation} 
+		由Lagrange中值定理，存在$y_{i}$和$y_{j}$之间的$\xi$，使得\[ (\sigma\theta_{j}-M)(y_{i}-y_{j})+\sigma(\theta_{i}-\theta_{j})=\sigma(p+1)(y_{i}-y_{j})\xi^{p} \]我们断言$y_{i}\geq y_{j}$.事实上，若$y_{i}\textless y_{j}$，两边同时除以$y_{i}-y_{j}$可得\[ (\sigma\theta_{j}-M)\geq\sigma(p+1)\xi^{p} \]显然$\sigma\theta_{j}-M\textgreater0$，由\eqref{inequality2}可得\[ (\sigma\theta_{j}-M)\geq(p+1)(\sigma\theta_{j}-M) \]矛盾！故$y_{i}\geq y_{j}$\\
+		如果$y_{i}=y_{j}$，由\eqref{equality3}显然有$\theta_{i}=\theta_{j}$.如果$\theta_{i}=\theta_{j}$时，$y_{i}\neq y_{j}$，会得到\[ (\sigma\theta_{j}-M)=\sigma(p+1)\xi^{p}  \]矛盾！\\
+		由于$y_{i}\geq y_{j}$，对于\eqref{inequality1}中$\sum_{k=1}^{N}m_{k}y_{k}$一项有如下估计\[ \sum_{k=1}^{N}m_{k}y_{k}\geq\sum_{k=i}^{N}m_{k}y_{k}\geq\sum_{k=i}^{N}m_{k}y_{i}=m_{\geq i}y_{i} \]
+		于是有\[ m_{\geq i}y_{i}+(\sigma\theta_{i}-M)y_{i}\leq\sigma y_{i}^{p+1} \]
+		即\[ y_{i}^{p}\geq\theta_{i}+\dfrac{m_{\geq i}-M}{\sigma} \]
+	\end{proof}
+	下面我们证明均衡点的存在唯一性
+	\begin{proposition}{}{prop3}
+		对于任意正参数集$(\theta,m,\sigma)\in\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}$，\eqref{equality1}存在唯一的正数解$\textbf{y}^{*}$，它是系统\eqref{system}的局部指数稳定均衡解.映射$\textbf{y}^{*}=\textbf{y}^{*}(\theta,m,\sigma):\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}\rightarrow\mathbb{R}_{+}^{N}$是无限光滑的.
+	\end{proposition}
+	\begin{proof}
+		对于一个给定的正参数集$(\theta,m,\sigma)\in\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}^{N}\times\mathbb{R}_{+}$，我们考虑如下映射$\mathbb{F}=\mathbb{F}_{\theta,m,\sigma}:\mathbb{R}_{+}^{N}\rightarrow\mathbb{R}^{N}$，定义为\[ \mathbb{F}(y)=\Bigg\{My_{i}-\sum_{k=1}^{N}m_{k}y_{k}-\sigma(\theta_{i}-y_{i}^{p})y_{i}\Bigg\}_{i=1}^{N} \]
+		我们断言\eqref{equality1}的任何解都不是该映射的临界解，并且有正的雅各比值，事实上，我们可以计算雅各比矩阵\[ D_{\textbf{y}}\mathbb{F}(\textbf{y})=diag\{d_{i}\}_{i=1}^{N}-\begin{pmatrix*}[c]
+			m_{1} & m_{2} & \cdots & m_{N} \\
+			\vdots & \vdots &  & \vdots \\
+			m_{1} & m_{2} & \cdots & m_{N}
+		\end{pmatrix*} \]其中\[ d_{i}=M+\sigma(p+1)y_{i}^{p}-\sigma\theta_{i} \]
+		计算雅各比行列式
+		\begin{align*}
+			\det D_{\textbf{y}}\mathbb{F}_{\theta}(\textbf{y}) &=\begin{vmatrix}
+				d_{1}-m_{1} & -m_{2} & \cdots & -m_{N} \\
+				\vdots& \vdots &  & \vdots \\
+				-m_{1}& -m_{2} & \cdots & d_{N}-m_{N}
+			\end{vmatrix}\\
+			&=\begin{vmatrix}
+				d_{1} & -d_{2} & \cdots & 0 \\
+				\vdots& \vdots &  & \vdots \\
+				-m_{1}& -m_{2} & \cdots & d_{N}-m_{N}
+			\end{vmatrix}\\
+			&=\prod_{i=1}^{N}d_{i}-\sum_{k=1}^{N}m_{k}\prod_{i\neq k}d_{i}\\
+			&=\prod_{i=1}^{N}d_{i}\times\big(1-\sum_{k=1}^{N}\dfrac{m_{k}}{d_{k}}\big)
+		\end{align*}
+		下面我们来确定该值的符号，首先证明$\forall i$，$d_{i}\textgreater0$.采用反证法，假设对于某个$i$，有$d_{i}\leq0$，即\[ (p+1)y_{i}^{p}\leq\theta_{i}-\dfrac{M}{\sigma} \]于是$\theta_{i}-\dfrac{M}{\sigma}\geq0$，进一步，由\eqref{lem:lemma2}，我们得到\[ (p+1)\Big(\theta_{i}+\dfrac{m_{\geq i}-M}{\sigma}\Big)\leq\theta_{i}-\dfrac{M}{\sigma} \]移项有\[ p\Big(\theta_{i}-\dfrac{M}{\sigma}\Big)\leq-\dfrac{m_{\geq i}}{\sigma}(p+1)\textless0 \]这与$\theta_{i}-\dfrac{M}{\sigma}\geq0$矛盾！\\
+		因此，雅各比行列式的值由$\big(1-\sum_{k=1}^{N}\dfrac{m_{k}}{d_{k}}\big)$确定，为表示方便，令$\dfrac{1}{M}\sum_{i=1}^{N}m_{i}y_{i}=\bar{y}$，由\eqref{equality1}\[ M\bar{y}-My_{i}+\sigma\theta_{i}y_{i}-\sigma y_{i}^{p+1}=0 \]
+		带入$d_{i}$的表达式，可得\[ \dfrac{1}{d_{i}}=\dfrac{y_{i}}{M\bar{y}+\sigma py_{i}^{p}} \]
+		进而\[ \sum_{i=1}^{N}\dfrac{m_{i}}{d_{i}}=\sum_{i=1}^{N}\dfrac{m_{i}y_{i}}{M\bar{y}+\sigma py_{i}^{p}}\textless\sum_{i=1}^{N}\dfrac{m_{i}y_{i}}{M\bar{y}}=1 \]我们得到$\big(1-\sum_{k=1}^{N}\dfrac{m_{k}}{d_{k}}\big)\textgreater0$，即雅各比行列式的值为正.
+		
+		类似地，注意到左上角的$n$阶子式$M_{n}$,$n\textless N$有类似的表达\[ M_{n}=\prod_{i=1}^{n}d_{i}\times\big(1-\sum_{k=1}^{n}\dfrac{m_{k}}{d_{k}}\big) \]于是它以相同方式维持稳定性，这种情况下容易发现\[ \sum_{k=1}^{n}\dfrac{m_{k}}{d_{k}}\textless\dfrac{
+		1}{M\bar{y}}\sum_{k=1}^{n}m_{k}y_{k}\textless1 \]
+		由李雅普诺夫
+		
+		对唯一性的证明要用到布劳威尔拓扑度(Brouwer topological degree)的结论\cite{ref3}，研究映射$\mathbb{F}$在零点的拓扑度.为使得定义合理，我们将限制$\mathbb{F}$在一个扇形区域$\mathcal{W}$中，在此之前先表示内积与范数\[ \langle\textbf{y},\textbf{z}\rangle=\sum_{i=1}^{N}m_{i}y_{i}z_{i}\qquad \Vert\textbf{y}\Vert_{p}^{p}=\sum_{i=1}^{N}m_{i}y_{i}^{p} \]
+		定义扇形区域\[ \mathcal{W}=\{\textbf{y}:\textbf{y}_{i}\geq0,\ \varepsilon\leq\Vert\textbf{y}\Vert_{\infty},\ \Vert\textbf{y}\Vert_{p+1}\leq R\}\]这里的$R\textgreater0$充分大，$\varepsilon$是任意小的数.
+		
+		首先我们验证边界的像不包含原点，即$0\notin\mathbb{F(\partial\mathcal{W})}$.按照定义可分别计算三个边界处的值：
+		\begin{enumerate}[(1)]
+			\item $\textbf{y}_{i}=0$，此时$\mathbb{F}^{i}=M\bar{y}\textgreater0$.
+			\item $\Vert\textbf{y}\Vert_{p+1}=R$，计算
+			\begin{align*}
+				\sum_{i=1}^{N}m_{i}\mathbb{F}^{i}(\textbf{y})
+				&=\sum_{i=1}^{N}[My_{i}-\sum_{k=1}^{N}m_{k}y_{k}+\sigma(y_{i}^{p}-\theta_{i})y_{i}]\\
+				&=-\sigma\sum_{i=1}^{N} m_{i}\theta_{i}+\sigma\sum_{i=1}^{N}m_{i}y_{i}^{p+1}\\
+				&=-\sigma\langle\bm{\theta},\textbf{y}\rangle+\sigma\Vert\textbf{y}\Vert_{p+1}^{p+1}
+			\end{align*}由Cauchy-Schwarz不等式
+			\begin{align*}
+				\sigma\Vert\textbf{y}\Vert_{p+1}^{p+1}-\sigma\langle\bm{\theta},\textbf{y}\rangle
+				&\geq \sigma\Vert\textbf{y}\Vert_{p+1}^{p+1}-\sigma\Vert\textbf{y}\Vert_{p+1}\Vert\bm{\theta}\Vert_{\frac{p+1}{p}}\\
+				&=\sigma\Vert\textbf{y}\Vert_{p+1}(\Vert\textbf{y}\Vert_{p+1}^{p}-\Vert\bm{\theta}\Vert_{p+1}^{p})\\
+				&\textgreater0
+			\end{align*}
+			这里的$R$充分大.
+			\item $\Vert\textbf{y}\Vert_{\infty}=\varepsilon$有
+			\begin{align*}
+				-\sigma\langle\bm{\theta},\textbf{y}\rangle+\sigma\Vert\textbf{y}\Vert_{p+1}^{p+1}
+				&\leq-\sigma\theta_{-}\Vert\textbf{y}\Vert_{1}+\sigma\mathop{max}\limits_{1\leq i\leq N}y_{i}\Vert\textbf{y}\Vert_{1}\\
+				&=-\sigma\theta_{-}\Vert\textbf{y}\Vert_{1}+\sigma\varepsilon^{p}\Vert\textbf{y}\Vert_{1}\\
+				&\textless0
+			\end{align*}
+			这里的$\varepsilon$充分小.
+		\end{enumerate}
+		
+			于是，我们可以使用M.Nagumo提出的近似方案\cite{ref4}计算布劳威尔拓扑度，即对于一个连续映射$\mathbb{F}$与有界开集$\mathcal{W}$，可以用每个$y\notin\mathbb{F}(\partial\mathcal{W})$计算，通过公式\[ \deg\{\mathbb{F},\mathcal{W},\textbf{0}\}=\sum_{\textbf{y}\in\mathbb{F}^{-1}(\textbf{0})}\sign{\det D_{\textbf{y}}\mathbb{F}(\textbf{y})} \]
+			
+			我们已经计算得出了所有的雅可比值为正，接下来只需说明$\deg\{\mathbb{F},\mathcal{W},\textbf{0}\}=1$就可以得到唯一性.
+			
+			在\eqref{equality2}的条件下，我们曾得出唯一的一个纳什均衡点.记\eqref{equality2}时的情况为$\hat{\bm{\theta}}=(\theta,\cdots\theta)$，固定任意有这种形式的$\hat{\bm{\theta}}$，考虑映射的同伦(homotopy):\[ \mathbb{F}_{\tau}=\mathbb{F}_{\tau\bm{\theta}+(1-\tau)\hat{\bm{\theta}},\textbf{m},\sigma}\quad0\leq\tau\leq1 \]
+			
+			我们已经证明了$\forall\tau$，$\textbf{0}\notin\mathbb{F}_{\tau}(\partial\mathcal{W})$，于是通过同伦变换下拓扑性质的不变性，得到\[ \deg\{\mathbb{F}_{\bm{\theta},\textbf{m},\sigma},\mathcal{W},\textbf{0}\}=\deg\{\mathbb{F}_{\hat{\bm{\theta}},\textbf{m},\sigma},\mathcal{W},\textbf{0}\}=1 \]
+			唯一性得证.
+			
+			关于$(\bm{\theta},\textbf{m},\sigma)$的函数$\textbf{y}^{*}$的光滑性，由于雅各比行列式是非退化的，由隐函数定理，可根据$\mathbb{F}$的无限光滑性推出$\textbf{y}^{*}$的光滑性，命题得证.
+	\end{proof}
+	\subsection{梯度结构以及向纳什均衡的收敛}
+	对系统增加一个扰动$E_{i}(t)$得到
+	\begin{equation}\label{system2}
+		\dot{y}_{i}=\sum_{k=1}^{N}m_{k}(y_{k}-y_{i})+\sigma(\theta_{i}-y_{i}^{p})y_{i}+E_{i}(t)
+	\end{equation}
+	
+	如果初始条件在$\textbf{y}^{*}$的一个小邻域内，且$E(t)$是很小的，显然可以应用\eqref{prop:prop3}.但对于一般情况下的解，我们需要用到\eqref{system2}的隐式梯度结构.
+	
+	首先，我们建立有界性，注意到\[ 	\dot{y}_{i}=\sum_{k=1}^{N}m_{k}(y_{k}-y_{i})+\sigma(\theta_{i}-y_{i}^{p})y_{i}+E_{i}(t)\leq\sum_{k=1}^{N}m_{k}y_{k}+\sigma(\theta_{i}-y_{i}^{p})y_{i}+E_{i}(t) \]有
+	\begin{align*}
+		\dfrac{\dif}{\dif t}\Vert\textbf{y}\Vert_{2}^{2}=\dfrac{\dif}{\dif t}\sum_{i=1}^{N}y_{i}^{2}
+		&=\sum_{i=1}^{N}2m_{i}y_{i}\dfrac{\dif y_{i}}{\dif t}\\
+		&\leq\sum_{i=1}^{N}2m_{i}y_{i}\Bigg[\sum_{k=1}^{N}m_{k}y_{k}+\sigma(\theta_{i}-y_{i}^{p})y_{i}+E_{i}(t)\Bigg]\\
+		&\leq2\sum_{i=1}^{N}\sigma m_{i}(\theta_{i}y_{i}^{2}-y_{i}^{p+2})+m_{i}y_{i}E_{i}(t)+m_{i}y_{i}\sum_{k=1}^{N}m_{k}y_{k}\\
+		&\leq2\sigma\theta^{+}\Vert\textbf{y}\Vert_{2}^{2}-2\sigma\Vert\textbf{y}\Vert_{p+2}^{p+2}+2E^{'}(t)+2\Vert\textbf{y}\Vert_{2}^{2}\\
+		&\leq2\Vert\textbf{y}\Vert_{2}^{2}(\sigma\theta^{+}+1-\sigma\Vert\textbf{y}\Vert_{2}^{p})+E(t)
+	\end{align*}
+	如果在某些时刻点有$\Vert\textbf{y}\Vert_{2}^{p}\textgreater2(\theta^{+}+\frac{1}{\sigma})$，则\[ \dfrac{\dif}{\dif t}\Vert\textbf{y}\Vert_{2}^{2}\leq-2(\sigma\theta^{+}+1)\Vert\textbf{y}\Vert_{2}^{2}+E(t)\leq-c_{0}+E(t) \]
+	因此，若从某时间$T$开始，当$E(t)\textless\frac{c_{0}}{2}$，$t\textgreater T$，这样的估计将给出一个递减的结果，有标准最大值原理便证明了结论.
+	
+	为了能更好的理解系统解的长期动态过程，我们重新调整该系统，将其转换为梯度流.事实上，当所有质量相等时，即$m_{i}=\frac{1}{N}$，这样的结果是显然的，有
+	\begin{equation}\label{equality4}
+		\dfrac{\dif}{\dif t}\textbf{y}=-\nabla\Phi(\textbf{y})+\textbf{E}(t)
+	\end{equation}
+	这里的$\Phi(\textbf{y})$为\[ \Phi(\textbf{y})=-\dfrac{1}{2N}(y_{1}+\cdots+y_{N})^{2}-\dfrac{1}{2}\sum_{i}(\sigma\theta_{i}-1)y_{i}^{2}+\dfrac{\sigma}{p+2}\sum_{i}y_{i}^{p+2} \]
+	对于一般的情况，我们引入新的变量\[ z_{i}=\sqrt{m_{i}}y_{i} \]
+	系统可以化为下面的形式\[ \dfrac{\dif}{\dif t}z_{i}=\sum_{j}\sqrt{m_{i}m_{j}}z_{j}-Mz_{i}+\dfrac{\sigma}{m_{i}^{\frac{p}{2}}}(m_{i}^{\frac{p}{2}}\theta_{i}-z_{i}^{p})z_{i}+E_{i}(t) \]
+	与此同时，$\Phi(\textbf{z})$也随之改变\[ \Phi(\textbf{z})=-\dfrac{1}{2}\Bigg(\sum_{j}\sqrt{m_{j}}z_{j}\Bigg)^{2}-\dfrac{1}{2}\sum_{j}(\sigma\theta_{j}-M)z_{j}^{2}+\dfrac{\sigma}{p+2}\sum_{j}\dfrac{z_{j}^{p+2}}{m_{j}^{\frac{p}{2}}} \] 
+	原始的系统现在转换为扰动梯度流 
+	\begin{equation}\label{system3}
+		\dfrac{\dif}{\dif t}\textbf{z}=-\nabla\Phi(\textbf{z})+\textbf{E}(t)
+	\end{equation} 
+	注意到我们在\eqref{prop:prop3}中的论述以及\eqref{system3}解的有界性均可以直接由旧系统直接转化为新系统，然而新系统中破坏了原有系统的结构，但我们下面将说明这样的结构不再需要.
+	
+	我们的目标转为证明\eqref{system3}中的解收敛到唯一的纳什均衡点$\textbf{z}^{*}$，$z_{i}^{*}=\sqrt{m_{i}}y_{i}^{*}$，证明基于Lojasiewicz梯度不等式.
+	
+	\begin{thm}{Lojasiewicz梯度不等式\cite{ref5}}{Lojasiewicz}
+		$\Phi$是一个邻域$\mathit{U}$中的实解析函数.若对$\forall\textbf{z}_{0}\in U$，都存在常数$c\textgreater0$以及$\delta\in(0,1]$和$\mu\in[\frac{1}{2},1]$，使得\[ \Vert\nabla\Phi(\textbf{z})\Vert\geq c\mid\Phi(\textbf{z})-\Phi(\textbf{z}_{0})\mid^{\mu}\qquad\forall\textbf{z}\in \mathit{U},\Vert\textbf{z}-\textbf{z}_{0}\Vert\leq\delta \]
+	\end{thm}
+	前文论述中选择的$\Phi$在正向扇形区域中是实解析的，于是这个不等式可以在此运用.
+	
+	于是，我们考虑\eqref{system3}的一个正解$\textbf{z}\in\mathbb{R}_{+}^{N}$.既然每个解都是有界的，于是$\textbf{z}(t)$有一个聚点$\textbf{z}_{0}$，$\textbf{z}_{0}\in\mathbb{R}_{+}^{N}$.事实上，根据原来系统的扇形最大原则，相应的$\textbf{y}$解将保持在一个更小的不与坐标平面相交的扇形$\Sigma\subset\mathbb{R}_{+}^{N}$，经过变换的$ \textbf{z}$自然也在同一个扇形中，由\eqref{prop:prop3}的证明不难发现$\textbf{y}$和$\textbf{z}$均不能靠近$\textbf{0}$，因此$\textbf{z}_{0}\in\Sigma\textbackslash{0}$.
+	
+	让我们考虑一个递增的时间序列${t_{n}:n\geq1}$，使得$\textbf{z}(t_{n})\rightarrow\textbf{z}_{0}$，我们要证明$\textbf{z}(t)$最终进入并停留在$B_{r}(\textbf{z}_{0})\coloneqq\{\textbf{z}\in\mathbb{R}^{N}:\Vert\textbf{z}-\textbf{z}_{0}\Vert\textless r\}$，这样的$r$任意小，便有$\textbf{z}(t)\rightarrow\textbf{z}_{0}$中.除此以外，我们还将进一步证明$\dfrac{\dif}{\dif t}\textbf{z}$沿着某些时间序列趋于$0$.这将推导出$\nabla\Phi(\textbf{z}_{0})=0$，从而$\textbf{z}_{0}=z^{*}$.
+	
+	这个证明通过建立对聚点 $\textbf{z}_{0}$附近 $\textbf{z}(t)$轨道长度的控制.我们继续对弧长函数进行估计，这是Simon结果\cite{ref6}的局部版本.
+	
+	我们定义\[ H(t)\coloneqq\Phi(\textbf{z}(t))+\dfrac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s \]
+	\begin{lemma}{}{lemma5}
+		只要$\textbf{z}(t)\in B_{\delta}(\textbf{z}_{0})$，对于$t^{\prime}\leq t\leq
+		t^{\prime\prime}$，我们有\[ \int_{t^{\prime}}^{t^{\prime\prime}}\Vert\dot{\textbf{z}}(s)\Vert\dif s\leq4\int_{H(t^{\prime\prime})}^{H(t^{\prime})}\dfrac{1}{c\mid\xi-\Phi(\textbf{z}_{0})\mid^{\mu}}\dif\xi+\int_{t^{\prime}}^{t^{\prime\prime}}\tilde{E}(s)\dif s \]这里的$\tilde{E}$是一个指数衰减量.
+	\end{lemma}
+	\begin{proof}
+		我们有
+		\begin{equation}\label{inequality3}
+			-\dot{H}(t)=-\langle\nabla\Phi(\textbf{z}(t)),\dot{\textbf{z}}(t)\rangle+\dfrac{3}{4}\Vert\textbf{E}(t)\Vert^{2}\geq\ \dfrac{1}{4}\Vert\nabla\Phi(\textbf{z}(t))\Vert\Vert\dot{\textbf{z}}(t)\Vert
+		\end{equation}
+		所以，函数$H(\cdot)$是不增的.为了进一步证明，我们需要再构造另外两个辅助函数
+		\[ \Psi(x)\coloneqq\int_{0}^{x}\dfrac{1}{\psi(\xi)}\dif\xi \]
+		这里的$\psi(\xi)$为
+		\[ \psi(\xi)\coloneqq c\mid\xi-\Phi(\textbf{z}_{0})\mid^{\mu} \]
+	 	这里的$\mu\in(0,1)$，由函数的凸性和三角不等式，我们可以得到
+	 	\begin{align}
+	 		\psi(H(t))&= c\mid\big(\Phi(\textbf{z}(t))-\Phi(\textbf{z}_{0})\big)+\dfrac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\mid^{\mu}\nonumber\\
+	 		&\leq c\mid\Phi(\textbf{z}(t))-\Phi(\textbf{z}_{0})\mid^{\mu}+c\Big(\dfrac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}\label{inequality4}
+	 	\end{align}
+	 	计算微分有
+	 	\[ \dfrac{\dif}{\dif t}\Psi(H(t))=\dot{\Psi}(H(t))\dot{H}(t)=\dfrac{\dot{H}(t)}{\psi(H(t))}\]
+	 	结合\eqref{inequality3}和\eqref{inequality4}有
+	 	\[ -\dfrac{\dif}{\dif t}\Psi(H(t))\geq\dfrac{1}{4c}\cdot\dfrac{\Vert\nabla\Phi(\textbf{z}(t))\Vert\Vert\dot{\textbf{z}}(t)\Vert}{\mid\Phi(\textbf{z}(t))-\Phi(\textbf{z}_{0})\mid^{\mu}+\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}} \]
+	 	因此，由Lojasiewicz梯度不等式\eqref{thm:Lojasiewicz}我们得到
+	 	\[ -\dfrac{\dif}{\dif t}\Psi(H(t))\geq\dfrac{1}{4}\cdot\dfrac{\Vert\nabla\Phi(\textbf{z}(t))\Vert\Vert\dot{\textbf{z}}(t)\Vert}{\Vert\nabla\Phi(\textbf{z})\Vert+c\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}}\quad\forall t\in(t^{\prime},t^{\prime\prime}) \]
+	 	于是，对$\forall t\in(t^{\prime},t^{\prime\prime})$，我们得到
+	 	\begin{equation}\label{inequality5}
+	 		-4\dfrac{\dif}{\dif t}\Psi(H(t))\geq\Vert\dot{\textbf{z}}(t)\Vert-c\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}\dfrac{\Vert\dot{\textbf{z}}(t)\Vert}{\Vert\nabla\Phi(\textbf{z})\Vert+c\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}}
+	 	\end{equation}
+	 	为了估计右侧第二项的值，我们利用\eqref{system3}
+	 	\begin{align}
+	 		\dfrac{\Vert\dot{\textbf{z}}(t)\Vert}{\Vert\nabla\Phi(\textbf{z})\Vert+c\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}}
+	 		&=\dfrac{\Vert-\nabla\Phi(\textbf{z})+\textbf{E}(t)\Vert}{\Vert\nabla\Phi(\textbf{z})\Vert+c\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}}\nonumber\\
+	 		&\leq1+\dfrac{\textbf{E}(t)\Vert}{c\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}}\label{inequality6}
+	 	\end{align}
+	 	结合\eqref{inequality5}和\eqref{inequality6}，得到\[ 	-4\dfrac{\dif}{\dif t}\Psi(H(t))\geq\Vert\dot{\textbf{z}}(t)\Vert-c\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}-\Vert\textbf{E}(t)\Vert\quad\forall t\in(t^{\prime},t^{\prime\prime}) \]
+	 	为表示方便，定义指数衰减量\[ \tilde{E}(t)\coloneqq c\Big(\frac{3}{4}\int_{t}^{\infty}\Vert\textbf{E}(s)\Vert^{2}\dif s\Big)^{\mu}+\Vert\textbf{E}(t)\Vert \]
+	 	进而
+	 	\begin{equation}\label{inequality7}
+	 		\Vert\dot{\textbf{z}}(t)\Vert\leq-4\dfrac{\dif}{\dif t}\Psi(H(t))+\tilde{E}(t)\quad\forall t\in(t^{\prime},t^{\prime\prime})
+	 	\end{equation}
+	 	对\eqref{inequality7}两边从$t^{\prime}$到$t^{\prime\prime}$积分，即\[ \int_{t^{\prime}}^{t^{\prime\prime}}\Vert\dot{\textbf{z}}(s)\Vert\dif s\leq4\int_{H(t^{\prime\prime})}^{H(t^{\prime})}\dfrac{1}{c\mid\xi-\Phi(\textbf{z}_{0})\mid^{\mu}}\dif\xi+\int_{t^{\prime}}^{t^{\prime\prime}}\tilde{E}(s)\dif s \]
+	\end{proof}
+	最后，我们对收敛性的证明做如下说明.	
+	让我们固定任意一个$r\textless\delta$，遥想一个时间$t_{n}\gg1$，使得\[ \textbf{z}(t_{n})\in B_{\frac{r}{3}}(\textbf{z}_{0})\qquad4\int_{\Phi(\textbf{z}_{0})}^{H(t_{n})}\dfrac{1}{c\mid\xi-\Phi(\textbf{z}_{0})\mid^{\mu}}\dif\xi\textless\dfrac{r}{3}\qquad\int_{t_{n}}^{\infty}\tilde{E}(s)\dif s\textless\dfrac{r}{3} \]
+	我们证明对于所有$t\textgreater t_{n}$的轨迹都落在$B_{r}(\textbf{z}_{0})$中.假设不然，令$t_{n}+\tilde{t},\tilde{t}\textgreater0$是使得$\Vert\textbf{z}(t_{n}+\tilde{t})-\textbf{z}_{0}\Vert=r$成立的最小值，则对于$\forall t\in(t_{n},t_{n}+\tilde{t})$，$\textbf{z}(t)$都落在$B_{r}(\textbf{z}_{0})$，运用\eqref{lem:lemma5}，取$t^{\prime}=t_{n}$，$t^{\prime\prime}=t_{n}+\tilde{t}$，可得
+	\begin{align*}
+		\Vert\textbf{z}(t_{n}+\tilde{t})-\textbf{z}_{0}\Vert&\leq\Vert\textbf{z}(t_{n}+\tilde{t})-\textbf{z}(t_{n})\Vert+\Vert\textbf{z}(t_{n})-\textbf{z}_{0}\Vert\\
+		&\leq\int_{t_{n}}^{t_{n}+\tilde{t}}\Vert\dot{\textbf{z}}(s)\Vert\dif s+\dfrac{r}{3}\\
+		&\leq4\int_{H(t_{n}+\tilde{t})}^{H(t_{n})}\dfrac{1}{c\mid\xi-\Phi(\textbf{z}_{0})\mid^{\mu}}\dif\xi+\int_{t_{n}}^{t_{n}+\tilde{t}}\tilde{E}(s)\dif s+\dfrac{r}{3}\\
+		&\textless4\int_{\Phi(\textbf{z}_{0})}^{H(t_{n})}\dfrac{1}{c\mid\xi-\Phi(\textbf{z}_{0})\mid^{\mu}}\dif\xi+\int_{t_{n}}^{\infty}\tilde{E}(s)\dif s+\dfrac{r}{3}\\
+		&\textless\dfrac{r}{3}+\dfrac{r}{3}+\dfrac{r}{3}=r
+	\end{align*}
+	这与假设是矛盾的，因此对于$\forall t\in[t_{n},\infty)$，$\textbf{z}(t)$都落在$B_{r}(\textbf{z}_{0})$中.
+	
+	注意到，上述论证意味着\[ \int_{t_{n}}^{\infty}\Vert\dot{\textbf{z}}(s)\Vert\dif s\textless\infty\]因此，$\dot{\textbf{z}}(s_{n})\rightarrow0$，进而$\nabla\Phi(\textbf{z}(s_{n}))\rightarrow0=\nabla\Phi(\textbf{z}_{0})$
+	
+	至此，\eqref{thm:thm1}的证明全部完成.\qed
+\begin{thebibliography}{99}  
+	
+	\bibitem{ref1}Lear D, Reynolds D N, Shvydkoy R. Grassmannian reduction of Cucker-Smale systems and dynamical opinion games[J]. arXiv preprint arXiv:2009.04036, 2020.
+	\bibitem{ref2}Nash J. Non-cooperative games[J]. Annals of mathematics, 1951: 286-295.
+	\bibitem{ref3}Cronin J. Fixed point and topological degree in nonlinear analysis[M]. American Mathematical Society, 1964.
+	\bibitem{ref4}Nagumo M. A theory of degree of mapping based on infinitesimal analysis[J]. American Journal of Mathematics, 1951, 73(3): 485-496.
+	\bibitem{ref5}Lojasiewicz S. Une propriété topologique des sous-ensembles analytiques réels[J]. Les équations aux dérivées partielles, 1963, 117: 87-89.
+	\bibitem{ref6}Simon L. Asymptotics for a class of non-linear evolution equations, with applications to geometric problems[J]. Annals of Mathematics, 1983: 525-571.
+	
+\end{thebibliography}
+\end{document}

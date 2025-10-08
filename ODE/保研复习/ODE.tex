@@ -1,0 +1,42 @@
+\documentclass[lang=cn,newtx,12pt,scheme=chinese,device=pad,color=gray]{elegantbook}
+
+\title{常微分方程}
+\subtitle{保研复习用}
+
+\author{王一鑫}
+\institute{兰州大学萃英学院}
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+\date{\today}
+
+\setcounter{tocdepth}{3}
+
+\logo{logo-blue.png}
+\cover{cover2.jpg}
+
+% 本文档命令
+\usepackage{extarrows}
+\usepackage{blkarray}
+\usepackage{multirow}
+\usepackage{array}
+
+
+% 修改标题页的橙色带
+\definecolor{customcolor}{RGB}{255,127,80}
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect}
+
+\begin{document}
+
+\maketitle
+\frontmatter
+\tableofcontents
+\mainmatter
+
+%正文
+\input{chapter/前言}
+\input{chapter/ODE/一阶微分方程的初等解法}
+\input{chapter/ODE/一阶微分方程的解的存在唯一性定理}
+\input{chapter/ODE/高阶微分方程}
+\input{chapter/ODE/线性微分方程组}
+
+\end{document}

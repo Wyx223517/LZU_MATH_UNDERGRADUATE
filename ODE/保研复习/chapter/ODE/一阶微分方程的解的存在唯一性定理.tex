@@ -1,0 +1,195 @@
+\chapter{一阶微分方程的解的存在定理}\label{chap:一阶微分方程的解的存在唯一性定理}
+复旦面试的惨痛教训。。。
+\section{解的存在唯一性定理}
+\begin{definition}[Lipschitz条件]\label{def:Lipschitz条件}
+    函数 $f(x,y)$ 称为在 $R$ 上关于 $y$ 满足\textbf{利普希茨(Lipschitz)条件}，如果存在常数 $L>0$,
+使得不等式
+$$|f(x,y_1)-f(x,y_2)| \le L|y_1-y_2|$$
+对于所有 $(x,y_1), (x,y_2) \in R$ 都成立，$L$ 称为\textbf{利普希茨常数}。
+\end{definition}
+首先考虑导数已解出的一阶微分方程
+\begin{equation}
+\frac{dy}{dx} = f(x,y), \label{eq:first_order_DE_dy_dx_fxy}
+\end{equation}
+这里 $f(x,y)$ 是在矩形域
+\begin{equation}
+R: |x-x_0| \le a, |y-y_0| \le b \label{eq:rectangular_domain}
+\end{equation}
+上的连续函数。
+\begin{theorem}[Picard定理]\label{thm:existence_uniqueness}
+    如果 $f(x,y)$ 在矩形域 $R$ 上连续且关于 $y$ 满足利普希茨条件，则方程 (\ref{eq:first_order_DE_dy_dx_fxy})
+存在唯一的解 $y=\varphi(x)$, 定义于 $|x-x_0| \le h$ 上，连续且满足初值条件
+\begin{equation}
+\varphi(x_0)=y_0, \label{eq:initial_condition}
+\end{equation}
+这里 $h=\min\left(a, \frac{b}{M}\right)$, $M= \max_{(x,y) \in R} |f(x,y)|$.
+\end{theorem}
+
+下面的讨论仅针对于 $x_0\le x \le x_0+h$ 进行，另一侧区域同理。
+
+\begin{proposition}[积分方程与微分方程等价]\label{prop:integral_equation_equivalence}
+    设 $y=\varphi(x)$ 是方程 (\ref{eq:first_order_DE_dy_dx_fxy}) 的定义于 $x_0 \le x \le x_0+h$ 上，满足初值条件
+$$\varphi(x_0)=y_0$$
+的解，则 $y=\varphi(x)$ 是积分方程
+\begin{equation}
+y=y_0 + \int_{x_0}^{x} f(x,\varphi(x))\,dx, \quad x_0 \le x \le x_0+h \label{eq:integral_equation}
+\end{equation}
+的定义于 $x_0 \le x \le x_0+h$ 上的连续解。反之亦然。
+\end{proposition}
+\begin{proof}
+    因为 $y=\varphi(x)$ 是方程 (\ref{eq:first_order_DE_dy_dx_fxy}) 的解, 故有
+$$\frac{d\varphi(x)}{dx}=f(x,\varphi(x)),$$
+两边从 $x_0$ 到 $x$ 取定积分，得到
+$$\varphi(x)-\varphi(x_0) = \int_{x_0}^{x} f(x,\varphi(x))\,dx, \quad x_0 \le x \le x_0+h.$$
+把 $\varphi(x_0)=y_0$ 代入上式，即有
+$$\varphi(x)=y_0 + \int_{x_0}^{x} f(x,\varphi(x))\,dx, \quad x_0 \le x \le x_0+h,$$
+因此，$y=\varphi(x)$ 是式 (\ref{eq:integral_equation}) 的定义于 $x_0 \le x \le x_0+h$ 上的连续解。
+
+反之，如果 $y=\varphi(x)$ 是式 (\ref{eq:integral_equation}) 的连续解，则有
+\begin{equation}
+\varphi(x)=y_0 + \int_{x_0}^{x} f(x,\varphi(x))\,dx, \quad x_0 \le x \le x_0+h. \label{eq:integral_equation_repeated}
+\end{equation}
+对 $x$ 求导数，得到
+$$\frac{d\varphi(x)}{dx}=f(x,\varphi(x)),$$
+又把 $x=x_0$ 代入式 (\ref{eq:integral_equation_repeated})，得到
+$$\varphi(x_0)=y_0.$$
+因此，$y=\varphi(x)$ 是方程 (\ref{eq:first_order_DE_dy_dx_fxy}) 的定义于 $x_0 \le x \le x_0+h$ 上，且满足初值条件 $\varphi(x_0)=y_0$ 的解。
+\end{proof}
+
+现在取 $\varphi_0(x)=y_0$, 构造皮卡逐步逼近函数序列如下:
+\begin{equation}
+\begin{cases} \varphi_0(x) = y_0, \\ \varphi_n(x) = y_0 + \int_{x_0}^{x} f(\xi, \varphi_{n-1}(\xi))\,d\xi, \quad x_0 \le x \le x_0+h \quad (n=1,2,\dots). \end{cases} \label{eq:Picard_iteration}
+\end{equation}
+
+\begin{proposition}[Picard逼近函数序列的良定义性]\label{prop:Picard_boundedness}
+    对于所有的 $n$, 式 (\ref{eq:Picard_iteration}) 中函数 $\varphi_n(x)$ 在 $x_0 \le x \le x_0+h$ 上有定义、连续且满足
+不等式
+\begin{equation}
+|\varphi_n(x)-y_0| \le b. \label{eq:Picard_bound_b}
+\end{equation}
+\end{proposition}
+\begin{proof}
+    当 $n=1$ 时, $\varphi_1(x)=y_0 + \int_{x_0}^{x} f(\xi,y_0)\,d\xi$. 显然 $\varphi_1(x)$ 在 $x_0 \le x \le x_0+h$ 上有定义、
+连续且有
+$$|\varphi_1(x) - y_0| = \left|\int_{x_0}^{x} f(\xi,y_0)\,d\xi\right| \le \int_{x_0}^{x} |f(\xi,y_0)|\,d\xi \le M(x-x_0) \le Mh \le b,$$
+即命题 \ref{prop:Picard_boundedness} 当 $n=1$ 时成立。现在我们用数学归纳法证明对于任何正整数 $n$, 命题 \ref{prop:Picard_boundedness} 都成
+立。为此，设命题 \ref{prop:Picard_boundedness} 当 $n=k$ 时成立，也即 $\varphi_k(x)$ 在 $x_0 \le x \le x_0+h$ 上有定义、连续且满足不
+等式 $|\varphi_k(x)-y_0| \le b$, 这时
+$$\varphi_{k+1}(x)=y_0 + \int_{x_0}^{x} f(\xi,\varphi_k(\xi))\,d\xi.$$
+由假设，命题 \ref{prop:Picard_boundedness} 当 $n=k$ 时 $\varphi_k(x)$ 在 $x_0 \le x \le x_0+h$ 上有定义、连续且有
+$$|\varphi_{k+1}(x)-y_0| \le \left|\int_{x_0}^{x} f(\xi,\varphi_k(\xi))\,d\xi\right| \le M(x-x_0) \le Mh \le b,$$
+即命题 \ref{prop:Picard_boundedness} 当 $n=k+1$ 时也成立。由数学归纳法知命题 \ref{prop:Picard_boundedness} 对于所有 $n$ 均成立。命题 \ref{prop:Picard_boundedness} 证毕。
+\end{proof}
+
+\begin{proposition}[Picard逼近函数序列的一致收敛性]\label{prop:Picard_uniform_convergence}
+    函数序列 $\{\varphi_n(x)\}$ 在 $x_0 \le x \le x_0+h$ 上是一致收敛的。
+\end{proposition}
+\begin{proof}
+    我们考虑级数
+\begin{equation}
+\varphi_0(x) + \sum_{k=1}^\infty [\varphi_k(x)-\varphi_{k-1}(x)], \quad x_0 \le x \le x_0+h \label{eq:Picard_series}
+\end{equation}
+它的部分和为
+$$\varphi_0(x) + \sum_{k=1}^n [\varphi_k(x)-\varphi_{k-1}(x)] = \varphi_n(x).$$
+因此，要证明函数序列 $\{\varphi_n(x)\}$ 在 $x_0 \le x \le x_0+h$ 上一致收敛，只需证明级数 (\ref{eq:Picard_series}) 在 $x_0 \le x \le x_0+h$ 上一致收敛。为此，我们进行如下的估计，由 \eqref{eq:Picard_iteration} 有
+\begin{equation}
+|\varphi_1(x)-\varphi_0(x)| = \left|\int_{x_0}^{x} f(\xi,\varphi_0(\xi))\,d\xi\right| \le M(x-x_0). \label{eq:phi1_minus_phi0_bound}
+\end{equation}
+及
+$$|\varphi_2(x)-\varphi_1(x)| = \left|\int_{x_0}^{x} [f(\xi,\varphi_1(\xi))-f(\xi,\varphi_0(\xi))]\,d\xi\right|.$$
+利用利普希茨条件及式 (\ref{eq:phi1_minus_phi0_bound})，得到
+$$|\varphi_2(x)-\varphi_1(x)| \le L \int_{x_0}^{x} |\varphi_1(\xi)-\varphi_0(\xi)|\,d\xi \le L \int_{x_0}^{x} M(\xi-x_0)\,d\xi = \frac{ML}{2!}(x-x_0)^2.$$
+设对于正整数 $n$, 不等式
+$$|\varphi_n(x)-\varphi_{n-1}(x)| \le \frac{ML^{n-1}}{n!}(x-x_0)^n$$
+成立，则由利普希茨条件，当 $x_0 \le x \le x_0+h$ 时，有
+\begin{align*}
+|\varphi_{n+1}(x)-\varphi_n(x)| &= \left|\int_{x_0}^{x} [f(\xi,\varphi_n(\xi))-f(\xi,\varphi_{n-1}(\xi))]\,d\xi\right| \\
+&\le L \int_{x_0}^{x} |\varphi_n(\xi)-\varphi_{n-1}(\xi)|\,d\xi \\
+&\le L \int_{x_0}^{x} \frac{ML^n}{n!}(\xi-x_0)^n\,d\xi \\ % Typo in original image: ML^(n-1) -> ML^n
+&= \frac{ML^n}{(n+1)!}(x-x_0)^{n+1}.
+\end{align*}
+于是，由数学归纳法，对于所有的正整数 $k$, 有如下的估计：
+\begin{equation}
+|\varphi_k(x)-\varphi_{k-1}(x)| \le \frac{ML^{k-1}}{k!}(x-x_0)^k, \quad x_0 \le x \le x_0+h. \label{eq:phi_k_diff_bound_x}
+\end{equation}
+从而可知，当 $x_0 \le x \le x_0+h$ 时，
+\begin{equation}
+|\varphi_k(x)-\varphi_{k-1}(x)| \le \frac{ML^{k-1}}{k!}h^k. \label{eq:phi_k_diff_bound_h}
+\end{equation}
+式 (\ref{eq:phi_k_diff_bound_h}) 的右端是正项级数
+$$\sum_{k=1}^\infty \frac{ML^{k-1}}{k!}h^k$$
+的一般项。由魏尔斯特拉斯 (Weierstrass) 判别法，级数 (\ref{eq:Picard_series}) 在 $x_0 \le x \le x_0+h$ 上一致收敛，因而序列 $\{\varphi_n(x)\}$ 也在 $x_0 \le x \le x_0+h$ 上一致收敛。命题 \ref{prop:Picard_uniform_convergence} 证毕。
+
+现设
+$$\lim_{n\to\infty} \varphi_n(x) = \varphi(x),$$
+则 $\varphi(x)$ 也在 $x_0 \le x \le x_0+h$ 上连续，且由 (\ref{eq:Picard_bound_b}) 可知
+$$|\varphi(x)-y_0| \le b.$$
+\end{proof}
+
+\begin{proposition}[函数序列收敛项是原方程的解]\label{prop:Picard_limit_is_solution}
+    $\varphi(x)$ 是积分方程 (\ref{eq:integral_equation}) 的定义于 $x_0 \le x \le x_0+h$ 上的连续解。
+\end{proposition}
+\begin{proof}
+    由利普希茨条件
+$$|f(x,\varphi_n(x))-f(x,\varphi(x))| \le L|\varphi_n(x)-\varphi(x)|$$
+以及 $\{\varphi_n(x)\}$ 在 $x_0 \le x \le x_0+h$ 上一致收敛于 $\varphi(x)$, 即序列 $\{f(x,\varphi_n(x))\}$ 在 $x_0 \le x \le
+x_0+h$ 上一致收敛于 $f(x,\varphi(x))$。因而，对式 (\ref{eq:Picard_iteration}) 两边取极限，得到
+$$\lim_{n\to\infty} \varphi_n(x)=y_0+\lim_{n\to\infty}\int_{x_0}^{x} f(\xi,\varphi_{n-1}(\xi))\,d\xi = y_0+\int_{x_0}^{x} \lim_{n\to\infty}f(\xi,\varphi_{n-1}(\xi))\,d\xi,$$
+即
+$$\varphi(x)=y_0 + \int_{x_0}^{x} f(\xi,\varphi(\xi))\,d\xi.$$
+这就是说，$\varphi(x)$ 是积分方程 (\ref{eq:integral_equation}) 的定义于 $x_0 \le x \le x_0+h$ 上的连续解。
+\end{proof}
+
+\begin{proposition}[唯一性]\label{prop:Picard_uniqueness}
+
+设 $\psi(x)$ 是积分方程 (\ref{eq:integral_equation}) 的定义于 $x_0 \le x \le x_0+h$ 上的另一个连续解，则
+$\varphi(x) = \psi(x)$ ($x_0 \le x \le x_0+h$)。
+
+\end{proposition}
+
+\begin{proof}
+    我们证明 $\psi(x)$ 也是序列 $\{\varphi_n(x)\}$ 的一致收敛极限函数。为此，从
+$$\varphi_0(x) = y_0,$$
+$$\varphi_n(x) = y_0 + \int_{x_0}^{x} f(\xi,\varphi_{n-1}(\xi))\,d\xi \quad (n \ge 1),$$
+以及
+$$\psi(x) = y_0 + \int_{x_0}^{x} f(\xi,\psi(\xi))\,d\xi$$
+可以进行如下估计：
+$$|\varphi_0(x)-\psi(x)| = \left|\int_{x_0}^{x} f(\xi,\psi(\xi))\,d\xi\right| \le M(x-x_0),$$
+\begin{align*}
+|\varphi_1(x)-\psi(x)| &= \left|\int_{x_0}^{x} [f(\xi,\varphi_0(\xi))-f(\xi,\psi(\xi))]\,d\xi\right| \\
+&\le L \int_{x_0}^{x} |\varphi_0(\xi)-\psi(\xi)|\,d\xi \\
+&\le L \int_{x_0}^{x} M(\xi-x_0)\,d\xi = \frac{ML}{2!}(x-x_0)^2.
+\end{align*}
+现设 $|\varphi_n(x)-\psi(x)| \le \frac{ML^n}{n!}(x-x_0)^n$, 则有
+\begin{align*}
+|\varphi_{n+1}(x)-\psi(x)| &= \left|\int_{x_0}^{x} [f(\xi,\varphi_n(\xi))-f(\xi,\psi(\xi))]\,d\xi\right| \\
+&\le L \int_{x_0}^{x} |\varphi_n(\xi)-\psi(\xi)|\,d\xi \\
+&\le L \int_{x_0}^{x} \frac{ML^n}{n!}(\xi-x_0)^n\,d\xi \\
+&= \frac{ML^n}{(n+1)!}(x-x_0)^{n+1}.
+\end{align*}
+故由数学归纳法知，对于所有的正整数 $n$, 有估计式
+\begin{equation}
+|\varphi_n(x)-\psi(x)| \le \frac{ML^n}{(n+1)!}(x-x_0)^{n+1}. \label{eq:phi_n_psi_diff_x}
+\end{equation}
+因此，在 $x_0 \le x \le x_0+h$ 上有
+\begin{equation}
+|\varphi_n(x)-\psi(x)| \le \frac{ML^n}{(n+1)!}h^{n+1}. \label{eq:phi_n_psi_diff_h}
+\end{equation}
+$\frac{ML^n}{(n+1)!}h^{n+1}$ 是收敛级数的一般项，故当 $n \to \infty$ 时，$\frac{ML^n}{(n+1)!}h^{n+1} \to 0$. 因而 $\{\varphi_n(x)\}$ 在
+$x_0 \le x \le x_0+h$ 上一致收敛于 $\psi(x)$。根据极限的唯一性，即得
+$$\varphi(x) = \psi(x), \quad x_0 \le x \le x_0+h.$$
+命题 \ref{prop:Picard_uniqueness} 证毕。
+\end{proof}
+
+\begin{remark}
+    命题 \ref{prop:integral_equation_equivalence} - 命题 \ref{prop:Picard_uniqueness} 证明了定理 \ref{thm:existence_uniqueness}。主要思路就是先证明微分方程与积分方程的等价性，再基于此构造Picard迭代序列，证明它的良定义性与唯一性，最后可以得到原方程的解，再证明唯一性。
+\end{remark}
+
+\section{解的延拓}\label{sec:解的延拓}
+\begin{theorem}[解的延拓定理]\label{thm:solution_extension_theorem}
+如果方程 (\ref{eq:first_order_DE_dy_dx_fxy}) 右端的函数 $f(x,y)$ 在有界区域 $G$ 中连
+续，且在 $G$ 内关于 $y$ 满足局部的利普希茨条件，那么方程 (\ref{eq:first_order_DE_dy_dx_fxy}) 的通过 $G$ 内任何一点
+$(x_0,y_0)$ 的解 $y=\varphi(x)$ 可以延拓，直到点 $(x,\varphi(x))$ 任意接近区域 $G$ 的边界。以向 $x$ 增大
+的一方的延拓来说，如果 $y=\varphi(x)$ 只能延拓到区间 $[x_0,d)$ 上，则当 $x \to d$ 时，$(x,\varphi(x))$
+趋于区域 $G$ 的边界。
+\end{theorem}

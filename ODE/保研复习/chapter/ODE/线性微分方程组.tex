@@ -1,0 +1,372 @@
+\chapter{线性微分方程组}\label{chap:线性微分方程组}
+\section{线性微分方程组的一般理论}\label{sec:线性微分方程组的一般理论}
+\begin{definition}[一阶线性微分方程组]\label{def:一阶线性微分方程组}
+    形如
+\begin{equation}
+\begin{cases}
+x_1' = a_{11}(t)x_1+a_{12}(t)x_2+\dots+a_{1n}(t)x_n+f_1(t), \\
+x_2' = a_{21}(t)x_1+a_{22}(t)x_2+\dots+a_{2n}(t)x_n+f_2(t), \\
+\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \dots \dots \dots \dots \dots \\
+x_n' = a_{n1}(t)x_1+a_{n2}(t)x_2+\dots+a_{nn}(t)x_n+f_n(t)
+\end{cases} \label{eq:system_of_first_order_DEs}
+\end{equation}
+的方程组称为一阶线性微分方程组，其中已知函数 $a_{ij}(t) (i,j=1,2,\dots,n)$ 和 $f_i(t) (i=1,2,\dots,n)$
+在区间 $[a,b]$ 上是连续的。方程组 (\ref{eq:system_of_first_order_DEs}) 关于 $x_1,x_2,\dots,x_n$ 及 $x_1',x_2',\dots,x_n'$ 是线性的。
+\end{definition}
+我们引进下面的记号：
+\begin{equation}
+A(t) = \begin{pmatrix}
+a_{11}(t) & a_{12}(t) & \cdots & a_{1n}(t) \\
+a_{21}(t) & a_{22}(t) & \cdots & a_{2n}(t) \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1}(t) & a_{n2}(t) & \cdots & a_{nn}(t)
+\end{pmatrix}, \label{eq:matrix_A_t}
+\end{equation}
+这里 $A(t)$ 是 $n \times n$ 矩阵，它的元是 $n^2$ 个函数 $a_{ij}(t) (i,j=1,2,\dots,n)$。
+\begin{equation}
+f(t) = \begin{pmatrix} f_1(t) \\ f_2(t) \\ \vdots \\ f_n(t) \end{pmatrix}, \quad \mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad \mathbf{x}' = \begin{pmatrix} x_1' \\ x_2' \\ \vdots \\ x_n' \end{pmatrix}. \label{eq:vector_notation}
+\end{equation}
+这里 $\mathbf{f}(t), \mathbf{x}, \mathbf{x}'$ 是 $n \times 1$ 矩阵或 $n$ 维列向量。方程组 (\ref{eq:system_of_first_order_DEs}) 可以写成下面的形式：
+\begin{equation}
+\mathbf{x}' = A(t)\mathbf{x}+\mathbf{f}(t). \label{eq:matrix_form_DE_system}
+\end{equation}
+
+\begin{definition}[线性微分方程组的解]\label{def:solution_linear_DE_system}
+设 $A(t)$ 是区间 $[a,b]$ 上连续的 $n \times n$ 矩阵，$\mathbf{f}(t)$ 是同一区间 $[a,b]$ 上连续
+的 $n$ 维向量。方程组
+\begin{equation}
+\mathbf{x}' = A(t)\mathbf{x}+\mathbf{f}(t) \label{eq:matrix_form_DE_system_repeated}
+\end{equation}
+在某区间 $[\alpha,\beta]$ (这里 $[\alpha,\beta] \subset [a,b]$) 的解就是向量 $\mathbf{u}(t)$，它的导数 $\mathbf{u}'(t)$ 在区间 $[\alpha,
+\beta]$ 上连续且满足
+$$\mathbf{u}'(t) = A(t)\mathbf{u}(t)+\mathbf{f}(t), \quad \alpha \le t \le \beta.$$
+\end{definition}
+
+\begin{definition}[初值问题]\label{def:initial_value_problem}
+初值问题
+\begin{equation}
+\mathbf{x}' = A(t)\mathbf{x}+\mathbf{f}(t), \quad \mathbf{x}(t_0)=\boldsymbol{\eta} \label{eq:initial_value_problem_system}
+\end{equation}
+的解就是方程组 (\ref{eq:matrix_form_DE_system_repeated}) 在包含 $t_0$ 的区间 $[\alpha,\beta]$ 上的解 $\mathbf{u}(t)$, 使得 $\mathbf{u}(t_0)=\boldsymbol{\eta}$.
+\end{definition}
+
+\begin{proposition}[初值问题的等价性]\label{prop:初值问题的等价性}
+    考虑 $n$ 阶线性微分方程的初值问题
+\begin{equation}
+\begin{cases}
+x^{(n)}+a_1(t)x^{(n-1)}+\dots+a_{n-1}(t)x'+a_n(t)x=f(t), \\
+x(t_0)=\eta_1, x'(t_0)=\eta_2, \dots, x^{(n-1)}(t_0)=\eta_n,
+\end{cases} \label{eq:nth_order_initial_value_problem}
+\end{equation}
+其中 $a_1(t), a_2(t), \dots, a_n(t), f(t)$ 是 $a \le t \le b$ 上的已知连续函数，$t_0 \in [a,b]$, $\eta_1, \eta_2, \dots,
+\eta_n$ 是已知常数。它可以转化为下列线性微分方程组的初值问题：
+\begin{equation}
+\begin{cases}
+\mathbf{x}' = \begin{pmatrix}
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & 0 & \cdots & 1 \\
+-a_n(t) & -a_{n-1}(t) & -a_{n-2}(t) & \cdots & -a_1(t)
+\end{pmatrix}\mathbf{x} + \begin{pmatrix}
+0 \\ 0 \\ \vdots \\ 0 \\ f(t)
+\end{pmatrix}, \\
+\mathbf{x}(t_0) = \boldsymbol{\eta},
+\end{cases} \label{eq:system_initial_value_problem}
+\end{equation}
+其中
+$$\mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad \mathbf{x}' = \begin{pmatrix} x_1' \\ x_2' \\ \vdots \\ x_n' \end{pmatrix}, \quad \boldsymbol{\eta} = \begin{pmatrix} \eta_1 \\ \eta_2 \\ \vdots \\ \eta_n \end{pmatrix}.$$
+\end{proposition}
+\begin{proof}令
+$$x_1=x, x_2=x', x_3=x'', \dots, x_n=x^{(n-1)},$$
+\textbf{这时}
+$$x_1'=x'=x_2, x_2'=x''=x_3, \dots, x_{n-1}'=x^{(n-1)}=x_n,$$
+$$x_n'=x^{(n)}=-a_n(t)x_1-a_{n-1}(t)x_2-\dots-a_1(t)x_n+f(t),$$
+\textbf{而且}
+$$x_1(t_0)=x(t_0)=\eta_1, x_2(t_0)=x'(t_0)=\eta_2, \dots, x_n(t_0)=x^{(n-1)}(t_0)=\eta_n.$$
+现在假设 $\psi(t)$ 是在包含 $t_0$ 的区间 $[a,b]$ 上式 (\ref{eq:nth_order_initial_value_problem}) 的任一解。由此，我们知 $\psi(t)$,
+$\psi'(t), \dots, \psi^{(n)}(t)$ 在 $a \le t \le b$ 上存在、连续、满足方程 (\ref{eq:nth_order_initial_value_problem}) 且 $\psi(t_0)=\eta_1, \psi'(t_0)=
+\eta_2, \dots, \psi^{(n-1)}(t_0)=\eta_n$。令
+$$\boldsymbol{\varphi}(t) = \begin{pmatrix}
+\varphi_1(t) \\ \varphi_2(t) \\ \vdots \\ \varphi_n(t)
+\end{pmatrix},$$
+其中 $\varphi_1(t)=\psi(t), \varphi_2(t)=\psi'(t), \dots, \varphi_n(t)=\psi^{(n-1)}(t)$ ($a \le t \le b$)。那么，显然有 $\boldsymbol{\varphi}(t_0) = \boldsymbol{\eta}$.
+此外，我们还得
+$$\boldsymbol{\varphi}'(t) = \begin{pmatrix}
+\varphi_1'(t) \\ \varphi_2'(t) \\ \vdots \\ \varphi_{n-1}'(t) \\ \varphi_n'(t)
+\end{pmatrix} = \begin{pmatrix}
+\psi'(t) \\ \psi''(t) \\ \vdots \\ \psi^{(n-1)}(t) \\ \psi^{(n)}(t)
+\end{pmatrix} = \begin{pmatrix}
+\varphi_2(t) \\ \varphi_3(t) \\ \vdots \\ \varphi_n(t) \\ -a_n(t)\psi(t)-\dots-a_1(t)\psi^{(n-1)}(t)+f(t)
+\end{pmatrix}$$
+$$= \begin{pmatrix}
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & 0 & \cdots & 1 \\
+-a_n(t) & -a_{n-1}(t) & -a_{n-2}(t) & \cdots & -a_1(t)
+\end{pmatrix}\begin{pmatrix} \varphi_1(t) \\ \varphi_2(t) \\ \vdots \\ \varphi_n(t) \end{pmatrix} + \begin{pmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ f(t) \end{pmatrix}.$$
+
+这就表示这个特定的向量 $\varphi(t)$ 是式 (\ref{eq:system_initial_value_problem}) 的解。反之，假设向量 $\mathbf{u}(t)$ 是在包含 $t_0$ 的区间
+$[a,b]$ 上式 (\ref{eq:system_initial_value_problem}) 的解，令
+$$\mathbf{u}(t) = \begin{pmatrix}
+u_1(t) \\ u_2(t) \\ \vdots \\ u_n(t)
+\end{pmatrix},$$
+并定义函数 $w(t)=u_1(t)$, 由式 (\ref{eq:system_initial_value_problem}) 的第一个方程，我们得到 $u_1'(t)=u_2(t)$, 由第
+二个方程得到 $u_2'(t)=u_3(t)$, \dots, 由第 $n-1$ 个方程得到 $u_{n-1}'(t)=u_n(t)=$
+$u_n(t)$, 由第 $n$ 个方程得到
+$$u_n'(t)=-a_n(t)u_1(t)-a_{n-1}(t)u_2(t)-\dots-a_1(t)u_n(t)+f(t)$$
+$$=-a_n(t)w(t)-a_{n-1}(t)w'(t)-\dots-a_1(t)w^{(n-1)}(t)+f(t),$$
+由此即得
+$$w^{(n)}(t)+a_1(t)w^{(n-1)}(t)+a_2(t)w^{(n-2)}(t)+\dots+a_n(t)w(t)=f(t).$$
+同时，我们也得到
+$$w(t_0)=u_1(t_0)=\eta_1, \dots, w^{(n-1)}(t_0)=u_n(t_0)=\eta_n,$$
+这就是说，$w(t)$ 是式 (\ref{eq:nth_order_initial_value_problem}) 的一个解。
+总之，由上面的讨论，我们已经证明了初值问题 (\ref{eq:nth_order_initial_value_problem}) 与 (\ref{eq:system_initial_value_problem}) 在下面的意义下是
+等价的：给定其中一个初值问题的解，我们可以构造另一个初值问题的解。
+\end{proof}
+
+\begin{remark}
+    值得指出的是：每一个 $n$ 阶线性微分方程可以转化为 $n$ 个一阶线性微分方程构成的方程组，反之却不成立。例如方程组
+$$\mathbf{x}' = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}\mathbf{x}, \quad \mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}$$
+不能化为一个二阶微分方程。
+\end{remark}
+
+\begin{theorem}[存在唯一性定理]\label{thm:existence_uniqueness_for_system}
+如果 $A(t)$ 是 $n \times n$ 矩阵，$\mathbf{f}(t)$ 是 $n$ 维列向量，它们都在区间 $[a,
+b]$ 上连续，则对于区间 $[a,b]$ 上的任何数 $t_0$ 及任一 $n$ 维常数列向量 $\boldsymbol{\eta}$，方程组
+\begin{equation}
+\mathbf{x}'=A(t)\mathbf{x}+\mathbf{f}(t) \label{eq:matrix_form_DE_system_theorem}
+\end{equation}
+存在唯一解 $\boldsymbol{\varphi}(t)$, 定义于整个区间 $[a,b]$ 上，且满足初值条件
+$$\boldsymbol{\varphi}(t_0)=\boldsymbol{\eta}.$$
+\end{theorem}
+
+在讨论齐次线性微分方程组和非齐次线性微分方程组时有很多相关概念与定理，例如叠加原理 \ref{thm:superposition_principle}与 \ref{sec:线性微分方程的一般理论} 节中的内容类似，不再赘述。
+
+\begin{definition}[向量函数的Wronsky行列式]\label{def:向量函数的Wronsky行列式}
+    设有 $n$ 个定义在 $a \le t \le b$ 上的向量函数
+$$\mathbf{x}_1(t)=\begin{pmatrix} x_{11}(t) \\ x_{21}(t) \\ \vdots \\ x_{n1}(t) \end{pmatrix}, \mathbf{x}_2(t)=\begin{pmatrix} x_{12}(t) \\ x_{22}(t) \\ \vdots \\ x_{n2}(t) \end{pmatrix}, \dots, \mathbf{x}_n(t)=\begin{pmatrix} x_{1n}(t) \\ x_{2n}(t) \\ \vdots \\ x_{nn}(t) \end{pmatrix},$$
+由这 $n$ 个向量函数构成的行列式
+$$W[\mathbf{x}_1(t), \mathbf{x}_2(t), \dots, \mathbf{x}_n(t)] \equiv W(t) = \begin{vmatrix}
+x_{11}(t) & x_{12}(t) & \cdots & x_{1n}(t) \\
+x_{21}(t) & x_{22}(t) & \cdots & x_{2n}(t) \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{n1}(t) & x_{n2}(t) & \cdots & x_{nn}(t)
+\end{vmatrix}$$
+称为这些向量函数的\textbf{朗斯基行列式}。
+\end{definition}
+\begin{remark}
+    有平行于定理 \ref{thm:Wronskian_linear_dependence}，定理\ref{thm:Wronskian_linear_independence}等的几个结论
+\end{remark}
+
+我们考虑齐次线性微分方程组：
+\begin{equation}
+\mathbf{x}'=A(t)\mathbf{x}. \label{eq:homogeneous_matrix_DE_system}
+\end{equation}
+
+\begin{theorem}[朗斯基行列式与向量函数线性相关性]\label{thm:Wronskian_linear_dependence_vector}
+如果向量函数 $\mathbf{x}_1(t), \mathbf{x}_2(t), \dots, \mathbf{x}_n(t)$ 在 $a \le t \le b$ 上线性相关，则它们的朗
+斯基行列式 $W(t) \equiv 0 (a \le t \le b)$.
+\end{theorem}
+
+\begin{theorem}[朗斯基行列式与向量函数线性无关性]\label{thm:Wronskian_linear_independence_vector}
+如果式 (\ref{eq:homogeneous_matrix_DE_system}) 的解 $\mathbf{x}_1(t), \mathbf{x}_2(t), \dots, \mathbf{x}_n(t)$ 线性无关，那么它们的朗斯基行列
+式 $W(t) \ne 0 (a \le t \le b)$.
+\end{theorem}
+
+\begin{theorem}[线性无关解的存在性]\label{thm:existence_linearly_independent_solutions}
+齐次线性微分方程组 (\ref{eq:homogeneous_matrix_DE_system}) 一定存在 $n$ 个线性无关的解 $\mathbf{x}_1(t), \mathbf{x}_2(t), \dots,
+\mathbf{x}_n(t)$.
+\end{theorem}
+
+\begin{theorem}[齐次方程组通解结构]\label{thm:general_solution_homogeneous_system}
+如果 $\mathbf{x}_1(t), \mathbf{x}_2(t), \dots, \mathbf{x}_n(t)$ 是式 (\ref{eq:homogeneous_matrix_DE_system}) 的 $n$ 个线性无关的解，则式 (\ref{eq:homogeneous_matrix_DE_system}) 的任一
+解 $\mathbf{x}(t)$ 均可表示为
+$$\mathbf{x}(t) = c_1\mathbf{x}_1(t)+c_2\mathbf{x}_2(t)+\dots+c_n\mathbf{x}_n(t),$$
+这里 $c_1, c_2, \dots, c_n$ 是相应的确定常数。
+\end{theorem}
+\begin{remark}
+    总结而言，\eqref{eq:homogeneous_matrix_DE_system} 所有解的集合构成一个$n$维线性空间。
+\end{remark}
+
+\begin{definition}[解矩阵]\label{def:解矩阵}
+    如果一个 $n \times n$ 矩阵的每一列都是式 (\ref{eq:homogeneous_matrix_DE_system}) 的解，我们称这个矩阵为式 (\ref{eq:homogeneous_matrix_DE_system}) 的\textbf{解矩阵}。它 的列
+在 $a \le t \le b$ 上是线性无关的解矩阵，称之为在 $a \le t \le b$ 上式 (\ref{eq:homogeneous_matrix_DE_system}) 的\textbf{基本解矩阵}。我们用 $\boldsymbol{\Phi}(t)$
+表示由式 (\ref{eq:homogeneous_matrix_DE_system}) 的 $n$ 个线性无关的解 $\boldsymbol{\varphi}_1(t), \boldsymbol{\varphi}_2(t), \dots, \boldsymbol{\varphi}_n(t)$ 作为列构成的基本解矩阵。当
+$\boldsymbol{\Phi}(t_0) = \mathbf{E} (\mathbf{E} \text{为单位矩阵})$ 时称其为\textbf{标准基解矩阵}。
+\end{definition}
+定理 \ref{thm:existence_linearly_independent_solutions} 和定理 \ref{thm:general_solution_homogeneous_system} 即可表达为如下的定理：
+
+\begin{theorem}[基解矩阵存在性]\label{thm:fundamental_matrix_solution}
+    
+式 (\ref{eq:homogeneous_matrix_DE_system}) 一定存在一个基解矩阵 $\boldsymbol{\Phi}(t)$. 如果 $\boldsymbol{\psi}(t)$ 是式 (\ref{eq:homogeneous_matrix_DE_system}) 的任一解，那么
+\begin{equation}
+\boldsymbol{\psi}(t) = \boldsymbol{\Phi}(t)\mathbf{c}, \label{eq:solution_using_fundamental_matrix}
+\end{equation}
+这里 $\mathbf{c}$ 是确定的 $n$ 维常数列向量。
+\end{theorem}
+
+定理 \ref{thm:Wronskian_linear_independence_vector} 和定理 \ref{thm:Wronskian_linear_dependence_vector}可以写成如下定理：
+\begin{theorem}[基解矩阵的充要条件]\label{thm:fundamental_matrix_criterion}
+式 (\ref{eq:homogeneous_matrix_DE_system}) 的一个解矩阵 $\boldsymbol{\Phi}(t)$ 是基解矩阵的充要条件是 $\det \boldsymbol{\Phi}(t) \ne 0 (a \le t \le
+b)$；而且，如果对某一个 $t_0 \in [a, b]$, $\det \boldsymbol{\Phi}(t_0) \ne 0$, 则 $\det \boldsymbol{\Phi}(t) \ne 0 (a \le t \le b)$.
+($\det \boldsymbol{\Phi}(t)$ 表示矩阵 $\boldsymbol{\Phi}(t)$ 的行列式。)
+\end{theorem}
+\begin{remark}
+    两个基解矩阵之间可以相差一个非异常数阵。
+\end{remark}
+
+对于非齐次线性微分方程组
+\begin{equation}
+\mathbf{x}'=A(t)\mathbf{x}+\mathbf{f}(t) \label{eq:matrix_form_DE_system_nonhomogeneous}
+\end{equation}
+有如下几个基本性质。
+
+\begin{proposition}[非齐次线性微分方程组解的性质]\label{prop:非齐次线性微分方程组解的性质}
+    如果 $\boldsymbol{\varphi}(t)$ 是 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的解，$\boldsymbol{\psi}(t)$ 是 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 对应的齐次线性微分方程组 (\ref{eq:homogeneous_matrix_DE_system})
+的解，则 $\boldsymbol{\varphi}(t)+\boldsymbol{\psi}(t)$ 是 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的解。
+\end{proposition}
+
+\begin{proposition}[非齐次和齐次线性微分方程组解的关系]\label{prop:非齐次和齐次线性微分方程组解的关系}
+    如果 $\tilde{\boldsymbol{\varphi}}(t)$ 和 $\bar{\boldsymbol{\varphi}}(t)$ 是 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的两个解，则 $\tilde{\boldsymbol{\varphi}}(t)-\bar{\boldsymbol{\varphi}}(t)$ 是 (\ref{eq:homogeneous_matrix_DE_system}) 的解。
+\end{proposition}
+
+\begin{theorem}[非齐次线性微分方程组解的结构]\label{thm:非齐次线性微分方程组解的结构}
+    设 $\boldsymbol{\Phi}(t)$ 是式 (\ref{eq:homogeneous_matrix_DE_system}) 的基解矩阵，$\bar{\boldsymbol{\varphi}}(t)$ 是式 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的某一解，则式 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的任一解
+$\boldsymbol{\varphi}(t)$ 都可表示为
+\begin{equation}
+\boldsymbol{\varphi}(t) = \boldsymbol{\Phi}(t)\mathbf{c}+\bar{\boldsymbol{\varphi}}(t), \label{eq:nonhomogeneous_general_solution_vector}
+\end{equation}
+这里 $\mathbf{c}$ 是确定的常数列向量。
+\end{theorem}
+
+求特解的方法依旧是常数变易法。
+
+
+\begin{theorem}[非齐次方程组特解]\label{thm:particular_solution_nonhomogeneous_system_integral}
+如果 $\boldsymbol{\Phi}(t)$ 是式 (\ref{eq:homogeneous_matrix_DE_system}) 的基解矩阵，则向量函数
+\begin{equation}
+\boldsymbol{\varphi}(t) = \boldsymbol{\Phi}(t)\int_{t_0}^{t} \boldsymbol{\Phi}^{-1}(s)\mathbf{f}(s)\,ds \label{eq:particular_solution_integral_form_final}
+\end{equation}
+是式 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的解，且满足初值条件 $\boldsymbol{\varphi}(t_0) = \mathbf{0}$.
+\end{theorem}
+\begin{proof}
+假设式 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的解有以下结构
+\begin{equation}
+\boldsymbol{\varphi}(t) = \boldsymbol{\Phi}(t)\mathbf{c}(t), \label{eq:variation_of_parameters_ansatz_matrix}
+\end{equation}
+这里 $\mathbf{c}(t)$ 是待定函数向量。
+
+假设式 (\ref{eq:variation_of_parameters_ansatz_matrix}) 存在解，将它代入式 (\ref{eq:matrix_form_DE_system_nonhomogeneous})，则有
+$$\boldsymbol{\varphi}'(t) = \boldsymbol{\Phi}'(t)\mathbf{c}(t) + \boldsymbol{\Phi}(t)\mathbf{c}'(t) = A(t)\boldsymbol{\Phi}(t)\mathbf{c}(t)+\mathbf{f}(t).$$
+因为 $\boldsymbol{\Phi}(t)$ 是式 (\ref{eq:homogeneous_matrix_DE_system}) 的基解矩阵，所以 $\boldsymbol{\Phi}'(t) = A(t)\boldsymbol{\Phi}(t)$，因而 $\mathbf{c}(t)$ 必须满足关系式
+\begin{equation}
+\boldsymbol{\Phi}(t)\mathbf{c}'(t)=\mathbf{f}(t). \label{eq:c_prime_equation}
+\end{equation}
+因为在 $a \le t \le b$ 上 $\boldsymbol{\Phi}(t)$ 是非奇异的，所以 $\boldsymbol{\Phi}^{-1}(t)$ 存在。用 $\boldsymbol{\Phi}^{-1}(t)$ 左乘式 (\ref{eq:c_prime_equation}) 两边，然
+后两边积分，得到
+\begin{equation}
+\mathbf{c}(t) = \int_{t_0}^{t} \boldsymbol{\Phi}^{-1}(s)\mathbf{f}(s)\,ds + \mathbf{C}, \quad t_0 \in [a,b]. \label{eq:c_t_integral}
+\end{equation}
+其中 $\mathbf{C}$ 是任意常数向量。这样式 (\ref{eq:variation_of_parameters_ansatz_matrix}) 变为
+$$\boldsymbol{\varphi}(t) = \boldsymbol{\Phi}(t)\left(\int_{t_0}^{t} \boldsymbol{\Phi}^{-1}(s)\mathbf{f}(s)\,ds + \mathbf{C}\right).$$
+因此，如果式 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 有一个形如式 (\ref{eq:variation_of_parameters_ansatz_matrix}) 的解，则 $\boldsymbol{\varphi}(t)$ 由上述表达式决定。
+显然，若要求 $\boldsymbol{\varphi}(t_0) = \mathbf{0}$, 那么 $\mathbf{C} = \mathbf{0}$.
+
+\end{proof}
+
+\begin{corollary}[常数变易公式]\label{cor:常数变易公式}
+    式 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的满足初值条件 $\boldsymbol{\varphi}(t_0) = \boldsymbol{\eta}$ 的解 $\boldsymbol{\varphi}(t)$ 由下面公
+式给出：
+\begin{equation}
+\boldsymbol{\varphi}(t) = \boldsymbol{\Phi}(t)\boldsymbol{\Phi}^{-1}(t_0)\boldsymbol{\eta}+\boldsymbol{\Phi}(t)\int_{t_0}^{t} \boldsymbol{\Phi}^{-1}(s)\mathbf{f}(s)\,ds, \label{eq:general_solution_initial_value_problem}
+\end{equation}
+这里 $\boldsymbol{\varphi}_h(t) = \boldsymbol{\Phi}(t)\boldsymbol{\Phi}^{-1}(t_0)\boldsymbol{\eta}$ 是式 (\ref{eq:homogeneous_matrix_DE_system}) 的满足初值条件 $\boldsymbol{\varphi}_h(t_0) = \boldsymbol{\eta}$ 的解。
+\end{corollary}
+
+\begin{remark}
+    公式 (\ref{eq:particular_solution_integral_form_final}) 或公
+式 (\ref{eq:general_solution_initial_value_problem}) 称为非齐次线性微分方程组 (\ref{eq:matrix_form_DE_system_nonhomogeneous}) 的\textbf{常数变易公式}。
+\end{remark}
+
+\begin{corollary}\label{cor:variation_of_parameters_single_equation}
+
+如果 $a_1(t), a_2(t), \dots, a_n(t), f(t)$ 是 $a \le t \le b$ 上的连续函数，$x_1(t), x_2(t), \dots,
+x_n(t)$ 是 $a \le t \le b$ 上齐次线性微分方程
+$$x^{(n)}+a_1(t)x^{(n-1)}+\dots+a_n(t)x=0$$
+的基本解组，那么非齐次线性微分方程
+$$x^{(n)}+a_1(t)x^{(n-1)}+\dots+a_n(t)x=f(t)$$
+的满足初值条件
+$$\varphi(t_0)=0, \varphi'(t_0)=0, \dots, \varphi^{(n-1)}(t_0)=0, \quad t_0 \in [a,b]$$
+的解由下面公式给出：
+\begin{equation}
+\varphi(t) = \sum_{k=1}^n x_k(t) \int_{t_0}^{t} \frac{W_k[x_1(s),x_2(s),\dots,x_n(s)]}{W[x_1(s),x_2(s),\dots,x_n(s)]}f(s)\,ds, \label{eq:variation_of_parameters_scalar}
+\end{equation}
+这里 $W[x_1(s),x_2(s),\dots,x_n(s)]$ 是 $x_1(s),x_2(s),\dots,x_n(s)$ 的朗斯基行列式，$W_k[x_1(s),x_2(s),\dots,x_n(s)]$
+是在 $W[x_1(s),x_2(s),\dots,x_n(s)]$ 中的第 $k$ 列代以 $(0,0,\dots,0,1)^T$ 后得
+到的行列式，而且式 (\ref{eq:variation_of_parameters_scalar}) 的任一解 $u(t)$ 都具有形式
+\begin{equation}
+u(t)=c_1x_1(t)+c_2x_2(t)+\dots+c_nx_n(t)+\varphi(t), \label{eq:general_solution_nonhomogeneous_scalar}
+\end{equation}
+这里 $c_1,c_2,\dots,c_n$ 是适当选取的常数。
+公式 (\ref{eq:variation_of_parameters_scalar}) 称为非齐次线性微分方程组 (\ref{eq:general_solution_nonhomogeneous_scalar}) 的\textbf{常数变易公式}。
+\end{corollary}
+
+\section{常系数线性微分方程组}\label{sec:常系数线性微分方程组}
+本节讨论齐次线性微分方程组
+\begin{equation}
+\mathbf{x}'=A\mathbf{x} \label{eq:homogeneous_linear_constant_coeffs_system}
+\end{equation}
+的基解矩阵的结构，这里 $A$ 是 $n \times n$ 常数矩阵。
+
+\begin{theorem}[常系数线性微分方程组的基解矩阵]\label{thm:matrix_exponential_fundamental_matrix}
+    矩阵
+\begin{equation}
+\boldsymbol{\Phi}(t) = \exp At \label{eq:matrix_exponential_solution}
+\end{equation}
+是式 (\ref{eq:homogeneous_linear_constant_coeffs_system}) 的基解矩阵，且 $\boldsymbol{\Phi}(0)=\mathbf{E}$.
+
+\end{theorem}
+
+\begin{proof}
+    由定义易知 $\boldsymbol{\Phi}(0)=\mathbf{E}$. 将式 (\ref{eq:matrix_exponential_solution}) 对 $t$ 求导数，我们得到
+\begin{align*}
+\boldsymbol{\Phi}'(t) &= (\exp At)' = A + \frac{A^2 t}{1!} + \frac{A^3 t^2}{2!} + \dots + \frac{A^k t^{k-1}}{(k-1)!} + \dots \\
+&= A\left(\mathbf{E} + \frac{At}{1!} + \frac{A^2t^2}{2!} + \dots \right) \\
+&= A\exp At = A\boldsymbol{\Phi}(t).
+\end{align*}
+这就表明 $\boldsymbol{\Phi}(t)$ 是式 (\ref{eq:homogeneous_linear_constant_coeffs_system}) 的解矩阵。又因为 $\det \boldsymbol{\Phi}(0)=\det \mathbf{E}=1$，因此 $\boldsymbol{\Phi}(t)$ 是式 (\ref{eq:homogeneous_linear_constant_coeffs_system}) 的
+基解矩阵。
+\end{proof}
+
+我们试图寻求
+$$\mathbf{x}'=A\mathbf{x}$$
+的形如
+\begin{equation}
+\boldsymbol{\varphi}(t) = e^{\lambda t}\mathbf{c} \quad (\mathbf{c}\ne\mathbf{0}) \label{eq:exponential_ansatz_vector}
+\end{equation}
+的解，其中常数 $\lambda$ 和向量 $\mathbf{c}$ 是待定的。为此，将式 (\ref{eq:exponential_ansatz_vector}) 代入式 (\ref{eq:homogeneous_linear_constant_coeffs_system})，得到
+$$\lambda e^{\lambda t}\mathbf{c}=A e^{\lambda t}\mathbf{c}.$$
+因为 $e^{\lambda t} \ne 0$，上式变为
+\begin{equation}
+(\lambda \mathbf{E}-A)\mathbf{c}=\mathbf{0}. \label{eq:eigenvalue_eigenvector_equation}
+\end{equation}
+这表示$\lambda$是$A$的特征值。
+
+\begin{theorem}[A具有n个线性无关特征向量时的基解矩阵]\label{thm:linearly_independent_eigenvectors_fundamental_matrix}
+   如果矩阵 $A$ 具有 $n$ 个线性无关的特征向量 $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$，它们对应的特征值
+分别为 $\lambda_1, \lambda_2, \dots, \lambda_n$ (不必各不相同)，那么矩阵
+$$\boldsymbol{\Phi}(t) = [e^{\lambda_1 t}\mathbf{v}_1, e^{\lambda_2 t}\mathbf{v}_2, \dots, e^{\lambda_n t}\mathbf{v}_n], \quad -\infty < t < +\infty$$
+是常系数线性微分方程组
+$$\mathbf{x}'=A\mathbf{x}$$
+的一个基解矩阵。 
+\end{theorem}
+\begin{proof}
+    每一个向量函数 $e^{\lambda_j t}\mathbf{v}_j (j=1,
+2,\dots,n)$ 都是式 (\ref{eq:homogeneous_linear_constant_coeffs_system}) 的一个解。因此，矩阵
+$$\boldsymbol{\Phi}(t) = [e^{\lambda_1 t}\mathbf{v}_1, e^{\lambda_2 t}\mathbf{v}_2, \dots, e^{\lambda_n t}\mathbf{v}_n]$$
+是式 (\ref{eq:homogeneous_linear_constant_coeffs_system}) 的一个解矩阵。因为向量 $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$ 是线性无关的，所以
+$$\det \boldsymbol{\Phi}(0)=\det[\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n] \ne 0.$$
+因此$\boldsymbol{\Phi}(t)$ 是式 (\ref{eq:homogeneous_linear_constant_coeffs_system}) 的一个基解矩阵。定理证毕。
+\end{proof}
