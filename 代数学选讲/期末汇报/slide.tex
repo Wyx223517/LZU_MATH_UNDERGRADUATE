@@ -1,0 +1,376 @@
+\documentclass{beamer}
+\usepackage{ctex, hyperref}
+\usepackage[T1]{fontenc}
+
+% other packages
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,pstricks,listings,stackengine}
+\usepackage{tikz-cd}
+\newcommand\cat{\mathcal{C}}
+\newcommand\dcat{\mathcal{D}}
+\newcommand\obj[1]{\mathrm{Ob}(#1)}
+\newcommand\Hom[2]{\mathrm{Hom}(#1, #2)}
+\newcommand\Homc[3]{\mathrm{Hom}_{#1}(#2, #3)}
+\newcommand\id{\mathbf{1}}
+
+\newcommand\Set{\mathbf{Set}}
+\newcommand\Ring{\mathbf{Ring}}
+\newcommand\CRing{\mathbf{CRing}}
+\newcommand\Grp{\mathbf{Grp}}
+\newcommand\Mod[1]{\mathbf{Mod}_{#1}}
+\newcommand\Vect[1]{\mathbf{Vect}_{#1}}
+\newcommand\opp[1]{{#1}^{\mathrm{op}}}
+
+\newcommand{\Ima}{\operatorname{im}}
+\author{王一鑫}
+\title{浅谈范畴论}
+\subtitle{代数学选讲期末汇报}
+\institute{兰州大学}
+\date{\today}
+\usepackage{Lanzhou}
+
+% defs
+\def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}}
+\def\env#1{\texttt{\color{blue}\footnotesize #1}}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	keywordstyle=\bfseries\color{deepblue},
+	emphstyle=\ttfamily\color{deepred},    % Custom highlighting style
+	stringstyle=\color{deepgreen},
+	numbers=left,
+	numberstyle=\small\color{halfgray},
+	rulesepcolor=\color{red!20!green!20!blue!20},
+	frame=shadowbox,
+}
+
+\begin{document}
+	
+	\kaishu
+	\begin{frame}
+		\titlepage
+		\begin{figure}[htpb]
+			\begin{center}
+				\includegraphics[width=0.2\linewidth]{pic/Lanzhou_University_Logo.eps}
+			\end{center}
+		\end{figure}
+	\end{frame}
+	
+	\begin{frame}
+		\tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+	\end{frame}
+	
+	
+	\section{范畴论概览}
+	
+	\begin{frame}{范畴研究什么问题？}
+		\begin{itemize}[<+->]
+			\item 概括地说, 范畴(Categories)是由对象及其间的态射(Morphisms)组成的数学结构, 从对象$X$到对象$Y$的态
+			射$f$习惯以箭头来表述\[ X\stackrel{f}{\longrightarrow}Y \]
+			\item 范畴关注的重点是关于\textbf{结构}的，而不是它们所代表的\textbf{意义}.数学中考虑的范畴经常以一类特定的结构为对象, 例如群，环,向量空间，偏序集，拓扑空间等，而范畴中的态射经常是保结构的映射, 如群同态, 连续映射等.
+			\item 函子(Functors)则可视作是范畴间保持箭头结构的某种 “映射”, 函子之间的关系由自然变换描
+			述.函子与自然变换在这种种结构之间搭起桥梁.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{实践例子}
+		\begin{itemize}[<+->]			
+			\item 范畴论体系原本是 Eilenberg 与 MacLane 为研究代数拓扑学而引进的, 它后来很快便发展为一门深入的学科, 并成为同调代数, 同伦论和代数几何等领域的基本语言.
+			\item 范畴论的成果远远超出了创立时的初衷.范畴里的对象未必是建立在集合上的结构，而态射也未必是映射.
+			\begin{table}[h!]
+				\centering
+				\renewcommand{\arraystretch}{1.5} % 调整行高
+				\setlength{\tabcolsep}{5pt} % 调整列间距
+				\scalebox{0.8}{ % 缩放表格大小
+					\begin{tabular}{|c|c|c|c|c|}
+						\hline
+						& 拓扑学 & 量子物理 & 数理逻辑 & 计算机科学 \\ 
+						& （配边理论） &  & （形式演绎系统） & （带类型的 $\lambda$-演算） \\ \hline
+						对象 & 流形 & 物理系统 & 命题 & 资料型态 \\ \hline
+						态射 & 配边关系 & 过程 & 证明 & 程序 \\ \hline
+					\end{tabular}
+				}
+			\end{table}
+		\end{itemize}
+	\end{frame}
+	
+	\section{范畴与态射}
+	\subsection{基本定义}
+	\begin{frame}{范畴的定义}
+		\begin{exampleblock}{定义 1.}
+			一个范畴 $\mathcal{C}$ 包含以下资料：
+			\begin{enumerate}
+				\item 聚合 $\mathrm{Ob}(\mathcal{C})$，其元素称作 $C$ 的\textbf{对象}(object).
+				\item 对任意一对对象$X, Y \in \obj{\cat}$，都有一个聚合
+				$\Homc{\cat}{X}{Y}$，其中的元素称为$X$到$Y$的\textbf{态射}
+				(morphism).
+				\item 对每个对象 $X$ 给定元素 $\mathrm{id}_X \in \mathrm{Hom}_C(X, X)$，称为 $X$ 到自身的\textbf{恒等态射}.
+				\item 对于任意 $X, Y, Z \in \mathrm{Ob}(\cat)$，给定态射间的\textbf{合成映射}
+				\[
+				\circ : \mathrm{Hom}_{\cat}(Y, Z) \times \mathrm{Hom}_{\cat}(X, Y) \to \mathrm{Hom}_{\cat}(X, Z)
+				\]
+				\[
+				(f, g) \mapsto f \circ g,
+				\]
+				不致混淆时常将 $f \circ g$ 简记为 $fg$.它满足：
+			\end{enumerate}
+		\end{exampleblock}
+	\end{frame}
+	
+	\begin{frame}{范畴的定义}
+				\begin{itemize}[<+->]
+				\item \textbf{结合律}：对于任意态射 $h, g, f \in \mathrm{Mor}(C)$，若合成 $f(gh)$ 和 $(fg)h$ 都有定义，则
+				\[
+				f(gh) = (fg)h.
+				\]
+				故两边可以同写为 $f \circ g \circ h$ 或 $fgh$；
+				\item 对于任意态射 $f \in \mathrm{Hom}_C(X, Y)$，有
+				\[
+				f \circ \mathrm{id}_X = f = \mathrm{id}_Y \circ f.
+				\]
+			\end{itemize}
+	\end{frame}
+	
+	
+	\begin{frame}{交换图表}
+		\begin{itemize}[<+->]
+			\item 对象与态射集皆空的范畴称为空范畴，记为$0$.
+			\item 图表加箭头是讨论范畴的方便语言。其中最常用的是交换图表的概念，“交换”意指箭头的合成殊途同归，例如以下图表的交换性分别等价于 $gf = h$ 和 $vu = yx$.态射的名称（如 $f, g$ 等等）如自明或不重要，则常从图表中省去.
+			 \begin{center}
+				\includegraphics[width=0.8\textwidth]{pic/figure1.png} 
+			\end{center}
+		\end{itemize}
+		
+	\end{frame}
+	\begin{frame}{范畴的大小、子范畴}
+		\begin{exampleblock}{定义 2.}
+			
+			如果 $\mathcal{C}, \mathcal{D}$ 是范畴，称 $\mathcal{D}$ 是 $\mathcal{C}$ 的\textbf{子范畴}，如果 $\operatorname{Ob}(\mathcal{D}) \subseteq \operatorname{Ob}(\mathcal{C})$，对任意的 $A, B \in \operatorname{Ob}(\mathcal{D})$，有
+			\[
+			\operatorname{Mor}_{\mathcal{D}}(A, B) \subseteq \operatorname{Mor}_{\mathcal{C}}(A, B),
+			\]
+			且在两个范畴内有相同的合成、相同的单位。
+		\end{exampleblock}	
+		\begin{exampleblock}{定义 3.}
+			设$\cat$为一范畴. 若$\obj{\cat}$和$\cat$里的所有态射构成的聚合都是集合，则称$\cat$是\textbf{小}（small）的，
+			反之则称其是\textbf{大}（large）的. 如果对于每对$X, Y : \cat$，
+			$\Homc{\cat}{X}{Y}$都是集合，则称$\cat$是\textbf{局部小}（locally small）的.
+	\end{exampleblock}
+			
+		
+	\end{frame}
+	
+	\begin{frame}{同构}
+		\begin{exampleblock}{定义4.}
+			设$\cat$为一范畴，并给定对象$X, Y \in ob(\cat)$和态射$f : X \rightarrow Y$.
+			如果存在一个态射$g : Y \rightarrow X$使得$g \circ f = \id_X$，
+			$f \circ g = \id_Y$，则称$f$为一\textbf{同构}（isomorphism）.
+			满足此条件的$g$，我们一般记作$f^{-1}$，称为$f$的\textbf{逆态射}(inverse morphism)，
+			或简称\textbf{逆}(inverse).
+			
+			如果对象$X$和$Y$之间有一同构，我们也称$X$和$Y$同构，又记作$X \cong Y$.
+			
+			若一个范畴$\cat$中的所有态射都可逆, 则称之为广群.
+		\end{exampleblock}
+	\end{frame}
+	
+	\begin{frame}{单态射和满态射}
+		\begin{exampleblock}{定义5.}
+			
+			设 $X, Y$ 为范畴 $\mathcal{C}$ 中的对象，$f: X \to Y$ 为态射：
+			\begin{itemize}
+				\item 称 $f$ 为\textbf{单态射}，如果对任何对象 $Z$ 和任一对态射 $g, h: Z \to X$，有 $fg = fh \iff g = h$（\textbf{左消去律}）；
+				\item 称 $f$ 为\textbf{满态射}，如果对任何对象 $Z$ 和任一对态射 $g, h: Y \to Z$，有 $gf = hf \iff g = h$（\textbf{右消去律}）。
+			\end{itemize}
+			
+			如果存在 $g$ 使得 $gf = \mathrm{id}_X$，则称 $f$ \textbf{左可逆}而 $g$ 是它的一个左逆；类似地，若 $fg = \mathrm{id}_Y$，则称 $f$ \textbf{右可逆}而 $g$ 是一个右逆。
+			
+			显然左可逆蕴涵单，右可逆蕴涵满。一个态射可逆当且仅当它左右皆可逆。
+		\end{exampleblock}
+	\end{frame}
+	\subsection{几个例子}
+	\begin{frame}{范畴的例子}
+		
+			\begin{exampleblock}{集合范畴}
+				所有集合构成一个范畴，我们记为$\Set$. 其对象是全体集合\footnote{全体集合不构成一个集合}，态射是集合间的函数，态射复合就是一般的函数复合，而单位态射就是恒等函数$\mathrm{id} = x \mapsto x$. 集合范畴是
+				大的，但局部小.在$\Set$中，同构即是双射函数.
+			\end{exampleblock}
+			
+			\begin{exampleblock}{群范畴}
+				所有群构成一个范畴，我们记为$\Grp$. 对象之间的态射定义为群同态, 态射的合成与恒等
+				态射定义与$\Set$情形相同.群范畴的同构即是群同构.
+			\end{exampleblock}
+	\end{frame}
+	
+	\begin{frame}{范畴的例子}
+		\begin{exampleblock}{环范畴}
+			所有环构成一个范畴，我们记为$\Ring$. 其对象是全体环，态射是环同态，态射复合是
+			函数复合，而单位态射一样是恒等函数. 所有交换环也构成一个范畴，记为$\CRing$，其定义
+			类似. 环范畴也是大的，但一样局部小. 事实上，我们接下来研究的范畴几乎都是局部小的.在$\Ring$和$\CRing$中，同构即是环同构.
+		\end{exampleblock}
+	\end{frame}
+	
+	\begin{frame}{态射不一定是函数}
+		\begin{exampleblock}{一个态射不是函数的范畴}
+			我们可以定义一个范畴如下：
+			\begin{enumerate}
+				\item 对象是全体集合；
+				\item 对于任两个集合$X$和$Y$，$\Hom{X}{Y}$是全体$X$和$Y$之间的
+				二元关系；
+				\item 定义复合如下：对于任意集合$X, Y, Z$，设$R$是$X, Y$间的二元关系，
+				$S$是$Y, Z$间的二元关系，那么我们定义$S \circ R$为这一二元关系：
+				对任意$x \in X$，$z \in Z$，$x (S \circ R) z$当且仅当存在一$y \in Y$，使得
+				$x R y$且$y S z$；
+				\item 单位态射是恒等关系（和恒等函数相同）.
+			\end{enumerate}
+			
+			可以验证这是一个范畴，我们一般称之为\textbf{关系范畴}（category of relations），
+			记作$\mathbf{Rel}$. 我们注意到，在这个范畴里，态射并不是函数。
+		\end{exampleblock}
+		
+	\end{frame}
+	
+	\begin{frame}{对偶范畴}
+		\begin{exampleblock}{对偶范畴}
+			设$\cat$是任一范畴. 我们可以构造一个范畴$\mathcal{D}$如下：
+			\begin{itemize}
+				\item 该范畴的对象跟$\cat$一样；
+				\item 该范畴的态射都是$\cat$中的范畴的倒置，即我们定义
+				$\Homc{\mathcal{D}}{X}{Y} = \Homc{\cat}{Y}{X}$；
+				\item 态射的复合也由$\cat$中的态射复合给出（即复合后再倒置）；
+				\item 单位态射和$\cat$中的一样.
+			\end{itemize}
+			
+			结合律和单位律都不难验证. 我们将这个范畴称为$\mathcal{C}$的
+			\textbf{相反范畴}(opposite category)或是
+			\textbf{对偶范畴}(dual category)，记作$\opp{\cat}$.
+		\end{exampleblock}
+	\end{frame}
+	\section{函子与自然变换}
+	
+	\subsection{函子的定义与例子}
+	
+	\begin{frame}{函子}
+		设 $\mathcal{C}', \mathcal{C}$ 为范畴。一个函子 $F: \mathcal{C}' \to \mathcal{C}$ 意谓以下资料：
+		\begin{itemize}
+			\item[(i)] \textbf{对象间的映射} $F: \operatorname{Ob}(\mathcal{C}') \to \operatorname{Ob}(\mathcal{C})$。
+			\item[(ii)] \textbf{态射间的映射} $F: \operatorname{Mor}(\mathcal{C}') \to \operatorname{Mor}(\mathcal{C})$，使得：
+			\begin{itemize}
+				\item 对每个 $X, Y \in \operatorname{Ob}(\mathcal{C}')$，皆有映射
+				\[
+				F: \operatorname{Hom}_{\mathcal{C}'}(X, Y) \to \operatorname{Hom}_{\mathcal{C}}(FX, FY);
+				\]对应于$f : X \rightarrow Y$的态射记为$F(f)$.
+				\item $F(g \circ f) = F(g) \circ F(f)$, $F(\operatorname{id}_X) = \operatorname{id}_{FX}$。
+			\end{itemize}
+		\end{itemize}
+		
+		对于 $F: \mathcal{C}_1 \to \mathcal{C}_2,G: \mathcal{C}_2 \to \mathcal{C}_3$，合成函子 $G \circ F: \mathcal{C}_1 \to \mathcal{C}_3$ 定义为
+		\[
+		\operatorname{Ob}(\mathcal{C}_1) \xrightarrow{F} \operatorname{Ob}(\mathcal{C}_2) \xrightarrow{G} \operatorname{Ob}(\mathcal{C}_3),
+		\]
+		\[
+		\operatorname{Mor}(\mathcal{C}_1) \xrightarrow{F} \operatorname{Mor}(\mathcal{C}_2) \xrightarrow{G} \operatorname{Mor}(\mathcal{C}_3).
+		\]
+		常将上述函子称为$\cat^{\prime}$到$\cat$的共变函子, 而称形如$ F:(\cat^{\prime})^{\mathrm{op}}\rightarrow C$的函子为反变函子.
+	\end{frame}
+	
+	\begin{frame}{本质满的、忠实的和全函子}
+		对于函子 $F: \mathcal{C}' \to \mathcal{C}$
+		\begin{itemize}
+			\item 称 $F$ 是\textbf{本质满的}，若 $\mathcal{C}$ 中任一对象都同构于某个 $FX$；
+			
+			\item 称 $F$ 是\textbf{忠实的}，若对所有 $X, Y \in \operatorname{Ob}(\mathcal{C}')$，映射
+			\[
+			\operatorname{Hom}_{\mathcal{C}'}(X, Y) \to \operatorname{Hom}_{\mathcal{C}}(FX, FY)
+			\]
+			都是单射；
+			
+			\item 称 $F$ 是\textbf{全的}，如果上述映射对所有 $X, Y \in \operatorname{Ob}(\mathcal{C}')$ 都是满射。	
+		\end{itemize}
+	
+	\end{frame}
+	\begin{frame}{例子}
+		\begin{exampleblock}{遗忘函子}
+			我们前面提到的代数结构的范畴（$\Grp$, $\Ring$, $\CRing$）都有一个到$\Set$的
+			十分简单的函子：把任何群$G$（或环$R$）都映到该群或环所对应的集合，而把任何同态都
+			映到该同态所对应的函数. 可见这个函子只是``遗忘''掉了所有代数结构，把代数结构变成了
+			纯粹的集合，因此一般叫做\textbf{遗忘函子}（forgetful functor）.
+		\end{exampleblock}
+	\end{frame}
+	
+	\subsection{自然变换}
+	
+	\begin{frame}{自然变换的定义}
+		\begin{exampleblock}{自然变换，或函子间的态射}
+			函子 $F, G: \mathcal{C}' \to \mathcal{C}$ 之间的自然变换 $\theta$ 是一族态射
+			\[
+			\theta_X \in \operatorname{Hom}_{\mathcal{C}}(FX, GX), \quad X \in \operatorname{Ob}(\mathcal{C}'),
+			\]
+			使得下图对所有 $\mathcal{C}'$ 中的态射 $f: X \to Y$ 交换：
+			\begin{center}
+				\includegraphics[width=0.4\textwidth]{pic/figure2.png} 
+			\end{center}
+			
+		\end{exampleblock}
+	\end{frame}
+	
+	\begin{frame}{自然变换的定义}
+		上述自然变换写作$\theta: F\rightarrow G$，或图解为
+		\begin{center}
+			\includegraphics[width=0.4\textwidth]{pic/figure3.png} 
+		\end{center}
+	\end{frame}
+	
+	\section{范畴论的发展历史}
+	\begin{frame}
+		\begin{itemize}[<+->]
+			\item 数学中经常出现一类具有重要性质的对象，其中最具有代表性的即是模范畴$\Mod{R}$.因此
+			用一种统一的语言描述这类对象便成为了上世纪中叶数学的当务之急，也成了范畴论发展的重要契机.
+			
+			\item 麦克莱恩 (S.~Mac Lane)、艾伦伯格 (S.~Eilenberg)和H. 嘉当 (H.~Cartan)
+			等数学家在上世纪40到50年代发展了范畴论的基础，但真正将范畴论的语言发扬光大的当属
+			塞尔 (J.-P.~Serre)和格罗腾迪克 (A.~Grothendieck). 特别地，Grothendieck在1957年发表的重要论文
+			``Sur quelques points d'algèbre homologique'' (通常称为
+			``东北论文'' (\textit{Tohoku} paper))中定义了一类重要的范畴$Abel$范畴，为范畴论
+			找到了大量应用场景.
+		\end{itemize}
+		
+	\end{frame}
+	
+	\begin{frame}
+		\begin{itemize}[<+->]
+			\item 更进一步，Grothendieck进而在上世纪80年代又发现同调代数只是一个 (当时仍未阐明的) 更一般理论的特例. 然而Grothendieck
+			在仍未阐明该理论之前便彻底退出了数学研究，在南法乡间隐居20多年后于2014年溘然长辞. 
+			后来，R.~Brown、A.~Joyal、R.~Jardine、C.~Rezk、J.~Lurie等数学家将格氏的想法发扬光大，深入
+			研究并严格化了这个``更一般理论''. 我们今天通常把这一理论
+			称为\textit{高阶范畴论} (higher category theory)或\textit{无穷范畴论} ($\infty$-category theory).
+			
+			\item 然而，无穷范畴论至今仍有大量重要问题悬而未决，因此至今仍是纯数学中最重要也最活跃的研究领域之一. 获1998年
+			菲尔兹奖的康采维奇 (M.~Kontsevich)、获2002年菲尔兹奖的弗沃德茨基 (V.~Voevodsky)，以及
+			获2018年菲尔兹奖的舒尔茨 (P.~Scholze)等人的工作，都和无穷范畴论有着紧密的联系.
+		\end{itemize}
+	\end{frame}
+	\section{参考文献}
+	
+	\begin{frame}[allowframebreaks]
+		\begin{thebibliography}{10} % Beamer does not support BibTeX so references must be inserted manually as below
+			\bibitem{}
+			Aluffi P. Algebra: chapter 0[M]. American Mathematical Soc., 2021.
+			
+			\bibitem{}
+			李文威.代数学方法. 第一卷, 基础架构[M].高等教育出版社,2019.
+			
+		\end{thebibliography}
+	\end{frame}
+	
+	\begin{frame}
+		\begin{center}
+			{\Huge\calligra Thanks!}
+		\end{center}
+	\end{frame}
+	
+\end{document}
