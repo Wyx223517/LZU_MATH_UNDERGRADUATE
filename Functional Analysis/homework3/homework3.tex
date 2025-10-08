@@ -1,0 +1,472 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usetikzlibrary{patterns}
+
+\title{\textbf{Homework 3}}
+\author{王一鑫\quad 作业序号42}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		\textit{\textbf{The Parseval equation.}}\\
+		Let $(u_n)_{n \geq 1}$ be an orthonormal system in the separable Hilbert space $X$ over $\mathbb{K}$. Show that $(u_n)$ is complete iff
+		\[
+		\sum_{n \geq 1} |\langle u_n, u\rangle|^2 = \|u\|^2 \quad \text{for all } u \in X.
+		\]
+	\end{problem}
+	\begin{solution}
+		
+		\noindent
+		"$\Rightarrow$" Recall that $u_n$ is complete if and only if, for all $u \in X$,
+		\[
+		u = \lim_{m \to \infty} \sum_{n=1}^m \langle u_n, u \rangle u_n
+		\]
+		
+		\[
+		\|u\|^2 = \langle u, u \rangle = \lim_{m \to \infty} \Bigg\langle \sum_{n=1}^m \langle u_n, u \rangle u_n, \sum_{k=1}^m \langle u_k, u \rangle u_k \Bigg\rangle.
+		\]
+		
+		Since $\langle u_n, u_k \rangle = \delta_{nk}$,
+		\[
+		\|u\|^2 = \lim_{m \to \infty} \sum_{n=1}^m |\langle u_n, u \rangle|^2 = \sum_{n=1}^\infty |\langle u_n, u \rangle|^2.
+		\]
+		
+		"$\Leftarrow$" By Parseval's equation,
+		\[
+		\|u - S_m\|^2 = \sum_{n=1}^\infty \Bigg|\langle u_n, u - \sum_{k=1}^m \langle u_k, u \rangle u_k \Bigg|^2.
+		\]
+		
+		\[
+		= \sum_{n=1}^\infty \Bigg|\langle u_n, u \rangle - \sum_{k=1}^m \langle u_k, u \rangle \langle u_n, u_k \rangle \Bigg|^2.
+		\]
+		
+		\[
+		= \sum_{n=1}^\infty |\langle u_n, u \rangle - \langle u_n, u \rangle|^2 \to 0 \quad \text{as } m \to \infty.
+		\]
+		
+		Thus, $u = \lim_{m \to \infty} S_m$, and $(u_n)$ is complete.
+		
+	\end{solution}
+	
+	\begin{problem}
+		\textit{\textbf{A fundamental completeness theorem.}}\\
+		Let $-\infty \leq a < b \leq \infty$. We are given a measurable function $f : \, (a, b) \to \mathbb{K}$ (e.g., $f$ is continuous) such that
+		\[
+		|f(x)| \leq C e^{-\alpha |x|} \quad \text{for all } x \in \mathbb{R} \text{ and fixed } \alpha > 0 \text{ and } C > 0.
+		\]
+		Show that the linear hull of the system $\{x^n f(x)\}_{n = 0, 1, \dots}$ is dense in the Hilbert space $L_2^\mathbb{K}(a, b)$.
+	\end{problem}
+	\begin{solution}
+		We want to show that $\operatorname{span}\{x^n f(x)\}$ is dense in $L_2^\mathbb{K}(a, b)$. According to \textbf{Corollary 3} in \textbf{Section 3.3}, we have to show that if $u \in L_2^\mathbb{K}(a, b)$ and
+		\[
+		\langle v_n , u\rangle \equiv \int_{a}^b x^n f(x) u(x) dx = 0 \quad \text{for all } n = 0, 1, \ldots, \tag{1}\label{1}
+		\]
+		then $u = 0$. To this end, let $M = \{k\in\mathbb{R}:|k|<\alpha - 1\}$ and set
+		\[
+		g(k) := \int_{a}^b f(x) u(x) e^{-ikx} dx \quad \text{for all } k \in M .
+		\]
+		
+		Formally,
+		\[
+		g^{(n)}(k) = \int_{a}^b f(x) u(x) (-ix)^n e^{-ikx} dx \quad \text{for all } k \in M, \, n = 0, 1, 2, \ldots. \tag{2}\label{2}
+		\]
+		
+		For all $x \in \mathbb{R}$ and $k \in M$, we get
+		\[
+		\begin{aligned}
+			\left| f(x) u(x) (-ix)^n e^{-ikx} \right| &\leq Ce^{-\alpha|x|} |x|^n e^{|kx|} |u(x)| \\
+			&\leq Ce^{-|x|} |x|^n |u(x)|\\&\leq \text{Const(n)}|u(x)|
+		\end{aligned}\tag{3}\label{3}
+		\]
+		
+		
+		
+		Since $u$ is an element of $L_2^\mathbb{K}(a,b)$,
+		\[
+		\int_{a}^b \left| u(x) \right| dx < \infty.
+		\]
+		
+		Thus, the majorant condition \eqref{3} justifies formula \eqref{2}. Consequently, the function $g$ is analytic on the strip $M$. By \eqref{1} and \eqref{2},
+		\[
+		g^{(n)}(0) = 0 \quad \text{for all } n = 0, 1, \ldots.
+		\]
+		
+		Hence $g(k) = 0$ for all $k \in M$. By lemma,  this implies $u(x) = 0$ for almost all $x \in [a,b]$.
+				
+	\end{solution}
+	
+	\begin{problem}
+		\textit{\textbf{The completeness of the system of the Laguerre functions.}}
+		\[
+		x^n e^{-\frac{x}{2}}, \quad n = 0, 1, \dots, \quad x \in \mathbb{R},
+		\]
+		the Schmidt orthogonalization method yields a system of functions
+		\[
+		L_n(x) e^{-\frac{x}{2}}, \quad n = 0, 1, \dots, \quad x \in \mathbb{R}.
+		\]
+		Show that the following are true:
+		\begin{enumerate}
+			\item[(i)] System forms a complete orthonormal system in $L_2^\mathbb{K}(0, \infty)$.
+			\item[(ii)] Explicitly,
+			\[
+			L_n(x) := \frac{(-1)^n}{n!} e^{x} \frac{d^n}{dx^n} \left(e^{-x} x^n\right), \quad n = 0, 1, \dots, \quad x \in \mathbb{R}.
+			\]
+		\end{enumerate}
+	\end{problem}
+	
+	\begin{solution}
+		\begin{enumerate}[(i)]
+			\item Since \[ f(x) = e^{-\frac{x}{2}}\leq C e^{-\alpha|x|}\quad\text{for all }x\in (0,\infty) \]where $C = 1$ and $\alpha = -\frac{1}{2}$.
+			
+			Thus, by problem 2, the linear hull of the system $\{x^{n}e^{-\frac{x}{2}}\}_{n=0,1,\cdots}$ is dense in the Hilbert space $L_{2}^{\mathbb{K}}(0,\infty)$. Moreover, the assertion follows from \textbf{Proposition $2$} in \textbf{Section $3.3$}.
+			\item Since\[ \lim\limits_{x\to\infty}e^{-x}x^{n} = 0 \] The derivatives of $e^{-x}x^{n} \to 0$ as $x\to\infty$.
+			
+			Recall that \[ 	L_n(x) := \frac{(-1)^n}{n!} e^{x} \frac{d^n}{dx^n} \left(e^{-x} x^n\right), \quad n = 0, 1, \dots, \quad x \in \mathbb{R}. \]  Integrating by parts yields that \[ \begin{aligned}
+				\int_{0}^{\infty}e^{-x}x^{m}L_{n}(x) &= \int_{0}^{\infty}x^{m}\frac{(-1)^n}{n!}\frac{d^n}{dx^n} \left(e^{-x} x^n\right)\\&=-m\frac{(-1)^n}{n!}\int_{0}^{\infty}x^{m-1}\frac{d^{n-1}}{dx^{n-1}}\left(e^{-x} x^n\right)\\&=m!\frac{(-1)^{m+n}}{n!}\int_{0}^{\infty}\frac{d^{n-m}}{dx^{n-m}}\left(e^{-x} x^n\right)\\&=\begin{cases}
+					0 & m<n\\
+					n! & m =n
+				\end{cases}
+			\end{aligned} \] 
+			Since $L_{m}$ is a polynomial of degree $m$, let $u_{n}(x) := L_{n}(x) e^{-\frac{x}{2}}$, we have \[ \langle u_{n}, u_{m}\rangle = \int_{0}^{\infty}e^{-x}L_{m}(x)L_{n}(x) = 0 \]for all $m<n$.
+			
+			If $m=n$, we have\[ \langle u_{n},u_{n}\rangle = \int_{0}^{\infty}e^{-x}L_{n}^{2}(x) = \dfrac{1}{n!}\int_{0}^{\infty}e^{-x}x^{n}L_{n}(x) =1\]
+		\end{enumerate}
+		
+	\end{solution}
+	
+	\begin{problem}
+		\textit{\textbf{The nonhomogeneous stationary Schrödinger equation.}}\\ Let $f: \mathbb{R} \to \mathbb{C}$ 
+		be a continuous function that vanishes outside a compact interval. Set
+		\[
+		v(x) := \int_{-\infty}^\infty \frac{i e^{ip|x-y|}}{2p} f(y) \, dy.
+		\]
+		Show that, for each $p \in \mathbb{R}$ with $p \neq 0$, the function $v$ is a $C^2$-solution of
+		\[
+		-v'' - p^2 v = f \quad \text{on } \mathbb{R}.
+		\]
+		
+	\end{problem}
+	
+	\begin{solution}
+		Recall that if \[ F(x) = \int_{\varphi(x)}^{\psi(x)} f(x,y)\, dy\] then \[ F^{\prime}(x)  =  \int_{\varphi(x)}^{\psi(x)}\dfrac{\partial f(x,y)}{\partial x} \, dy+ f(x,\psi(x))\psi^{\prime}(x) - f(x,\varphi(x))\varphi^{\prime}(x)\]
+		Since \[ v(x) := \int_{-\infty}^\infty \frac{i e^{ip|x-y|}}{2p} f(y) \, dy = \int_{-\infty}^{x} \frac{i e^{ip(x-y)}}{2p} f(y) \, dy + \int_{x}^{\infty}\frac{i e^{ip(y-x)}}{2p} f(y) \, dy\]We compute\[ v^{\prime}(x) = \int_{-\infty}^{x}\frac{- e^{ip(x-y)}}{2} f(y) \, dy + \dfrac{i}{2p}f(x) + \int_{x}^{\infty}\frac{ e^{ip(y-x)}}{2} f(y) \, dy - \dfrac{i}{2p}f(x)\]and\[ \begin{aligned}
+			v^{\prime\prime}(x) &= \int_{-\infty}^{x}\frac{-ip e^{ip(x-y)}}{2} f(y) \, dy - \dfrac{1}{2}f(x) +\int_{x}^{\infty}\frac{ -ip e^{ip(y-x)}}{2} f(y) \, dy - \dfrac{1}{2}f(x)\\ & =\int_{-\infty}^{\infty}\frac{ -ip e^{ip|x-y|}}{2} f(y) \, dy -f(x)
+		\end{aligned}\]Thus \[ \begin{aligned}
+		-v^{\prime\prime} -p^{2}v &= \int_{-\infty}^{\infty}\frac{ ip e^{ip|x-y|}}{2} f(y) \, dy +f(x) - p^{2}\int_{-\infty}^\infty \frac{i e^{ip|x-y|}}{2p} f(y) \, dy\\&=f
+		\end{aligned} \]
+	\end{solution}
+	
+	\begin{problem}
+		\textit{\textbf{Graph closed operators.}}\\ Let $A : D(A) \subseteq X \to X$ be a linear operator 
+		on the Hilbert space $X$ over $\mathbb{K}$ such that $D(A)$ is dense in $X$. The set
+		\[
+		G(A) := \{(u, Au) : u \in D(A)\}
+		\]
+		is called the graph of $A$. The operator $A$ is called graph closed iff $G(A)$ is 
+		closed in $X \times X$, i.e.,
+		\[
+		u_n \to u \quad \text{and} \quad Au_n \to v \quad \text{in } X \text{ as } n \to \infty
+		\]
+		imply $Au = v$. The linear operator $B : D(B) \subseteq X \to X$ is called the closure of $A$ iff $A \subseteq B$ and
+		\[
+		\overline{G(A)} = G(B).
+		\]
+		   
+		We write $\overline{A}$ instead of $B$. Show the following:
+		
+		\begin{enumerate}
+			\item[(i)] The adjoint operator $A^*$ is graph closed.
+			\item[(ii)] The closure $\overline{A}$ exists iff it follows from $u_n \in D(A)$ for all $n$ along with
+			\[
+			Au_n \to v \quad \text{and} \quad u_n \to 0 \quad \text{as } n \to \infty
+			\]
+			that $v = 0$.
+			\item[(iii)] If there exists a linear graph closed operator $C : D(C) \subseteq X \to X$ such that $A \subseteq C$, 
+			then the closure $\overline{A}$ exists and
+			\[
+			\overline{A} \subseteq C.
+			\]
+			Hence the closure $\overline{A}$ is the smallest graph closed extension of $A$. In particular, $\overline{A}$ is uniquely determined by $A$.
+			\item[(iv)] If $A$ is symmetric, then the closure $\overline{A}$ exists and is symmetric.
+			\item[(v)] If $\overline{A}$ exists, then $(\overline{A})^* = A^*$.
+			\item[(vi)] If $A$ is self-adjoint, then $\overline{A} = A$.
+			\item[(vii)] The operator $A$ is graph closed iff $D(A)$ is a Hilbert space over $\mathbb{K}$ equipped with the inner product
+			\[
+			\langle u , v\rangle_A := \langle u , v\rangle + \langle Au , Av\rangle.
+			\]
+		\end{enumerate}
+		
+	\end{problem}
+	
+	\begin{solution}
+		\begin{enumerate}[(i)]
+			\item Recall that $v\in D(A^{*})$ iff there exists $A^{*}v\in X$ such that \[ \langle Au,v\rangle = \langle u, A^{*}v \rangle \]Suppose now that $v_{n}\in D(A^{*})$, then\[ \langle Au,v_{n}\rangle = \langle u, A^{*}v_{n} \rangle \]If $v_{n}\to v$ and $A^{*}v_{n}\to w$, we know\[ \langle Au,v\rangle = \lim\limits_{n\to\infty}\langle Au,v_{n} \rangle =\lim\limits_{n\to\infty}\langle u,A^{*}v_{n}\rangle = \langle u,w\rangle \] This implies $ A^{*}v = w$, so the adjoint operator $A^{*}$ is graph closed.
+			\item $\Rightarrow$ If the closure $\overline{A}$ exists, then $\overline{G(A)} = G(\overline{A})$. For all $u_{n}\in D(A)$, $(u_{n}, Au_{n})\in G(A)$. Since $Au_{n}\to v$ and $u_{n}\to0$ as $n\to\infty$, $(0, v)\in\overline{G(A)} = G(\overline{A})$. Therefore, $v = \overline{A}0 = 0$.\\
+			$\Leftarrow$ To construct the closure \( \overline{A} \), we suppose \( (u_n, Au_n) \to (u, v) \) in \( X \times X \). Since \( A \) is densely defined, \( u_n \to u \) implies \( u \in \overline{D(A)} = X \). To ensure \( v \) is uniquely determined by \( u \), assume another sequence \( \{u'_n\} \subseteq D(A) \) with \( u'_n \to u \) and \( Au'_n \to v' \). Then \( w_n = u_n - u'_n \to 0 \) and \( Aw_n = Au_n - Au'_n \to v - v' \). By the given condition, \( v - v' = 0 \), hence \( v = v' \). Thus $\overline{A}$ is well-defined.
+			
+			Next, we show that \( \overline{A} \) is closed. Suppose \( u_n \to u \) and \( \overline{A}u_n \to v \). Since \( (u_n, \overline{A}u_n) \in G(\overline{A}) = \overline{G(A)} \), the limit \( (u, v) \in \overline{G(A)} \), implying \( v = \overline{A}u \). Thus, \( \overline{A} \) is closed, thus the closure \( \overline{A} \) exists.
+
+			\item Suppose that $u_{n}\in D(A)\subseteq D(C)$. Since $C$ is a linear graph closed operator 	\[
+			u_n \to u \quad \text{and} \quad Cu_n \to v \quad \text{in } X \text{ as } n \to \infty
+			\]
+			imply $Cu = v$. Thus $G(\overline{A}) = \overline{G(A)}\subseteq G(C)$.
+			\item Suppose now $u_{n}\in D(A)$ for all $n$ along with \[
+			Au_n \to v \quad \text{and} \quad u_n \to 0 \quad \text{as } n \to \infty
+			\]Since $A$ is symmetric, then \[ v^{2} = \langle v,v\rangle = \lim\limits_{n\to\infty}\langle v, Au_{n}\rangle = \lim\limits_{n\to\infty}\langle u_{n}, Av\rangle = 0 \]then $v=0$. By (ii) we show the closure $\overline{A}$ exists.
+			
+			Moreover, for $u_{n}\to u$ and $v_{n}\to v$,\[ \langle \overline{A}u, v\rangle = \lim\limits_{n\to\infty}\langle Au_{n},v_{n}\rangle = \lim\limits_{n\to\infty}\langle u_{n}, Av_{n}\rangle = \langle u, \overline{A}v\rangle  \]Thus $\overline{A}$ is symmetric.
+			\item \textbf{Step 1}: We show \( A^* \subseteq (\overline{A})^* \). Since \( A \subseteq \overline{A} \), for all \( u \in D(A) \) and \( v \in D(A^*) \), we have
+			\[
+			\langle Au, v \rangle = \langle u, A^{*}v \rangle = \langle \overline{A}u, v \rangle = \langle u, (\overline{A})^*v \rangle.
+			\]
+			By the definition of \( A^* \), this implies \( v \in D((\overline{A})^*) \) and \( A^*v = (\overline{A})^*v \). Hence, \( A^* \subseteq (\overline{A})^* \).
+			
+			\textbf{Step 2}: We show \( (\overline{A})^* \subseteq A^* \). Since \( A \subseteq \overline{A} \), for all \( u \in D(A) \) and \( v \in D((\overline{A})^*) \), we have
+			\[
+			\langle \overline{A}u, v \rangle = \langle Au, v \rangle = \langle u, A^{*}v \rangle = \langle u, (\overline{A})^*v \rangle.
+			\]
+			By the definition of \( (\overline{A})^* \), this implies \( v \in D(A^*) \) and \( A^*v = (\overline{A})^*v \). Hence, \(  (\overline{A})^* \subseteq A^*\).
+			
+			
+			Combining the two inclusions, we conclude that
+			\[
+			(\overline{A})^* = A^*.
+			\]
+			\item Since $A$ is self-adjoint, by (i) we know that $A = A^{*}$ is graph closed, that is \[ \overline{G(A)} = G(A) \] then $A = \overline{A}$.
+			\item $\Rightarrow$ If $A$ is graph closed, i.e., \[
+			u_n \to u \quad \text{and} \quad Au_n \to v \quad \text{in } X \text{ as } n \to \infty
+			\]
+			imply $Au = v$. Suppose  $(u_{n})$ is a Cauchy sequence in D(A), that is \[ \|u_{n}-u_{m}\|_{A} = \langle u_{n}-u_{m}, u_{n}-u_{m}\rangle^{\frac{1}{2}}_{A}<\varepsilon\quad\text{for all }n,m>N_{\varepsilon} \]where\[ \langle u_{n}-u_{m}, u_{n}-u_{m}\rangle_{A} = \|u_{n}-u_{m}\|^{2} + \|Au_{n}-Au_{m}\|^{2} \]Thus $\|\cdot\|\leq\|\cdot\|_{A}$, so $\|u_{n}-u_{m}\|_{A}<\varepsilon$ implies $\|u_{n}-u_{m}\|<\varepsilon$ and $\|Au_{n} - Au_{m}\|<\varepsilon$. Since $X$ is a Hilbert space with $\|\cdot\|$, we have $u_{n}\to u$ and $Au_{n}\to v$ as $n\to \infty$. Moreover, the graph closed operator $A$ shows that $Au = v$. This implies \[ \|u_{n} - u\|_{A}\to 0\quad\text{as } n\to\infty  \]and $u\in D(A)$. So $D(A)$ is a Hilbert space over $\mathbb{K}$ equipped with the inner  product\[
+			\langle u , v\rangle_A := \langle u , v\rangle + \langle Au , Av\rangle.
+			\]
+			$\Leftarrow$ If $D(A)$ is a Hilbert space, we aim to show that $A$ is graph closed.
+			Let \((u_n) \subseteq D(A)\) be a sequence such that \( u_n \to u \) in \( X \) and \( Au_n \to v \) in \( X \). We need to prove that \( Au = v \).
+			
+			Since \((D(A), \|\cdot\|_A)\) is a Hilbert space, it is complete with respect to the norm \(\|\cdot\|_A\). Observe that
+			\[
+			\|u_n - u\|_A^2 = \|u_n - u\|^2 + \|Au_n - Au\|^2.
+			\]
+			
+			Given \( u_n \to u \) in \( D(A) \), we have \(\|u_n - u\|_{A} \to 0\) and $\|u_{n}-u\|\to0$, thus \[ \|Au_{n}-Au\|\to0 \] Additionally, since \( Au_n \to v \) in \( X \), it follows that \(\|Au_n - v\| \to 0\). Combining these results, 
+			\[
+				\|Au - v\| \leq \|Au - Au_{n}\| + \|Au_{n} - v\| \to 0 \quad \text{as } n \to \infty.
+			\]
+			
+			This shows that $Au = v$, so $A$ is graph closed.
+			
+		\end{enumerate}
+	\end{solution}
+	
+	\begin{problem}
+		\textit{\textbf{The Kato perturbation theorem.}}\\ Let $A : D(A) \subseteq X \to X$ be a linear self-adjoint operator on the complex Hilbert space $X$, and let $B : D(B) \subseteq X \to X$ be a linear symmetric operator such that $D(A) \subseteq D(B)$ and
+		\begin{equation}
+			\|Bu\| \leq a\|Au\| + b\|u\| \quad \text{for all } u \in D(A)\tag{4}\label{4}
+		\end{equation}
+		
+		
+		where $a$ and $b$ are fixed real numbers with $0 \leq a < 1$ and $b \geq 0$. 
+		
+		Show that $A + B$ is self-adjoint.
+		
+	\end{problem}
+	
+	\begin{solution}
+		Let $\alpha \in \mathbb{R}$ with $\alpha \neq 0$. Since $i\alpha \in \rho(A)$, the operator $(A - i\alpha I)^{-1}: X \rightarrow X$ is linear and continuous. We shall show ahead that
+		\begin{equation}
+			\left\|B(A - i\alpha I)^{-1}\right\| < 1 \quad \text{for all} \quad \alpha \in \mathbb{R}: |\alpha| \geq \alpha_0, \tag{5}\label{5}
+		\end{equation}
+		provided $\alpha_0$ is sufficiently large. Since
+		\begin{equation*}
+			(A + B - i\alpha I)(A - i\alpha I)^{-1} = I + B(A - i\alpha I)^{-1},
+		\end{equation*}
+		Applying the conclusion of Neumann series, it follows from \eqref{5} that
+		\begin{equation*}
+			R(A + B - i\alpha I) = X \quad \text{for all} \quad \alpha \in \mathbb{R}: |\alpha| \geq \alpha_0
+		\end{equation*}
+		Thus, by Problem 5.5(i) in p416, $A + B$ is self-adjoint.
+		
+		\textbf{Proof of \eqref{5}.} By Problem 5.4(i),
+		\begin{equation*}
+			\left\|(A - i\alpha I)^{-1} u\right\| \leq |\alpha|^{-1} \|u\| \quad \text{for all} \quad u \in X.
+		\end{equation*}
+		Furthermore,
+		\begin{align*}
+			\|A v\|^2 + |\alpha|^2 \|v\|^2 &= (A v - i\alpha v \mid A v - i\alpha v) \\
+			&= \|A v - i\alpha v\|^2 \quad \text{for all} \quad v \in D(A).
+		\end{align*}
+		Letting $v := (A - i\alpha I)^{-1} u$, this implies
+		\begin{equation*}
+			\|A(A - i\alpha I)^{-1} u\|^2 \leq \|u\|^2 \quad \text{for all} \quad u \in X.
+		\end{equation*}
+		Thus, it follows from \eqref{4} that
+		\begin{align*}
+			\|B(A - i\alpha I)^{-1} u\| &\leq a \|A(A - i\alpha I)^{-1} u\| + b \|(A - i\alpha I)^{-1} u\| \\
+			&\leq \left(a + b|\alpha|^{-1}\right) \|u\| \quad \text{for all} \quad u \in X.
+		\end{align*}
+		This yields \eqref{5}.
+	\end{solution}
+	
+	\begin{problem}
+		\textit{\textbf{A classical inequality.}} \\Show that, for all $u \in C_0^\infty(\mathbb{R}^3)$,
+		\[
+		\int_{\mathbb{R}^3} \left( u_\xi^2 + u_\eta^2 + u_\zeta^2 \right) dx \geq \int_{\mathbb{R}^3} \frac{u^2}{4r^2} dx,
+		\]
+		where $x = (\xi, \eta, \zeta)$.
+		
+	\end{problem}
+	
+	\begin{solution}
+		Set $v = r^{\frac{1}{2}}u$. Since $v = \sqrt{\xi^{2}+\eta^{2}+\zeta^{2}}$. We have \[ \begin{aligned}
+			u_\xi^2 + u_\eta^2 + u_\zeta^2 & = |\nabla u|^{2} = |\nabla r^{-\frac{1}{2}}v|^{2}\\&=|-\dfrac{1}{2}r^{-\frac{3}{2}}v\nabla r + r^{-\frac{1}{2}}\nabla v|^{2}\\&=r^{-1}(v_{\xi}^{2}+v_{\eta}^{2}+v_{\zeta}^{2}) - \frac{1}{2}r^{-2}(v^{2})_{r} + (4r^{3})^{-1}v^{2}
+		\end{aligned} \]Since $u\in C_{0}^{\infty}(\mathbb{R}^{3}) $, for sufficiently large $R$, \[ \int_{\mathbb{R}}r^{-2}(v^{2})_{r} = \int_{0}^{\pi}\int_{0}^{2\pi}\sin\theta\int_{0}^{R}(v^{2})_{r}\, dr\, d\theta\, d\varphi = 0 \]
+		then \[ u_\xi^2 + u_\eta^2 + u_\zeta^2 = r^{-1}(v_{\xi}^{2}+v_{\eta}^{2}+v_{\zeta}^{2})  + (4r^{3})^{-1}v^{2}\geq (4r^{3})^{-1}v^{2} = \dfrac{u^{2}}{4r^{2}}  \]thus \[
+		\int_{\mathbb{R}^3} \left( u_\xi^2 + u_\eta^2 + u_\zeta^2 \right) dx \geq \int_{\mathbb{R}^3} \frac{u^2}{4r^2} dx,
+		\]
+	\end{solution}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,464 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools}
+
+\title{\textbf{Homework 1}}
+\author{王一鑫\quad 作业序号42}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{\par\noindent\textsc{Solution. }}{\par}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		Let $\mathbb{X}\coloneqq C[a,b]$, where $-\infty < a < b < \infty$ and $\Vert u\Vert \coloneqq \mathop{max}\limits_{a\leq x\leq b}|u(x)|$. Show that $\{u\in \mathbb{X}\text{:}\int_{a}^{b}u(x)\mathrm{d}x=0\}$ is a closed linear subspace of $\mathbb{X}$. This set is not dense in $\mathbb{X}$.
+	\end{problem}
+	
+	\begin{solution}
+		(Subspace) First we show that $\mathbb{A} \coloneqq \{u\in \mathbb{X}\text{:}\int_{a}^{b}u(x)\mathrm{d}x=0\}$ is a  linear subspace of $\mathbb{X}$. For $\forall u , v \in \mathbb{A}$, we have\[ \int_{a}^{b}u(x) + v(x) \mathrm{d}x = \int_{a}^{b}u(x)\mathrm{d}x + \int_{a}^{b}v(x)\mathrm{d}x = 0 + 0 = 0 \]
+		thus $u+v\in\mathbb{A}$. For $\forall c\in\mathbb{R}$, $\forall u\in\mathbb{A}$, we have\[ \int_{a}^{b}cu(x)\mathrm{d}x = c\int_{a}^{b}u(x)\mathrm{d}x = 0\]
+		then $cu\in\mathbb{A}$.
+		
+		(Closed) Let $u_{n}\rightarrow u\ \text{as}\ n\rightarrow\infty$, where $u_{n}\in\mathbb{A}$ for all $n$. Since $u_{n}\in\mathbb{A}$ is bounded, by Lebesgue's Dominated Convergence Theorem, we have\[ \int_{a}^{b}u(x)\mathrm{d}x = \int_{a}^{b}\lim\limits_{n\to\infty}u_{n}(x)\mathrm{d}x = \lim\limits_{n\to\infty}\int_{a}^{b}u_{n}(x)\mathrm{d}x = 0 \]Then $u\in\mathbb{A}$.$\mathbb{A}$ is closed.
+		
+		(Not Dense) Let $v(x)\equiv 1\in\mathbb{X}$ in $[a,b]$. Choose $\varepsilon_{0} = \frac{1}{2}$. Then for $\forall u\in\mathbb{A}$, we have\[ |\int_{a}^{b}(u(x)-v(x))\mathrm{d}x| = b-a \leq (b-a)\Vert u-v\Vert \]So\[ \Vert u-v\Vert\geq 1>\varepsilon_{0} \]Thus $\mathbb{A}$ is not dense in $\mathbb{X}$.
+	\end{solution}
+	
+	\begin{problem}
+		Show that $\{u\in \mathbb{X}\text{:}\ u(a)^{2}=u(b)\}$ is a closed subset of $\mathbb{X}$, but not a linear subspace of $\mathbb{X}$.
+	\end{problem}
+	
+	\begin{solution}
+		(Closed) Let $u_{n}\rightarrow u\ \text{as}\ n\rightarrow\infty$, where $u_{n}\in\mathbb{A}$ for all $n$. Since $u_{n}(a)^{2} = u_{n}(b)$, take $n\to\infty$ on both sides, we have $u(a)^{2}=u(b)$.Then $u\in\mathbb{A}$, so $\mathbb{A}$ is closed.
+		
+		(Not linear) For $\forall u , v \in \mathbb{A}$, we have \[ [(u+v)(a)]^{2} = [u(a)+v(a)]^{2} = u(a)^{2}+v(a)^{2}+2u(a)v(a)\neq u(b) + v(b) \]Thus $u+v\notin\mathbb{A}$. So $\mathbb{A}$ is not linear.
+	\end{solution}
+	
+	\begin{problem}
+		Show that $\{u\in \mathbb{X}\text{:}\ u(a)>0\}$ is an open, convex, not dense subset of $\mathbb{X}$.
+	\end{problem}
+	
+	\begin{solution}
+		(Open) $\forall u\in\mathbb{A}$, choose $\varepsilon = \frac{u}{2}$, then $(u-\varepsilon)(a) = \frac{u}{2}(a) > 0$, so $B(u,\varepsilon)\subset\mathbb{A}$, then $\mathbb{A}$ is open.
+		
+		(Convex) For $\forall u , v \in \mathbb{A}$, $0\leq\alpha\leq1$, we have \[ [\alpha u +(1-\alpha)v](a) = \alpha u(a) + (1-\alpha)v(a) > 0 \]Thus $\alpha u+ (1-\alpha)v\in\mathbb{A}$. So $\mathbb{A}$ is convex.
+		
+		(Not Dense) Let $v(x)\equiv -1\in\mathbb{X}$ in $[a,b]$. Choose $\varepsilon_{0} = 1$. Then for $\forall u\in\mathbb{A}$, we have\[ |(u(x)-v(x))(a)| = u(a) + 1 \leq \Vert u-v\Vert \]So\[ \Vert u-v\Vert\geq 1+u(a)>\varepsilon_{0} \]Thus $\mathbb{A}$ is not dense in $\mathbb{X}$.
+	\end{solution}
+	
+	\begin{problem}
+		Show that $\{u\in \mathbb{X}\text{:}\ u(a)=1\}$ is a closed, convex, not dense subset of $\mathbb{X}$.
+	\end{problem}
+	
+	\begin{solution}
+		(Closed) Let $u_{n}\rightarrow u\ \text{as}\ n\rightarrow\infty$, where $u_{n}\in\mathbb{A}$ for all $n$. Since $u_{n}(a)^{2} = 1$, take $n\to\infty$ on both sides, we have $u^{2}(a)=1$.Then $u\in\mathbb{A}$, so $\mathbb{A}$ is closed.
+		
+		(Convex) For $\forall u , v \in \mathbb{A}$, $0\leq\alpha\leq1$, we have \[ [\alpha u +(1-\alpha)v](a) = \alpha u(a) + (1-\alpha)v(a) = \alpha + 1- \alpha = 1 \]Thus $\alpha u+ (1-\alpha)v\in\mathbb{A}$. So $\mathbb{A}$ is convex.
+		
+		(Not Dense) Let $v(x)\equiv -1\in\mathbb{X}$ in $[a,b]$. Choose $\varepsilon_{0} = 1$. Then for $\forall u\in\mathbb{A}$, we have\[ |(u(x)-v(x))(a)| = u(a) + 1 \leq \Vert u-v\Vert \]So\[ \Vert u-v\Vert\geq 1+u(a)>\varepsilon_{0} \]Thus $\mathbb{A}$ is not dense in $\mathbb{X}$.
+	\end{solution}
+	
+	\begin{problem}
+		Show that $\{u\in \mathbb{X}\text{:}\ \Vert u\Vert \leq1\}$ is not a compact subset of $\mathbb{X}$.
+	\end{problem}
+	
+	\begin{solution}
+		To show that the set 
+		\[
+			\mathbb{A} = \{u \in \mathbb{X} : \Vert u \Vert \leq 1\}
+		\]
+		is not a compact subset of the Banach space \( \mathbb{X} = C[a,b] \), we will construct a sequence in \( \mathbb{A} \) that does not contain a convergent subsequence.
+		
+		WLOG, consider the sequence of functions \( f_n=x^{n} \in \mathbb{A} \) defined on \( [0, 1] \). Observe that $f_{n}$ converges pointwise to $f$.
+		\[
+		f(x) = 
+		\begin{cases}
+			1, & \text{if } 0 \leq x < 1 \\
+			0, & \text{if } x=1.
+		\end{cases}
+		\]
+		Since $f$ is not continuous, no subsequence of $f_{n}$ converges. Then $\mathbb{A}$ is not a compact subset of $\mathbb{X}$.
+	\end{solution}
+	
+	\begin{problem}
+		Show that $\{u\in \mathbb{X}\text{:}\ u(x)=0\ \text{on}\ [c,d]\}$ is not dense in $\mathbb{X}$ provided $a\leq c\leq d\leq b$.
+	\end{problem}
+	
+	\begin{solution}
+		Let $v(x)\in\mathbb{X}$ in $[a,b]$ and $v(x)=1$ in $[c,d]$. Choose $\varepsilon_{0} = 1$. Then for $\forall u\in\mathbb{A}$, we have\[ \Vert u-v\Vert \geq 1 \geq \varepsilon \]Thus $\mathbb{A}$ is not dense in $\mathbb{X}$.
+	\end{solution}
+	
+	\begin{problem}
+		Show that $\mathbb{A}=\{u\in \mathbb{X}\text{:}\ u(a)\geq0\}$ is the closure of the set $\mathbb{B}=\{u\in \mathbb{X}\text{:}\ u(a)>0\}$. 
+	\end{problem}
+	
+	\begin{solution}
+		 Recall that the closure of a set includes all the points of the set as well as all its limit points. Therefore, we need to show that for any $u \in \mathbb{A}$, there exists a sequence $\{u_n\} \subseteq \mathbb{B}$ such that $u_n \to u$ with the norm $\Vert \cdot \Vert$.
+		
+		Consider $u \in \mathbb{A}$, then $u(a) \geq 0$. If $u(a) > 0$, then $u \in \mathbb{B}$. If $u(a) = 0$, we can construct a sequence $\{u_n\}$, define
+		\[
+		u_n(x) = u(x) + \frac{1}{n}
+		\]
+		for all $x \in [a, b]$. Clearly, $u_n(a) = u(a) + \frac{1}{n} > 0$, so $u_n \in \mathbb{B}$. As $n \to \infty$, we have $u_n \to u$ because
+		\[
+		\Vert u_n - u \Vert = \max_{a \leq x \leq b} \left| u(x) + \frac{1}{n} - u(x) \right| = \frac{1}{n} \to 0.
+		\]
+		This shows that $u$ is a limit point of $\mathbb{B}$.
+		
+		Therefore, $\mathbb{A}$ is the closure of $\mathbb{B}$.
+	\end{solution}
+	
+	\begin{problem}
+		If we set $\phi(u)\coloneqq|u(a)|$, then $\phi$ is not a norm on $\mathbb{X}$.
+	\end{problem}
+	
+	\begin{solution}
+		We will check the properties of the norm. Let $\phi(u) = |u(a)| = 0$, which implies $u(a)\equiv0$, but we can choose $u$ such that $u(x)\neq0$ in $(a,b]$. Thus $\phi(u)$ is not a norm on $\mathbb{X}$. 
+	\end{solution}
+	
+	\begin{problem}
+		If we set \[ \Vert u\Vert_{1}\coloneqq\int_{a}^{b}|u(x)|\mathrm{d}x \]then $\Vert\cdot\Vert_{1}$ is a norm on $\mathbb{X}$, but $\mathbb{X}$ is not a Banach space with respect to $\Vert\cdot\Vert_{1}$.
+	\end{problem}
+	
+	\begin{solution}
+		We will check the properties of the norm. 
+	\begin{itemize}
+		\item $\Vert u\Vert_{1}=\int_{a}^{b}|u(x)|\mathrm{d}x \geq 0$ and $\Vert u\Vert_{1}=0 $ iff $u = 0$.
+		\item $\forall\alpha\in\mathbb{R}$, we have $\Vert\alpha u\Vert_{1} = \int_{a}^{b}|\alpha u(x)|\mathrm{d}x = |\alpha|\int_{a}^{b}|u(x)|\mathrm{d}x = |\alpha|\Vert u\Vert_{1}$.
+		\item $\forall u, v\in\mathbb{X}$, we have\[ \Vert u + v\Vert_{1}=\int_{a}^{b}|u(x)+v(x)|\mathrm{d}x\leq\int_{a}^{b}|u(x)|\mathrm{d}x+\int_{a}^{b}|v(x)|\mathrm{d}x=\Vert u \Vert_{1}+\Vert v\Vert_{1} \]then $\Vert\cdot\Vert_{1}$ is a norm on $\mathbb{X}$. 
+		Define a discontinuous function $w:[a,b]\rightarrow\mathbb{R}$, say,
+		\[
+		w(x) \coloneqq 
+		\begin{cases}
+			1, & \text{if } a \leq x \leq c < b \\
+			0, & \text{if } c < x \leq b
+		\end{cases}
+		\]
+		Construct a sequence $\{u_{n}\}$ in $\mathbb{X}$ 
+		\[
+		u_n(x) \coloneqq 
+		\begin{cases}
+			1, & \text{if } a \leq x \leq c - \frac{1}{n}, \\
+			n(c - x), & \text{if } c - \frac{1}{n} < x < c, \\
+			0, & \text{if } c \leq x \leq b.
+		\end{cases}
+		\]
+		such that\[ \Vert u_{n} - w\Vert_{1} = \int_{c-\frac{1}{n}}^{c}|n(c-x)-1|\mathrm{d}x \leq \dfrac{1}{n}\rightarrow 0\quad \text{as}\ n\to \infty \]
+		$\forall\varepsilon>0$, choose $n_{\varepsilon}>\varepsilon$, then for $\forall n>m\geq n_{\varepsilon}$, we have \[ \Vert u_{n} - u_{m}\Vert_{1} \leq \int_{c-\frac{1}{m}}^{c}1\mathrm{d}x \leq \dfrac{1}{m}<\varepsilon\]
+		Then $\{u_{n}\}$ is Cauchy with respect to $\Vert\cdot\Vert_{1}$. Suppose that $\Vert u_{n} - u\Vert_{1}\rightarrow 0$ as $n\rightarrow\infty$, where $u\in\mathbb{X}$. Then,\[ \Vert u-w\Vert_{1}\leq\Vert u-u_{n}\Vert_{1}+\Vert u_{n} - w\Vert_{1}\rightarrow 0 \]Hece $u(x)=w(x)$ on $[a,b]$, contradicting the continuity of the function $u$.
+	\end{itemize}
+	\end{solution}
+	
+	\begin{problem}
+		The operators $A:\mathbb{X}\rightarrow\mathbb{X}$ and $B:\mathbb{X}\rightarrow\mathbb{X}$ defined through\[ (A u)(x)\coloneqq u(a)\qquad\text{and }\qquad (Bu)(x)\coloneqq\int_{a}^{x}u(y)\mathrm{d}y \]are linear and continuous with $\Vert A\Vert = 1$ and $\Vert B \Vert = b-a$.
+	\end{problem}
+	\begin{solution}
+		For all $u,v\in\mathbb{X}$ and $\alpha,\beta\in\mathbb{R}$, we have\[ (A(\alpha u +\beta v))(x) = \alpha u(a) + \beta v(a) = \alpha (Au)(x) + \beta (Av)(x) \]and \[ (B(\alpha u +\beta v))(x) = \alpha \int_{a}^{x}u(y)\mathrm{d}y + \beta \int_{a}^{x}v(y)\mathrm{d}y = \alpha (Bu)(x) + \beta (Bv)(x) \]imply that the operators are linear.
+		Notice that \[ \Vert Au\Vert = \mathop{max}\limits_{a\leq x\leq b}|(Au)(x)| = u(a) \leq \mathop{max}\limits_{a\leq x\leq b}|u(x)| = \Vert u\Vert\]and\[ \Vert Bu\Vert = \mathop{max}\limits_{a\leq x\leq b}|(Bu)(x)|\leq (b-a)\mathop{max}\limits_{a\leq x\leq b}|u(x)| = (b-a)\Vert u\Vert\]
+		Thus the operators are continuous. Further, $\Vert A\Vert = \mathop{sup}\limits_{\Vert u\Vert=1}\Vert Au\Vert=1$ and $\Vert B \Vert =\mathop{sup}\limits_{\Vert u\Vert=1}\Vert Bu\Vert= b-a$.
+	\end{solution}
+	
+	\begin{problem}
+		If we set \[ f(u)\coloneqq\int_{a}^{b}yu(y)\mathrm{d}y\quad\text{for all }u\in\mathbb{X} \]then $f\in\mathbb{X}^{*}$ with $\Vert f\Vert = \frac{(b-a)^{2}}{2}$.
+	\end{problem}
+	
+	\begin{solution}
+		For all $u\in\mathbb{X}$,\[ |f(u)|\leq\mathop{max}\limits_{a\leq x\leq b}|u(x)|\int_{a}^{b}y\mathrm{d}y=\dfrac{(b-a)^{2}}{2}\Vert u\Vert \]
+		Thus $\Vert f\Vert=\mathop{sup}\limits_{\Vert u\Vert\leq1}|f(u)|=\frac{(b-a)^{2}}{2}$
+	\end{solution}
+	
+	\begin{problem}
+		Let $\alpha\in\mathbb{R}$ with $|\alpha|(b-a)<1$. For each given $u_{0}\in\mathbb{X}$, the iteration method\[ u_{n+1}(x)=\alpha\int_{a}^{b}\sin u_{n}(x)\mathrm{d}x +1 \quad n=0,1,\cdots\ x\in[a,b]\]converges uniformly on $[a,b]$ to the unique solution $u\in\mathbb{X}$ of the integral equation\[ u(x)=\alpha\int_{a}^{b}\sin u(x)\mathrm{d}x +1\quad x\in[a,b]\]
+	\end{problem}
+	\begin{solution}
+		Define the operator\[ (Au)(x)\coloneqq\alpha\int_{a}^{b}\sin u(x)\mathrm{d}x+1\quad x\in[a,b] \]Then, the original equation corresponds to the fixed-point problem\[ u=Au \]
+		
+		If $u\in\mathbb{X}$, then so is the function $Au:[a,b]\rightarrow R$. This way we get the operator\[ A:\mathbb{X}\rightarrow\mathbb{X} \]For $\forall u, v\in\mathbb{X}$,we have
+		\begin{align*}
+			\Vert Au-Av\Vert &= \mathop{max}\limits_{a\leq x\leq b}|(Au)(x)-(Av)(x)|\\&\leq|\alpha|\int_{a}^{b}\mathop{max}\limits_{a\leq x\leq b}|\sin u(x) - \sin v(x)|\mathrm{d}x\\&\leq|\alpha|\int_{a}^{b}\mathop{max}\limits_{a\leq x\leq b}|cos w(x)|| u(x) -  v(x)|\mathrm{d}x\\&\leq|\alpha|(b-a)\Vert u-v\Vert
+		\end{align*}
+		Since $|\alpha|(b-a)<1$, by Banach Fixed Point Theorem we show the conclusion. 
+	\end{solution}
+	
+	\begin{problem}
+		Let $\alpha\in\mathbb{R}$ with $|\alpha|<1$. For each given $u_{0}\in\mathbb{R}$, the iteration method\[ u_{n+1}=\alpha\sin u_{n}+1\quad n=0,1,\cdots \]converges to the unique solution $u\in\mathbb{R}$ of the equation $u\in\mathbb{R}$ of the equation $u=\alpha\sin u +1$.
+	\end{problem}
+	\begin{solution}
+		Define the operator\[ f(u)\coloneqq\alpha\sin u+1\]Then, the original equation corresponds to the fixed-point problem\[ u=f(u) \]
+		
+		If $u_{0}\in\mathbb{R}$, then except for $u_{0}$, $u_{n}\in \mathbb{I}=[0,2]$ for $n\geq1$, so is the function $f(u)$. This way we get the operator\[ f:\mathbb{I}\rightarrow\mathbb{I} \]Where $\mathbb{I}$ is a closed nonempty set in the Banach space $\mathbb{R}$. For $\forall u, v\in\mathbb{I}$,we have
+		\begin{align*}
+			\Vert Au-Av\Vert &= \mathop{max}\limits_{0\leq x\leq 2}|(Au)(x)-(Av)(x)|\\&\leq|\alpha|\mathop{max}\limits_{0\leq x\leq 2}|\sin u(x) - \sin v(x)|\\&\leq|\alpha|\mathop{max}\limits_{0\leq x\leq 2}|cos w(x)|| u(x) -  v(x)|\\&\leq|\alpha|\Vert u-v\Vert
+		\end{align*}
+		Since $|\alpha|<1$, by Banach Fixed Point Theorem we show the conclusion. 
+	\end{solution}
+	
+	\begin{problem}
+		Let $K(x,y):[a,b]\times[a,b]\rightarrow\mathbb{R}$ be continuous with $0\leq K(x,y)\leq d$ for all $x,y\in[a,b]$. Let $2(b-a)d\leq1$ along with $u_{0}(x)\equiv0$ and $v_{0}(x)\equiv2$. Then, the two iteration methods
+		\begin{align*}
+			u_{n+1}(x)&=\int_{a}^{b}K(x,y)u_{n}(y)\mathrm{d}y+1\quad n=0,1,\cdots\ x\in[a,b]\\
+			v_{n+1}(x)&=\int_{a}^{b}K(x,y)v_{n}(y)\mathrm{d}y+1
+		\end{align*}
+		converge uniformly on $[a,b]$ to the unique solution $u\in\mathbb{X}$ of the integral equation\[ u(x)=\int_{a}^{b}K(x,y)u(y)\mathrm{d}y+1\quad x\in[a,b] \]
+		where $u_{0}(x)\leq u_{1}(x)\leq\cdots\leq v_{1}(x)\leq v_{0}(x)$ for all $x\in[a,b]$
+	\end{problem}
+	\begin{solution}
+		Define  the operator\[ (Au)(x)\coloneqq \int_{a}^{b}K(x,y)u(y)\mathrm{d}y+1\]If $u\in\mathbb{X}$, then so is the function $Au:[a,b]\rightarrow R$. This way we get the operator\[ A:\mathbb{X}\rightarrow\mathbb{X} \]A is continuous, $\mathbb{X}$ is bounded, it suffices to show
+		 \begin{itemize}
+		 	\item A($\mathbb{X}$) is bounded.
+		 	\item A($\mathbb{X}$) is equicontinuous.
+		 \end{itemize}
+		 For all $u\in\mathbb{X}$,\[ \Vert Au\Vert = \mathop{max}\limits_{a\leq x\leq b}\vert\int_{a}^{b}K(x,y)u(y)\mathrm{d}y+1\vert\leq(b-a)d\Vert u\Vert+1 \]Since $K(x,y)$ is uniformly continuous, then for $\forall\varepsilon>0$ , $\exists\delta>0$, such that$|x-z|<\delta$ and $x,z\in[a,b]$, we have $|K(x,y)-K(z,y)|<\varepsilon$. Then\[ |(Au)(x) -(Au)(z)|\leq\int_{a}^{b}|K(x,y)-K(z,y)||u(y)|\mathrm{d}y\leq(b-a)\Vert u\Vert\varepsilon \]By Arzel$\grave{a}$-Ascoli theorem, $A$ is a compact operator. Obviously $A$ is monotone increasing. Further, \[ Au_{0}=1\geq u_{0} \]and\[ Av_{0}=2\int_{a}^{b}K(x,y)\mathrm{d}y+1\leq2(b-a)d+1\leq2=v_{0} \]By Theorem 1.E, we have the conclusion.
+	\end{solution}
+	
+	\begin{problem}
+		Let $\alpha\in\mathbb{R}$ and $f\in\mathbb{X}$ be given. Then, the nonlinear integral equation\[ u(x)=\alpha\int_{a}^{b}\sin u(x)\mathrm{d}x +f(x)\]has a solution $u\in\mathbb{X}$.
+	\end{problem}
+	\begin{solution}
+		Define the operator\[ (Au)(x)\coloneqq\alpha\int_{a}^{b}\sin u(x)\mathrm{d}x+f(x) \]We first show that $A:\mathbb{X}\rightarrow\mathbb{X}$ is a compact operator. Continuity is obviously, it suffices to show that $A(\mathbb{X})$ is bounded and equicontinuous.
+		
+		For all $u\in\mathbb{X}$, we have \[ \Vert Au\Vert\leq\alpha(b-a)+\mathop{max}\limits_{a\leq x\leq b}f(x)\coloneqq r \] Since $f\in\mathbb{X}$, it's bounded in $[a,b]$.
+		For $u,f\in\mathbb{X}$, $u$ and $f$ are uniformly continuous. For each $\varepsilon>0$, there is a $\delta>0$ such that $|x-y|<\delta$ imply $|u(x)-u(y)|<\frac{\varepsilon}{2\alpha(b-a)}$ and $|f(x)-f(y)|<\frac{\varepsilon}{2}$.\[ |(Au)(x)-(Au)(y)|\leq|\alpha|\int_{a}^{b}\mathop{max}\limits_{a\leq x\leq b}|cos u(z)|| u(x) -  u(y)|\mathrm{d}x+|f(x)-f(y)|<\varepsilon \]By Arzel$\grave{a}$-Ascoli theorem, $A$ is a compact operator.
+		Further we have priori estimate\[ \Vert u\Vert =|t|\Vert\alpha\int_{a}^{b}\sin u(x)\mathrm{d}x +f(x)\Vert=|t|r \]Apply Leray-Schaude Principle we have the conclusion. 
+	\end{solution}
+	\begin{problem}
+		Let $f:\mathbb{R}^{2}\rightarrow\mathbb{R}$ be continuous. Then, the system\[ \xi= 10^{27}+\sin f(\xi,\eta) \quad \eta =\cos f(\xi,\eta)\]has a solution $(\xi,\eta)\in\mathbb{R}^{2}$
+	\end{problem}
+	\begin{solution}
+		Define operators\[ A\xi=10^{27}+\sin f(\xi,\eta)\quad B\eta =\cos f(\xi,\eta) \]By Arzel$\grave{a}$-Ascoli theorem, $A$ and $b$ are compact operators. Details are similar to the previous problem.
+		Further, we have the priori estimate\[ \Vert \xi\Vert =|t|\Vert10^{27}+\sin f(\xi,\eta)\Vert\leq(10^{27}+1)|t| \] and\[ \Vert\eta\Vert=|t|\Vert\cos f(\xi,\eta)\Vert\leq|t| \]Apply Leray-Schaude Principle we have the conclusion. 
+	\end{solution}
+	
+	\begin{problem}
+		Let $\sigma(A)$ denote the spectrum of the linear operator $A:\mathbb{X}\rightarrow\mathbb{X}$. Show that $\sigma(A)={2}$ provided $\mathbb{X}\coloneqq\mathbb{C}$ and $Au=2u$.
+	\end{problem}
+	\begin{solution}
+		Consider whether $(\lambda I- A)^{-1}$ exists. Since $Au=2u$\[ (\lambda I- A)u = (\lambda-2)u\] If $\lambda=2$, $(\lambda I- A)^{-1}$ doesn't exist. If $\lambda\neq2$ , $(\lambda I- A)^{-1}=\frac{I}{\lambda-2}$. By definition, $\sigma(A)=2$.
+	\end{solution}
+	
+	\begin{problem}
+		The spectral radius. Let $A:\mathbb{X}\rightarrow\mathbb{X}$ be a linear continuous operator on the complex Banach space $\mathbb{X}$. Define the spectral radius $r(A)$ of A through\[ r(A)\coloneqq\mathop{sup}\limits_{\lambda\in\sigma(A)}|\lambda| \]Show that $r(A)=\lim\limits_{n\to\infty}\Vert A^{n}\Vert^{\frac{1}{n}}$
+	\end{problem}
+	\begin{solution}
+		For any $\varepsilon>0$, let's define the two following matrics\[ A_{\pm}=\dfrac{A}{r(A)\pm\varepsilon} \]Thus\[ r(A_{\pm})=\dfrac{r(A)}{r(A)\pm\varepsilon}\]and\[ r(A_{+})<1<r(A_{-}) \]Then\[ \lim\limits_{n\to\infty}A_{+}^{k}=0 \]This shows the existence of $N_{+}\in\mathbb{N}$ such that, for all $n\geq N_{+}$\[ \Vert A_{+}^{n}\Vert< 1 \]Therefore\[ \Vert A^{n}\Vert^{\frac{1}{n}}< r(A)+\varepsilon \]Similarly, the theorem on power sequences implies that $\Vert A_{-}^{n}\Vert$ is not bounded and that there exists $N_{-}\in\mathbb{N}$ such that, for all $ n ≥ N_{-}$\[ \Vert A_{-}^{n}\Vert> 1 \]Therefore\[ \Vert A^{n}\Vert^{\frac{1}{n}}> r(A)-\varepsilon \]Let $N=max\{N_{+},N_{-}\}$, for $\forall\varepsilon$, $\exists N\in\mathbb{N}$, $\forall n\geq N$\[ r(A)-\varepsilon<\Vert A^{n}\Vert^{\frac{1}{n}}<r(A)+\varepsilon \]That is, $r(A)=\lim\limits_{n\to\infty}\Vert A^{n}\Vert^{\frac{1}{n}}$.
+		
+	\end{solution}
+	
+	\begin{problem}
+		\textbf{Volterra integral operator}. Let $\mathbb{X}\coloneqq C[a,b]_{\mathbb{C}}$, where $-\infty<a<b<\infty$. Define the operator $A:\mathbb{X}\rightarrow\mathbb{X}$ through\[ (Au)(x)\coloneqq\int_{a}^{x}K(x,y)u(y)\mathrm{d}y\quad \text{for all}\ x\in[a,b] \]where $K:[a,b]\times[a,b]\rightarrow\mathbb{C}$ is continuous. Then, $r(A)=0$, and hence $\sigma(A)=\{0\}$.
+	\end{problem}
+	\begin{solution}
+		Set \[ c=\mathop{max}\limits_{a\leq x,y\leq b}|K(x,y)| \]Then\[ |(Au)(x)| = \int_{a}^{x}K(x,y)u(y)\mathrm{d}y\leq c\Vert u\Vert(x-a)\]and\[  |(A^{2}u)(x)| = \int_{a}^{x}K(x,y)(Au)(y)\mathrm{d}y\leq c^{2}\Vert u\Vert\int_{a}^{x}(y-a)\mathrm{d}y=\dfrac{c^{2}\Vert u\Vert(x-a)^{2}}{2!} \]Continuing in this way, we have\[ |(A^{n}u)(x)|\leq\dfrac{c^{n}\Vert u\Vert(x-a)^{n}}{n!} \]and therefore\[ \Vert A^{n}u\Vert =\mathop{max}\limits_{a\leq x\leq b}|(A^{n}u)(x)|= \dfrac{c^{n}\Vert u\Vert(b-a)^{n}}{n!} \]Thus we find the radius $r(A)=\lim\limits_{n\to\infty}\Vert A^{n}\Vert^{\frac{1}{n}}=0$, and hence $\sigma(A)=\{0\}$.
+	\end{solution}
+	\begin{problem}
+		\textbf{Fredholm integral operator}.Let $\mathbb{X}\coloneqq C[a,b]_{\mathbb{C}}$, where $-\infty<a<b<\infty$. Define the operator $A:\mathbb{X}\rightarrow\mathbb{X}$ through\[ (Au)(x)\coloneqq\int_{a}^{b}K(x,y)u(y)\mathrm{d}y\quad \text{for all}\ x\in[a,b] \]where $K:[a,b]\times[a,b]\rightarrow\mathbb{C}$ is continuous. Show that \[ r(A)\leq(b-a)\mathop{max}\limits_{x,y\in[a,b]}|K(x,y)| \]
+	\end{problem}
+	\begin{solution}
+		We have shown that \[ \Vert A\Vert\leq\mathop{sup}\limits_{\Vert u\Vert\leq1}c\Vert u\Vert(b-a)=(b-a)\mathop{max}\limits_{x,y\in[a,b]}|K(x,y)| \]Combining with \[ r(A)\leq\Vert A\Vert \]We have the conclusion.
+	\end{solution}
+	
+	\begin{problem}
+		\textbf{The Banach space $l_{\infty}^{\mathbb{K}}$}. Let $\mathbb{K}^{\infty}$ denote the space of all sequences $(u_{n})_{n\geq1}$, where $u_{n}\in\mathbb{K}$ for all $n\in\mathbb{N}$. Moreover, let $l_{\infty}^{\mathbb{K}}$ denote the set of all $(u_{n})\in\mathbb{K}^{\infty}$ such that\[ \Vert(u_{n})\Vert_{\infty}\coloneqq\mathop{sup}\limits_{n\geq1}|u_{n}|<\infty \]Define\[ \alpha(u_{n})+\beta(v_{n}) = (\alpha u_{n} + \beta v_{n})\quad\text{for all }\ \alpha, \beta\in\mathbb{K} \]Show that $\mathbb{K}^{\infty}$ is an infinite-dimensional linear space over $\mathbb{K}$.
+	\end{problem}
+	\begin{solution}
+		Since $\mathbb{K}$ is a linear space, It suffices to show that $\alpha(u_{n})+\beta(v_{n})\in\mathbb{K}^{\infty}$. We have \[ \alpha(u_{n})+\beta(v_{n}) = (\alpha u_{n} + \beta v_{n})\quad\text{for all }\ \alpha, \beta\in\mathbb{K} \]Since $\alpha u_{n}+\beta v_{n}\in\mathbb{K}$, $\alpha(u_{n})+\beta(v_{n})\in\mathbb{K}^{\infty}$.
+		
+		Now we choose $(e_{1n}),e_{2n},\cdots e_{Nn}$, and $e_{kn}=\{0,\cdots,0,1,0\cdots\}$ such that 1 arise in the k-th place. Thus for each $N=1,2,\cdots$,\[ \alpha_{1}(e_{1n})+\alpha_{2}(e_{2n})+\cdots\alpha_{N}(e_{Nn})=0 \]always implies $\alpha_{1}=\alpha_{2}=\cdots=\alpha_{N}=0$, so $\mathbb{K}^{\infty}$ is an infinite-dimensional linear space over $\mathbb{K}$.
+	\end{solution}
+		
+	\begin{problem}
+		$l_{\infty}^{\mathbb{K}}$ is an infinite-dimensional Banach space over $\mathbb{K}$ with respect to the norm $\Vert\cdot\Vert_{\infty}$.
+	\end{problem}
+	\begin{solution}
+		First we show that $l_{\infty}^{\mathbb{K}}$ is linear. For $\forall (u_{n}),(v_{n})\in l_{\infty}^{\mathbb{K}}$ and $\alpha, \beta\in\mathbb{K}$, we have \[ \Vert\alpha(u_{n})+\beta(v_{n})\Vert = \Vert(\alpha u_{n} + \beta v_{n})\Vert=\mathop{sup}\limits_{n\geq1}|\alpha u_{n} + \beta v_{n}|\leq\alpha\mathop{sup}\limits_{n\geq1}|u_{n}|+\beta\mathop{sup}\limits_{n\geq1}|v_{n}|<\infty \]Thus $\alpha(u_{n})+\beta(v_{n})\in l_{\infty}^{\mathbb{K}}$.
+		
+		Then we show each Cauchy sequences is convergent. Choose a Cauchy sequence $(u_{n}^{(k)})$ in $l_{\infty}^{\mathbb{K}}$, which means for $\forall\varepsilon>0$, there exists $N>0$, such that $\forall k_{1}, k_{2}\geq N$, we have \[ \Vert (u_{n}^{(k_{1})}-u_{n}^{(k_{2})})\Vert=\mathop{sup}\limits_{n\geq1}|u_{n}^{(k_{1})}-u_{n}^{(k_{2})}|<\varepsilon \]That is, for each $u_{n}\in\mathbb{K}$, $u_{n}^{(k)}$ is a Cauchy sequence, and by applying the traditional Cauchy convergent criterion, $u_{n}^{(k)}$ converges to $u_{n}^{*}$, then\[ \Vert(u_{n}^{(k)}-u_{n}^{*})\Vert= \mathop{sup}\limits_{n\geq1}|u_{n}^{(k)}-u_{n}^{(*)}|<\varepsilon\]$l_{\infty}^{\mathbb{K}}$ is an infinite-dimensional Banach space over $\mathbb{K}$ with respect to the norm $\Vert\cdot\Vert_{\infty}$.
+	\end{solution}
+	
+	\textbf{Classical function spaces on $[a,b]$}. Let $-\infty<a<b<\infty$. Show that the following function spaces are Banach spaces.
+	\begin{problem}
+		Let $B[a,b]$ denote the set of all bounded functions $u:[a,b]\rightarrow\mathbb{R}$ and set\[ \Vert u\Vert\coloneqq\mathop{sup}\limits_{a\leq x\leq b}|u(x)| \]
+	\end{problem}
+	\begin{solution}
+		First we show $\Vert\cdot\Vert$ is a norm.
+		\begin{itemize}
+			\item $\Vert u\Vert=\mathop{sup}\limits_{a\leq x\leq b}|u(x)|=0\Leftrightarrow u\equiv0$.
+			\item For $\alpha\in\mathbb{R}$, $\Vert \alpha u\Vert=\mathop{sup}\limits_{a\leq x\leq b}|\alpha u(x)|=\alpha\mathop{sup}\limits_{a\leq x\leq b}|u(x)|=\Vert\alpha u\Vert$
+			\item For $\forall u,v\in[a,b]$\[ \Vert u+v\Vert=\mathop{sup}\limits_{a\leq x\leq b}|u(x)+v(x)|\leq\mathop{sup}\limits_{a\leq x\leq b}|u(x)|+\mathop{sup}\limits_{a\leq x\leq b}|v(x)|=\Vert u\Vert+\Vert v\Vert \]Then we show each Cauchy sequences is convergent. Choose a Cauchy sequence $(u_{n})$ in $B[a,b]$, i.e.\[ \Vert u_{n}-u_{m}\Vert= \mathop{sup}\limits_{a\leq x\leq b}|u_{n}(x)-u_{m}(x)|<\varepsilon\quad\text{for all}\ n,m\geq N\]This implies the pointwise convergence\[ u_{n}(x)\rightarrow u(x)\quad\text{for all}\ x\in[a,b] \]Letting $m\rightarrow\infty$, we obtain\[ \mathop{sup}\limits_{a\leq x\leq b}|u_{n}(x) - u(x)|\leq\varepsilon \]Thus the convergence is uniform on the interval $[a,b]$. Further \[ \Vert u\Vert = \Vert u -u_{n} + u_{n}\Vert\leq \Vert u - u_{n}\Vert+\Vert u_{n}\Vert<\varepsilon + \Vert u_{n}\Vert \]Since $u_{n}$ is bounded, $u\in B[a,b]$, and \[ u_{n}\rightarrow u\ \text{in}\ B[a,b]\ \text{as}\ n\to\infty \]
+		\end{itemize}
+	\end{solution}
+	
+	\begin{problem}
+		For $0<\alpha\leq1$, let $C^{0,\alpha}[a,b]$ denote the set of all the so-called H{\"o}lder continuous function $u:[a,b]\rightarrow\mathbb{R}$, i.e., by definition,\[ |u(x)-u(y)|\leq\text{const}|x-y|^{\alpha}\quad\text{for all}\ x,y\in[a,b] \]Let\[ H_{\alpha}(u)\coloneqq\text{sup}\dfrac{|u(x)-u(y)|}{|x-y|^{\alpha}} \]where the supremum is taken over all $x,y\in[a,b]$ with $x\neq y$. In particular\[ |u(x)-u(y)|\leq H_{\alpha}(u)|x-y|^{\alpha}\quad\text{for all}\ x,y\in[a,b] \]Set\[ \Vert u\Vert\coloneqq \mathop{max}\limits_{a\leq x\leq b}|u(x)|+H_{\alpha}(u) \]
+	\end{problem}
+	\begin{solution}
+		It's easy to show $\Vert\cdot\Vert$ is a norm as before. Choose a Cauchy sequence $(u_{n})$ in $C^{0,\alpha}$, i.e.\[ \Vert u_{n}-u_{m}\Vert = \mathop{max}\limits_{a\leq x\leq b}|u_{n}(x)-u_{m}(x)|+ H_{\alpha}(u_{n}-u_{m})<\varepsilon\quad\text{for all}\ n,m\geq N \]Obviously $H_{\alpha}(u_{n}-u_{m})\geq0$, it implies\[  \mathop{max}\limits_{a\leq x\leq b}|u_{n}(x)-u_{m}(x)|<\varepsilon \] The pointwise convergence holds\[  u_{n}(x)\rightarrow u(x)\quad\text{for all}\ x\in[a,b] \]Letting $m\rightarrow\infty$, we obtain \[ \Vert u_{n} - u\Vert = \mathop{max}\limits_{a\leq x\leq b}|u_{n}(x)-u(x)|+ H_{\alpha}(u_{n}-u)\leq\varepsilon \]Thus the convergence is uniform on the interval $[a,b]$. Further \[ \Vert u\Vert=\Vert u-u_{n}+u_{n}\Vert\leq\Vert u - u_{n}\Vert +\Vert u_{n}\Vert\leq\varepsilon+\Vert u_{n}\Vert \]$u_{n}$ is H{\"o}lder continuous, which implies $\Vert u_{n}\Vert<\infty$. Thus $u$ is also H{\"o}lder continuous.
+	\end{solution}
+	
+	\begin{problem}
+		Let $C^{k}[a,b]$ with $k=1,2,\cdots$ denote the set of all continuous functions $u:[a,b]\rightarrow\mathbb{R}$ that have continuous derivatives on $[a,b]$ up to the order k. Set \[ \Vert u\Vert\coloneqq\sum_{j=0}^{k}\mathop{max}\limits_{a\leq x\leq b}|u^{(j)}(x)| \]where $u^{{j}}$ denotes the $j$th derivative.
+	\end{problem}
+	\begin{solution}
+		It's easy to show $\Vert\cdot\Vert$ is a norm as before. Choose a Cauchy sequence $(u_{n})$ in $C^{k}[a,b]$, i.e.\[ \Vert u_{n}-u_{m}\Vert = \sum_{j=0}^{k}\mathop{max}\limits_{a\leq x\leq b}|u_{n}^{(j)}(x)-u_{m}^{(j)}(x)|<\varepsilon\quad\text{for all}\ n,m\geq N \]\[  \mathop{max}\limits_{a\leq x\leq b}|u_{n}^{(j)}(x)-u_{m}^{(j)}(x)|<\varepsilon\quad\ \text{for all}\ j=1,2,\cdots,k \] It implies the pointwise convergence\[ u^{(j)}_{n}(x)\rightarrow u^{(j)}(x)\quad\text{for all}\ x\in[a,b]\ \text{and}\ j=1,2,\cdots, k \]Letting $m\rightarrow\infty$, we obtain \[ \Vert u_{n}-u\Vert= \sum_{j=0}^{k}\mathop{max}\limits_{a\leq x\leq b}|u_{n}^{(j)}(x)-u^{(j)}(x)|\leq\varepsilon\]Thus the convergence is uniform on the interval $[a,b]$. Further for $\varepsilon>0$, $|x-y|<\delta$, $j=1,2,\cdots,k$\[ |u^{(j)}(x)-u^{(j)}(y)|\leq|u^{(j)}(x)-u^{(j)}_{n}(x)|+|u^{(j)}_{n}(x)-u^{(j)}_{n}(y)|+|u^{(j)}_{n}(y)-u^{(j)}(y)|<\varepsilon \]We obtain $u\in C^{k}[a,b]$.
+	\end{solution}
+	
+	\begin{problem}
+		For $0<\alpha\leq1$ and $k=1,2,\cdots$, let $C^{k,\alpha}[a,b]$ denote the set of all functions $u\in C^{k}[a,b]$ with $u^{(k)}\in C^{0,\alpha}[a,b]$. Set\[ \Vert u\Vert\coloneqq\sum_{j=0}^{k}\mathop{max}\limits_{a\leq x\leq b}|u^{(j)}(x)|+H_{\alpha}(u^{(k)}) \]
+	\end{problem}
+	\begin{solution}
+		Combining previous two problems.
+	\end{solution}
+	
+	\begin{problem}
+		Let $C[a,b]_{\mathbb{C}}$ denote the set of all complex continuous functions $u:[a,b]\rightarrow\mathbb{C}$. Define \[ \Vert u\Vert\coloneqq\mathop{max}\limits_{a\leq x\leq b}|u(x)| \]
+	\end{problem}
+	\begin{solution}
+		Apply the condition of $C[a,b]$ to real and imaginary parts respectively.
+	\end{solution}
+	
+	\begin{problem}
+		\textbf{Density}. Let $D$ be a dense subset of the normed space $X$ over $\mathbb{K}$. Show that \[ \langle u^{*},u\rangle=0 \quad\text{for all}\ u\in D\ \text{and fixed}\ u^{*}\in X\] implies $u^{*}=0$.
+	\end{problem}
+	\begin{solution}
+		Let $v\in X$ be given. Since $D$ is dense in $X$, there exists a sequence $(u_{n})$ in $D$ such that $u_{n}\rightarrow v$ as $n\rightarrow\infty$. The functional $u^{*}$ is continuous and $u^{*}(u_{n})=0$ for all $n$. Hence\[ \langle u^{*},v\rangle=\lim\limits_{n\to\infty}\langle u^{*},u_{n}\rangle=0\quad\text{for all }v\in X \]Therefore, $u^{*}=0$.
+	\end{solution}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

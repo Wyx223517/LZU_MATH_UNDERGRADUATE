@@ -1,0 +1,288 @@
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, color, framed, graphicx, hyperref, mathrsfs, mathtools, enumerate, tikz}
+\usetikzlibrary{patterns}
+
+\title{\textbf{Homework 4}}
+\author{王一鑫\quad 作业序号42}
+\date{\today}
+\linespread{1.5}
+\newcounter{problemname}
+\newenvironment{problem}{\begin{framed}\stepcounter{problemname}\par\noindent\textsc{Problem \arabic{problemname}. }}{\end{framed}\par}
+\newenvironment{solution}{%
+	\par\noindent\textsc{Solution. }\ignorespaces
+}{%
+	\hfill$\qed$\par
+}
+\newenvironment{note}{\par\noindent\textsc{Note of Problem \arabic{problemname}. }}{\\\par}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{problem}
+		\textbf{The completion principle for Banach spaces}
+		
+		Two normed spaces \( X \) and \( Y \) over \( \mathbb{K} \) are called \textbf{normisomorphic} iff there exists a linear bijective operator \( j: X \to Y \) such that \( j \) is isometric, i.e.,
+		\[
+		\|j(u)\| = \|u\| \quad \text{for all } u \in X.
+		\]
+		
+		Let \( D \) be a normed space over \( \mathbb{K} \). The Banach space \( X \) over \( \mathbb{K} \) is called a \textbf{completion} of \( D \) iff the set \( D \) is dense in \( X \) and the \( X \)-norm coincides with the \( D \)-norm on \( D \).
+		
+		\begin{enumerate}[a.]
+			\item \textbf{Uniqueness of completion} Show that two completions \( X \) and \( Y \) of \( D \) are normisomorphic.
+			\item \textbf{Existence of a completion} Show that there exists a Banach space \( X \) over \( \mathbb{K} \) that is a completion of \( D \).
+		\end{enumerate}
+		
+	\end{problem}
+	
+	\begin{solution}
+		\begin{enumerate}[a.]
+			\item Let $D \subseteq X$ and $D \subseteq Y$. We define the operator $j: D \subseteq X \to Y$ by $j(u) = u$. Then we have $\|j(u)\| = \|u\|$ on $D$. By the extension principle in Section 3.6, there exists a unique extension $j: X \to Y$ with $\|j(u)\| = \|u\|$ on $X$.
+			
+			It suffices to show that $j$ is a surjective. In order to prove that $j(X) = Y$, notice that $X$ and $Y$ are all Banach spaces. Let $(u_n)$ be a sequence in $D$ with $u_n \to v$ in $Y$ as $n \to \infty$. Then $(u_n)$ is a Cauchy sequence in $X$ and $Y$. Thus, we obtain $u_n \to u$ in $X$ as $n \to \infty$, i.e., $j(u) = v$.
+			\item Two Cauchy sequences \((u_n)\) and \((v_n)\) in \(D\) are called equivalent iff
+			\[
+			\|u_n - v_n\| \to 0 \quad \text{as} \quad n \to \infty.
+			\]
+			Let \(X\) be the set of the corresponding equivalence classes \(u = [(u_n)]\). We define operations by
+			\[
+			[(u_n)] + [(v_n)] := [(u_n + v_n)], \quad \alpha [(u_n)] := [(\alpha u_n)].
+			\]
+			It is easy to show that these operations are independent of the choice of the representatives. 
+			\begin{enumerate}[1.]
+
+				\item Suppose \([(u_n)] = [(u_n')]\) and \([(v_n)] = [(v_n')]\), i.e.,  
+				\[
+				\|u_n - u_n'\| \to 0 \quad \text{and} \quad \|v_n - v_n'\| \to 0 \quad \text{as} \quad n \to \infty.
+				\]  
+				Then by the triangle inequality:  
+				\[
+				\|(u_n + v_n) - (u_n' + v_n')\| = \|(u_n - u_n') + (v_n - v_n')\| \leq \|u_n - u_n'\| + \|v_n - v_n'\|.
+				\]  
+				Hence, \(\|(u_n + v_n) - (u_n' + v_n')\| \to 0\), so \([(u_n + v_n)] = [(u_n' + v_n')]\).
+				
+				\item   
+				Suppose \([(u_n)] = [(u_n')]\), i.e., \(\|u_n - u_n'\| \to 0\). Then:  
+				\[
+				\|(\alpha u_n) - (\alpha u_n')\| = |\alpha| \cdot \|u_n - u_n'\|.
+				\]  
+				Since \(\|u_n - u_n'\| \to 0\), it follows that \(\|(\alpha u_n) - (\alpha u_n')\| \to 0\), so \([(\alpha u_n)] = [(\alpha u_n')]\).
+			\end{enumerate}
+			This way \(X\) becomes a linear space.
+			
+			Furthermore, we define
+			\begin{equation}
+				\|u\|:=\|[(u_{n})]\| = \lim_{n \to \infty} \|u_n\|.\label{norm}
+			\end{equation}
+			Since \(|\|u_n\| - \|u_m\|| \leq \|u_n - u_m\|\), this limit exists. Moreover, it follows from
+			\[
+			|\|u_n\| - \|v_n\|| \leq \|u_n - v_n\|
+			\]
+			that the limit in \eqref{norm} is independent of the choice of the representative \((u_n)\) of \(u\). It follows easily from \eqref{norm} that \(X\) is a normed space.
+			
+			Let \(w \in D\). Then the constant sequence \((w)\) is a Cauchy sequence and hence \([(w)]\) lies in \(X\). We identify \(w\) with the equivalence class \([(w)]\). This way \(D\) becomes a subset of \(X\), i.e., \(D \subseteq X\).
+			
+			Each Cauchy sequence \((u_n)\) in \(D\) converges to \(u = [(u_n)]\) in \(X\). This follows from \(u - u_m = [(u_n - u_m)]\) for fixed \(m\).  Then we have \[ \|u-u_{m}\| = \lim\limits_{n\to\infty}\|u_{n}-u_{m}\| <\varepsilon \]Hence \(D\) is \textit{dense} in \(X\).
+			
+			Finally, we show that \(X\) is a Banach space. To this end, let \((w_n)\) be a Cauchy sequence in \(X\). We choose a sequence \((u_n)\) in \(D\) with \(\|u_n - w_n\| < 1/n\) for all \(n\). Hence \((u_n)\) is a Cauchy sequence, this is from\[ \|u_{n}-u_{m}\|\leq\|u_{n}-w_{n}\|+\|w_{n}-w_{m}\|+\|u_{m}-w_{m}\| \] and \(u_n \to u\) in $X$ as \(n \to \infty\). This implies \(w_n \to u\) as \(n \to \infty\).
+		\end{enumerate}
+		
+	
+	\end{solution}
+	
+	\begin{problem}
+		\textbf{Separation of convex sets}
+		
+		Let \( A \) and \( B \) be nonempty convex sets in the real normed space \( X \). Show that
+		
+		\begin{enumerate}
+			\item[(i)] \( A \) and \( B \) can be separated by a closed hyperplane provided
+			\[
+			B \cap \text{int} A = \varnothing \quad \text{and} \quad \text{int} A \neq \varnothing.
+			\]
+			\item[(ii)] \( A \) and \( B \) can be strictly separated by a closed hyperplane provided
+			\[
+			A \cap B = \varnothing \quad \text{and both } A \text{ and } B \text{ are open.}
+			\]
+			\item[(iii)] \( A \) and \( B \) can be strictly separated by a closed hyperplane provided
+			\[
+			A \cap B = \varnothing, \quad A \text{ is closed, and } B \text{ is compact.}
+			\]
+			
+		\end{enumerate}
+	\end{problem}
+	\begin{solution}
+		\begin{enumerate}[(i)]
+			\item Suppose first that \[ B\cap A = \varnothing \quad \text{and} \quad \text{int} A \neq \varnothing.\]
+			Set \[ K := A - B \] then $K$ is a nonempty convex sets and $\text{int}K \neq\varnothing$. Besides, $0\notin K$. In fact, suppose there exists $x_{1}\in A$ and $x_{2}\in B$, such that $x_{1} - x_{2} = 0$, then \[ x_{1} = x_{2}\in A\cap B \] which contradicts with $A\cap B = \varnothing$.
+			
+			Applying \textbf{Hanh-Banach} theorem we can find a hyperplane which seperates $K$ and $0$.\[ f(x)\leq r\quad\text{for all }x\in K\quad f(0)\geq r \] Thus $f(x)\leq 0$ for all $x\in K$, then there exist $y\in A$ and $z\in B$ such that $f(y-z)\leq0$ , which implies $f(y)\leq f(z)$. 
+			
+			Then we can find $s\in \mathbb{R}$ such that\[ \sup_{y\in A}f(y) \leq s \leq \inf_{z\in B}f(z) \]So $A$ and $B$ can be separated by a closed hyperplane.
+			
+			Now we show that the condition can be weakened to \[
+			B \cap \text{int} A = \varnothing \quad \text{and} \quad \text{int} A \neq \varnothing.
+			\]
+			Since int$A$ is a nonempty convex set which has interior point. By the conclusion we have given \[ f(x)\leq s\quad\text{for all }x\in \text{int}A \quad f(x)\geq s\quad\text{for all }x\in B\]By the continuity of $f$, we have \[ f(x)\leq s\quad\text{for all }x\in \overline{\text{int}A} = \overline{A} \] and further\[ f(x)\leq s\quad\text{for all }x\in A \]This is the statement.
+			
+			\item The set \( K = A - B \) is open and convex and does not contain \( 0 \).  
+			Hence  there exists a continuous linear form \( f \neq 0 \) on \( X \) such that \( f(K) < 0 \).  
+			If \( \alpha = \sup \{f(a): a \in A\} \), then \( \alpha \) is finite and  
+			\[
+			f(A) \leq \alpha, \quad f(B) \geq \alpha.
+			\]  
+			However, since \( f \neq 0 \), \( f \) is an open map of \( X \) onto \( \mathbb{R} \).  
+			Hence from \( f(A) \leq \alpha \) and \( f(B) \geq \alpha \) follows indeed \( f(A) < \alpha \) and \( f(B) > \alpha \).
+			
+			\item There exists an open convex neighbourhood \( U \) of \( 0 \) in \( X \) such that  
+			\[
+			(A + U) \cap (B + U) = \emptyset.
+			\]  
+			
+			Since $A + U$  and \( B + U \) are open and \( f \) is an open map of \( X \) onto \( \mathbb{R} \). Applying (ii) to the sets \( A + U \) and \( B + U \), we deduce the existence of a continuous linear form \( f \neq 0 \) on \( X \) and a real number \( \alpha \) such that  
+			\[
+			f(A + U) < \alpha, \quad f(B + U) > \alpha.
+			\]  
+			whence the assertion.
+		\end{enumerate}
+		
+	\end{solution}
+	
+	\begin{problem}
+		\textbf{Extension of linear positive functionals (the Krein theorem)}
+		
+		Suppose that \( X \) is a real ordered normed space in the sense of Section 1.19 of AMS Vol.108 with the order cone \( X_+ \) and that \( L \) is a linear subspace of \( X \) such that
+		\[
+		L \cap \text{int} X_+ \neq \varnothing.
+		\]
+		Let \( F: L \rightarrow \mathbb{R} \) be a linear functional such that
+		\[
+		F(u) \geq 0 \quad \text{for all } u \in L \text{ with } u \geq 0.
+		\]
+		
+		Show that \( F \) can be extended to a linear continuous functional \( f: X \rightarrow \mathbb{R} \) such that \( f(u) \geq 0 \) for all \( u \in X \) with \( u \geq 0 \).
+		
+	\end{problem}
+	
+	\begin{solution}
+		We first show a similar result.
+		\begin{framed}
+			Suppose that \( X \) is a real ordered normed space \( L \) is a linear subspace of \( X \) such that each $x\in X$ corresponds at least one element $m\in L$ for which $x\leq m$. If $F$ is a positive linear functional on $L$, then $F$ can be extended to a positive linear functional on $X$. 
+		\end{framed}
+		\textbf{Proof.} We define \( p \) on \( X \) by  
+		\[
+		p(x) = \inf \{F(y): y \in L, y \geq x\}.
+		\]  
+		Our hypothesis on \( L \) entails that to each \( x \in X \) corresponds \( m \) and \( m' \) in \( L \) such that \( m' \leq x \leq m \). It follows that \( p \) is bounded. In fact,  
+		\[
+		F(m') \leq p(x) \leq F(m).
+		\]  
+		
+		Obviously \( p \) is a sublinear function on \( X \). If \( x \) is in \( L \), it is evident that \( p(x) \leq F(x) \). On the other hand, if \( x \) and \( y \) are in \( L \) and \( y \geq x \), then \( F(y) \geq F(x) \), this is from \[ F(y-x) = F(y) - F(x)\geq 0 \text{ with } y-x\geq0 \] so \( p(x) \geq F(x) \) for \( x \) in \( L \).  
+		Thus in fact \( F(x) = p(x) \) for \( x \) in \( L \).  
+		
+		Applying \textbf{Hanh-Banach} theorem, we deduce that there exists a linear form \( f \) on \( X \) that extends \( f \) and that satisfies \( f(x) \leq p(x) \) for \( x \) in \( X \). Then, if \( x \geq 0 \),  
+		\[
+		f(-x) \leq p(-x) = \inf \{F(y): y \in L, y + x \geq 0\} \leq 0 \quad \text{and so} \quad f(x) \geq 0.
+		\]
+		Thus \( f \) is a positive linear form on \( X \).
+		
+		\textbf{Proof of Problem 3.} Suppose \[
+		x_{0} \in L \cap \text{int} X_+ .
+		\]Let \( U \) be any balanced neighbourhood of \( 0 \) in \( X \) such that \( x_0 + U \subseteq X_{+} \).  
+		If \( x \) belongs to \( X \) and \( \lambda > 0 \) is such that \( x \in \lambda U \), then \( -x / \lambda \in U \) and so  
+		\[
+		x_0 - x / \lambda \in X_{+}; \quad \text{that is,} \quad x \leq \lambda x_0 = m.
+		\]  
+		
+		The hypothesis of the previous statement is fulfilled and the construction used in its proof shows that \( p(x) \leq \lambda F(x_0) \) if \( x \in \lambda U \) and \( \lambda > 0 \).  
+		We can extend \( F \) into a positive linear form \( f \) on \( X \) such that \( f(x) \leq p(x) \) for all \( x \) in \( X \). Hence \( f(x) \leq \lambda F(x_0) \) if \( x \in \lambda U \), \( \lambda > 0 \).  
+			This entails that  
+		\[
+		|f(x)| \leq \lambda |F(x_0)| \quad \text{if} \quad x \in \lambda U, \ \lambda > 0.
+		\]
+		Thus \( f \) is continuous on \( X \).
+	\end{solution}
+	
+	
+	
+	\begin{problem}
+		\textbf{ Density and duality}
+		
+		Let \( X \) and \( Y \) be Banach spaces over \( \mathbb{K} \) such that the embedding
+		\begin{equation}
+				X \hookrightarrow Y\label{embedding}
+		\end{equation}
+	
+		
+		is continuous, and \( X \) is dense in \( Y \). Show that the following are met:
+		
+		\begin{enumerate}
+			\item[(i)] The embedding \( Y^* \hookrightarrow X^* \) is continuous.
+			\item[(ii)] If \( X \) is reflexive, then \( Y^* \) is dense in \( X^* \).
+		\end{enumerate}
+	\end{problem}
+	
+	\begin{solution}
+		\begin{enumerate}[(i)]
+			\item 
+			It follows from \eqref{embedding} that  
+			\[
+			\|j(x)\|_Y \leq \text{const} \|x\|_X \quad \text{for all} \quad x \in X.
+			\]
+			where $j: X\to Y$ is linear, continuous and injective.
+			
+			Let \( y \in Y^* \) be given. Then, for all \( x \in X \),  
+			\begin{equation}
+				| y^*(j(x))| \leq \|y^*\| \|j(x)\| \leq \text{const} \|y^*\| \|x\|. \label{est1}
+			\end{equation}
+			
+			
+			Let \( \bar{y}^*: X \to \mathbb{K} \) denote the restriction of the functional \( y^*: Y \to \mathbb{K} \) to the subset \( X \) of \( Y \). By \eqref{est1}, we get \( \bar{y}^* \in X^* \), where  
+			\begin{equation}
+				\bar{y}^*(x)  =  y^*(j(x)) \quad \text{for all} \quad x \in X, \label{bary}
+			\end{equation}
+		
+			and  
+			\begin{equation}
+				\|\bar{y}^*\| \leq \text{const} \|y^*\| \quad \text{for all} \quad y^* \in Y^*. \label{est2}
+			\end{equation}
+			
+			
+			We want to show that \( \bar{y}^* = 0 \) implies \( y^* = 0 \). In fact, let \( \bar{y}^* = 0 \). Since \( X \) is \textit{dense} in \( Y \), it follows from \eqref{bary} that \(  y^*(j(x)) = 0 \) for all \( j(x) \in Y \), and hence \( y^* = 0 \).
+			
+			Set \( p(y^*) = \bar{y}^* \). Then, it follows from our considerations above that the operator  
+			\[
+			p: Y^* \to X^*
+			\]
+			is \textit{injective} and continuous. Therefore, we have \( Y^* \hookrightarrow X^* \). Moreover, it follows from \eqref{bary} and \eqref{est2} that  
+			\begin{equation}
+				 y^*(x)= y^*(j(x)) \quad \text{for all} \quad y^* \in Y^*, \ x \in X, \label{equ1}	
+			\end{equation}
+			
+			
+			and  
+			\[
+			\|y^*\| \leq \text{const} \|y^*\| \quad \text{for all} \quad y^* \in Y^*.
+			\]
+			
+			\item  If the assertion is not true, then the closure of \( Y^* \) in the Banach space \( X^* \) is a \textit{proper} closed linear subspace of \( X^* \). By the \textit{Hahn–Banach theorem}, there exists a functional \( f \in (X^*)^* \) such that  
+			\begin{equation}
+				f(x^*) = 0 \quad \text{for all} \quad x^* \in Y^* \label{equ2}
+			\end{equation}
+			
+			and \( f \neq 0 \). Since \( X \) is \textit{reflexive}, there exists an \( x \in X \) such that  
+			\[
+			f(x^*) =  x^*(x) \quad \text{for all} \quad x^* \in X^*.
+			\]
+			By \eqref{equ1} and \eqref{equ2},  
+			\[
+			x^*(j(x)) = 0 \quad \text{for all} \quad x^* \in Y^*.
+			\]Thus $j(x) = 0$ and $x = 0$. Furthermore, $f = 0$, which contradicts with $f\neq0$.
+		\end{enumerate}
+	\end{solution}
+	
+\end{document}
+
+
